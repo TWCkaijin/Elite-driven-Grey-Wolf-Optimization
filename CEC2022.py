@@ -39,11 +39,11 @@ def ackley_function(x, y):
 
 
 if __name__ == '__main__':
-    UBX = 0 #eval(input("upper bound"))
-    LBX = -2 #eval(input("lower bound"))
+    UBX = eval(input("X upper bound:"))
+    LBX = eval(input("X lower bound:"))
 
-    UBY = 2#eval(input("upper bound"))
-    LBY = 0 #eval(input("lower bound"))
+    UBY = eval(input("Y upper bound:"))
+    LBY = eval(input("Y lower bound:"))
 
     X, Y = np.meshgrid(np.arange(LBX, UBX, 0.5), np.arange(LBY, UBY, 0.5))
     function_name = ["bent_cigar_function","rastrigin_function","high_conditioned_elliptic_function",
