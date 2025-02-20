@@ -8,27 +8,25 @@
 using namespace std;
 
 const int DIM = 2; //dimension
-const int WOLF_COUNT = 10; 
+const int WOLF_COUNT = 20; 
 const int MAX_ITER = 100000; //intration
-const double LB = 0;  // lower bound
+const double LB = -3;  // lower bound
 const double UB = 3; // upper bouud
+
 
 // 個別狼隻對於假想最佳解的距離(網路上也說叫做目標適應度)
 double fitnessFunction(const vector<double>& position) {
-    double fitness = 0;
+    double fitness = 10 * DIM;
 
-    // Arg type 1 
-    if (position[0]<2){
-        fitness = numeric_limits<double>::max();
-    }else{
-        fitness = abs(pow(position[1],2) - position[0]);
-    }
-    //fitness = 
+    //Arg type 1
+    /* for (size_t i = 0; i < DIM; i++) {
+        fitness += position[i] * position[i];
+    } */
     
-    //Arg ype 2 
-    /* for (size_t i = 0; i < DIM; i++) {  //不知道為甚麼這樣最佳解不是 1.07
+    //Arg type 2 
+    for (size_t i = 0; i < DIM; i++) { 
         fitness += abs(cos(position[i]));
-    }  */
+    } 
     return fitness;
 }
 
@@ -75,9 +73,9 @@ void updateWolves(vector<vector<double>>& wolves, vector<double>& fitness, vecto
     
     // 更新每隻狼的位置，每隻狼會更新[維度]次
     for (size_t i = 0; i < WOLF_COUNT; i++) { 
-        auto current_wolve = wolves[i];
+        
         for (size_t j = 0; j < DIM; j++) {
-            double a = 2 - 2 * ((MAX_ITER-iter)/MAX_ITER);  //隨時間變化的參數 a
+            double a = 2.0 * (1.0 - (iter / (double)MAX_ITER)); //隨時間變化的參數 a
 
             double A1 = a * (2 * ((double)rand() / RAND_MAX) - 1);  //距離隨機參數
             double A2 = a * (2 * ((double)rand() / RAND_MAX) - 1);
@@ -85,21 +83,17 @@ void updateWolves(vector<vector<double>>& wolves, vector<double>& fitness, vecto
             
             double C1 = 2 * ((double)rand() / RAND_MAX); //領頭狼位置隨機權重參數
             double C2 = 2 * ((double)rand() / RAND_MAX);
-            double C3 = 2 * ((double)rand() / RAND_MAX);
+            double C3 = 2 * ((double)rand() / RAND_MAX); 
             
-            double D_alpha = fabs(C1 * alpha[j] - current_wolve[j]); //隨機狼與兩頭狼距離
-            double D_beta = fabs(C2 * beta[j] - current_wolve[j]);
-            double D_gamma = fabs(C3 * gamma[j] - current_wolve[j]);
+            double D_alpha = fabs(C1 * alpha[j] - wolves[i][j]); //隨機狼與兩頭狼距離
+            double D_beta = fabs(C2 * beta[j] - wolves[i][j]);
+            double D_gamma = fabs(C3 * gamma[j] - wolves[i][j]);
             
             double X1 = alpha[j] - A1 * D_alpha; //目標位置
             double X2 = beta[j] - A2 * D_beta;
             double X3 = gamma[j] - A3 * D_gamma;
             
-            wolves[i][j] = (X1 + X2 + X3) / 3; //平均三個目標位置
-            
-            // 限制範圍
-            if (wolves[i][j] < LB) wolves[i][j] = LB;
-            if (wolves[i][j] > UB) wolves[i][j] = UB;
+            wolves[i][j] = max(LB, min(UB, (X1 + X2 + X3) / 3)); //平均取值並限制範圍    
         }
         fitness[i] = fitnessFunction(wolves[i]); // 更新目標適應度
     }
