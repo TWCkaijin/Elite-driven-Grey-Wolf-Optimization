@@ -7,11 +7,11 @@
 
 using namespace std;
 
-const int DIM = 2; //dimension
-const int WOLF_COUNT = 20; 
-const int MAX_ITER = 100000; //intration
-const double LB = -3;  // lower bound
-const double UB = 3; // upper bouud
+const int DIM = 1; //dimension
+const int WOLF_COUNT = 10; 
+int MAX_ITER=0; //iteration
+const double LB = -10000;  // lower bound
+const double UB = 10000; // upper bound
 
 
 // 個別狼隻對於假想最佳解的距離(網路上也說叫做目標適應度)
@@ -19,15 +19,17 @@ double fitnessFunction(const vector<double>& position) {
     double fitness = 0;
 
     //Arg type 1
-    /* for (size_t i = 0; i < DIM; i++) {
-        fitness += position[i] * position[i];
-    } */
+    for (size_t i = 0; i < DIM; i++) {
+        fitness += 50*cos(0.005*position[i])+log(position[i]*position[i]);
+    } 
     
-
     //Arg type 2 
+    /* 
     for (size_t i = 0; i < DIM; i++) { 
         fitness += abs(cos(position[i]));
-    } 
+    }
+    */ 
+
     return fitness;
 }
 
@@ -101,6 +103,9 @@ void updateWolves(vector<vector<double>>& wolves, vector<double>& fitness, vecto
 }
 
 int main() {
+    cout << "iter: ";
+    cin >> MAX_ITER;
+    cout << "iter: " << MAX_ITER << endl;
     srand(static_cast<unsigned int> (time(0)));
     
     vector<vector<double>> wolves(WOLF_COUNT, vector<double>(DIM)); // 狼群  [狼隻數量][空間維度]
@@ -113,13 +118,14 @@ int main() {
     // Alpha、Beta、Gamma 狼
     vector<double> alpha(DIM), beta(DIM), gamma(DIM);
     updateWolves(wolves, fitness, alpha, beta, gamma, iter);
-    
-    for (iter = 0; iter < MAX_ITER; iter++) {
+    cout << "iter:" << iter;
+    while(fitnessFunction(alpha) != -INFINITY && iter < MAX_ITER) {
+        iter++;
         updateWolves(wolves, fitness, alpha, beta, gamma, iter);
-        //cout << "Iteration " << iter + 1 << ": Best fitness = " << fitnessFunction(alpha) << endl;
+        cout << "\r" << "iter" <<iter;
     }
     
-    cout << "Best solution found: ";
+    cout << "\nBest solution found: ";
     for (double val : alpha) cout << val << " ";
     cout << "\nBest fitness: " << fitnessFunction(alpha) << endl;
     
