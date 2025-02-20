@@ -29,7 +29,7 @@
 2.2. **更新隨機狼**(N隻): 隨機狼的更新公式如下
 >1. 先計算 a 值(時間參數): 
 ``` cpp
-    a = 2 - 2 * ((MAX_ITER - iter) / MAX_ITER)
+    a = 2.0 * (1.0 - (iter / (double)MAX_ITER))
 ```
 </br>
 

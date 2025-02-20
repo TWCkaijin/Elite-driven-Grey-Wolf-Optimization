@@ -16,13 +16,14 @@ const double UB = 3; // upper bouud
 
 // 個別狼隻對於假想最佳解的距離(網路上也說叫做目標適應度)
 double fitnessFunction(const vector<double>& position) {
-    double fitness = 10 * DIM;
+    double fitness = 0;
 
     //Arg type 1
     /* for (size_t i = 0; i < DIM; i++) {
         fitness += position[i] * position[i];
     } */
     
+
     //Arg type 2 
     for (size_t i = 0; i < DIM; i++) { 
         fitness += abs(cos(position[i]));
