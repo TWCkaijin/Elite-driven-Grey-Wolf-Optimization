@@ -17,10 +17,19 @@
 4. GWO/EDGWO: 演算法架構，包含演算法的變量，並且可以呼叫演算法的初始化、適應函數、更新、選擇等。
 
 
-## 實驗與論文對照
+
+## 實驗結果與論文對照
 ![CEC2021-F3](./EXP_PIC/CEC2021-F3.png)
-![CEC2021-F3](./EXP_PIC/CEC2021-F3.png)
-![CEC2021-F3](./EXP_PIC/CEC2021-F3.png)
-![CEC2021-F3](./EXP_PIC/CEC2021-F3.png)
+![CEC2021-F6](./EXP_PIC/CEC2021-F6.png)
+![CEC2021-F8](./EXP_PIC/CEC2021-F8.png)
+![CEC2021-F10](./EXP_PIC/CEC2021-F10.png)
 
 完成日期: 2024/02/21
+
+
+
+</br>
+
+## 持續更新: 
+1. CHGWOSCA 演算法(尚未上線)
+2. MSGWO 演算法(尚未上線)
