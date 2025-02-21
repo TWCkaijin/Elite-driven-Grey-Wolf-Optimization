@@ -5,13 +5,6 @@ try:
 except:
     from CECData import CEC
 
-class OPTIMIZERRESULT:
-    def __init__(self, best_position, best_value,info,curve):
-        self.best_position = best_position
-        self.best_value = best_value
-        self.info = info
-        self.curve = np.log10(curve)
-
 class EDGWO:
     def __init__(self, obj_function, dim, lb, ub, num_wolves=10, max_iter=100):
         self.obj_function = obj_function  # 目標函數
@@ -35,13 +28,14 @@ class EDGWO:
             return targetlead - A * D
         else:
             r3, r4 = np.random.rand(), np.random.rand()
-            return self.alpha - Xm - r3 * (self.lb + (self.ub-self.lb) * r4)
+            return targetlead - Xm - r3 * (self.lb + (self.ub-self.lb) * r4)
+            #return self.alpha - Xm - r3 * (self.lb + (self.ub-self.lb) * r4)
         
 
     def optimize(self):
         convergence_curve = []
         for t in range(self.max_iter):
-            # 計算適應度並更新 α, β, δ
+            # 計算適應度並更新
 
             R_P = np.random.rand()
             mean_pos = np.mean(self.wolves, axis=0)
@@ -65,7 +59,7 @@ class EDGWO:
                 A1, C1 = 2 * a * r1 - a, 2 * r2
                 D_alpha = abs(C1 * self.alpha - self.wolves[i])
                 X1 = self.alpha - A1 * D_alpha """
-                X1 = self.VectorComponentCalculation(a=a, index=i, Xm=mean_pos, targetlead=self.alpha)
+                X1 = self.VectorComponentCalculation(a, index=i, Xm=mean_pos, targetlead=self.alpha)
 
 
                 """ # calculating X2
@@ -73,14 +67,14 @@ class EDGWO:
                 A2, C2 = 2 * a * r1 - a, 2 * r2
                 D_beta = abs(C2 * self.beta - self.wolves[i])
                 X2 = self.beta - A2 * D_beta """
-                X2 = self.VectorComponentCalculation(a=a, index=i, Xm=mean_pos, targetlead=self.beta)
+                X2 = self.VectorComponentCalculation(a, index=i, Xm=mean_pos, targetlead=self.beta)
 
                 """ # calculating X3
                 r1, r2 = np.random.rand(), np.random.rand()
                 A3, C3 = 2 * a * r1 - a, 2 * r2
                 D_delta = abs(C3 * self.delta - self.wolves[i])
                 X3 = self.delta - A3 * D_delta """
-                X3 = self.VectorComponentCalculation(a=a, index=i, Xm=mean_pos, targetlead=self.delta)
+                X3 = self.VectorComponentCalculation(a, index=i, Xm=mean_pos, targetlead=self.delta)
 
 
                 if(R_P<0.5):
@@ -94,12 +88,11 @@ class EDGWO:
                 self.wolves[i] = np.clip(self.wolves[i], self.lb, self.ub)
 
             convergence_curve.append(self.alpha_score)
-        
         return self.alpha, self.alpha_score, convergence_curve
     
 
 class EDGWOCONTROL:
-    def __init__(self,MAX_ITER=500, NUM_WOLVES=30, YEAR="2022", FUNCTION_NAME="F1", DIM=10):
+    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION_NAME, DIM):
         self.MAX_ITER = MAX_ITER
         self.NUM_WOLVES = NUM_WOLVES
         self.YEAR = YEAR
@@ -113,20 +106,23 @@ class EDGWOCONTROL:
         self.dim= function.dim
         self.f = function.func
 
+    def info(self):
+        return f"ED-GWO Convergence {self.YEAR}-{self.FUNCTION_NAME}-{self.DIM}D"
+
     def Start(self):
         gwo = EDGWO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
                     num_wolves=self.NUM_WOLVES, max_iter=self.MAX_ITER)
         best_position, best_value, curve = gwo.optimize()
         
-        print("Best solution found:", best_position)
-        print("Best fitness:", best_value)
+        """ print("Best solution found:", best_position)
+        print("Best fitness:", best_value) """
 
-        return OPTIMIZERRESULT(best_position, best_value, f"ED-GWO Convergence {self.YEAR}-{self.FUNCTION_NAME}-{self.DIM}D", curve)
-
-
+        return np.log10(curve)
 
 
-if __name__ == '__main__':
+
+
+"""if __name__ == '__main__':
     # 設定參數
     MAX_ITER = 500
     NUM_WOLVES = 30
@@ -154,29 +150,4 @@ if __name__ == '__main__':
     plt.xlabel("Iterations")
     plt.ylabel("Fitness Value (Log10)")
     plt.title(f"ED-GWO Convergence {YEAR}-{FUNCTION_NAME}-{DIM}D")
-    plt.show()
-
-
-    if(DIM!=2):
-        print("Dimension must be 2 to plot 3D chart")
-        exit()
-
-    X = np.linspace(LB[0], UB[0], 100)
-    Y = np.linspace(LB[1], UB[1], 100)
-    X, Y = np.meshgrid(X, Y)
-    Z = np.array([f([X[i, j], Y[i, j]]) for i in range(X.shape[0]) for j in range(X.shape[1])]).reshape(X.shape)
-
-    fig = plt.figure(figsize=(8, 6))
-    ax = fig.add_subplot(111, projection='3d')
-    ax.plot_surface(X, Y, Z, cmap='coolwarm', alpha=0.7)
-
-    """  # 畫出狼群搜索過程
-    wolves_path = np.array(gwo.wolves)
-    for i in range(len(wolves_path)):
-        ax.scatter(wolves_path[i][:, 0], wolves_path[i][:, 1], rastrigin(wolves_path[i].T), color='black', marker='o')
-    """
-    ax.set_xlabel("X")
-    ax.set_ylabel("Y")
-    ax.set_zlabel("Fitness")
-    plt.title("GWO Searching Path")
-    plt.show()
+    plt.show()"""

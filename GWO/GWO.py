@@ -5,13 +5,6 @@ try:
 except:
     from GWO.CECData import CEC
 
-class OPTIMIZERRESULT:
-    def __init__(self, best_position, best_value,info,curve):
-        self.best_position = best_position
-        self.best_value = best_value
-        self.info = info
-        self.curve = np.log10(curve)
-
 # 定義 Grey Wolf Optimization (GWO)
 class GWO:
     def __init__(self, obj_function, dim, lb, ub, num_wolves=10, max_iter=100):
@@ -77,7 +70,7 @@ class GWO:
     
 
 class GWOCONTROL:
-    def __init__(self,MAX_ITER=500, NUM_WOLVES=30, YEAR="2022", FUNCTION_NAME="F1", DIM=10):
+    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION_NAME, DIM=10):
         self.MAX_ITER = MAX_ITER
         self.NUM_WOLVES = NUM_WOLVES
         self.YEAR = YEAR
@@ -96,13 +89,13 @@ class GWOCONTROL:
                     num_wolves=self.NUM_WOLVES, max_iter=self.MAX_ITER)
         best_position, best_value, curve = gwo.optimize()
         
-        print("Best solution found:", best_position)
-        print("Best fitness:", best_value)
+        """ print("Best solution found:", best_position)
+        print("Best fitness:", best_value) """
 
-        return OPTIMIZERRESULT(best_position, best_value, f"GWO Convergence {self.YEAR}-{self.FUNCTION_NAME}-{self.DIM}D", curve)
+        return np.log10(curve)
 
 
-if __name__ == '__main__':
+"""if __name__ == '__main__':
     funcs_by_year = {
         "2021": ["F3", "F6", "F8", "F10"],
         "2022": ["F4", "F7", "F8", "F9"]
@@ -156,13 +149,12 @@ if __name__ == '__main__':
             ax = fig.add_subplot(111, projection='3d')
             ax.plot_surface(X, Y, Z, cmap='coolwarm', alpha=0.7)
 
-            """  # 畫出狼群搜索過程
-            wolves_path = np.array(gwo.wolves)
-            for i in range(len(wolves_path)):
-                ax.scatter(wolves_path[i][:, 0], wolves_path[i][:, 1], rastrigin(wolves_path[i].T), color='black', marker='o')
-            """
+            # 畫出狼群搜索過程
+            #wolves_path = np.array(gwo.wolves)
+            #for i in range(len(wolves_path)):
+            #    ax.scatter(wolves_path[i][:, 0], wolves_path[i][:, 1], rastrigin(wolves_path[i].T), color='black', marker='o')
             ax.set_xlabel("X")
             ax.set_ylabel("Y")
             ax.set_zlabel("Fitness")
             plt.title(f"GWO Searching Path for CEC {year} {func_name}")
-            plt.show()
+            plt.show()"""
