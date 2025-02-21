@@ -2,3 +2,5 @@
 *.npy
 /.vscode
 test*
+__pycache__
+*.pyc
