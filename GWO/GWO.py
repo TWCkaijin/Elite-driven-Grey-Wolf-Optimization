@@ -53,7 +53,6 @@ class GWO:
                 D_alpha = abs(C1 * self.alpha - self.wolves[i])
                 X1 = self.alpha - A1 * D_alpha
 
-
                 # calculating X2
                 r1, r2 = np.random.rand(), np.random.rand()
                 A2, C2 = 2 * a * r1 - a, 2 * r2
@@ -150,7 +149,8 @@ if __name__ == '__main__':
             X = np.linspace(LB[0], UB[0], 100)
             Y = np.linspace(LB[1], UB[1], 100)
             X, Y = np.meshgrid(X, Y)
-            Z = np.array([f([X[i, j], Y[i, j]]) for i in range(X.shape[0]) for j in range(X.shape[1])]).reshape(X.shape)
+            # Z = np.array([f([X[i, j], Y[i, j]]) for i in range(X.shape[0]) for j in range(X.shape[1])]).reshape(X.shape)
+            Z = np.vectorize(f)(X, Y)
 
             fig = plt.figure(figsize=(8, 6))
             ax = fig.add_subplot(111, projection='3d')
