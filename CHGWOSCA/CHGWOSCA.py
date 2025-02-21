@@ -67,7 +67,7 @@ class CHGWOSCA:
                     X_sca = self.wolves[i] + r1_sca * np.cos(r2_sca) * abs(r3_sca * self.alpha - self.wolves[i])
 
                 # 混合
-                X_new = 0.9 * X_gwo + 0.1 * X_sca
+                X_new = w * X_gwo + (1-w) * X_sca
                 X_new = np.clip(X_new, self.lb, self.ub)
                 self.wolves[i] = X_new
 
