@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from EDGWO.EDGWO import EDGWOCONTROL
 from GWO.GWO import GWOCONTROL
 from CHGWOSCA.CHGWOSCA import CHGWOSCACONTROL
+from REEGWO.REEGWO import REEGWOCONTROL
 
 
 
@@ -26,13 +27,13 @@ class MAINCONTROL:
         return Result
 
     def Start(self, EPOCH):
-        EDGWOResult = None
-        GWOResult = None
         EDGWO_obj = EDGWOCONTROL(MAX_ITER=self.MAX_ITER, NUM_WOLVES=self.NUM_WOLVES, YEAR=self.YEAR,
                                         FUNCTION_NAME=self.FUNCTION_NAME, DIM=self.DIM)
         GWO_obj = GWOCONTROL(MAX_ITER=self.MAX_ITER, NUM_WOLVES=self.NUM_WOLVES, YEAR=self.YEAR,
                                     FUNCTION_NAME=self.FUNCTION_NAME, DIM=self.DIM)
         CHG_obj = CHGWOSCACONTROL(MAX_ITER=self.MAX_ITER, NUM_WOLVES=self.NUM_WOLVES, YEAR=self.YEAR,
+                                        FUNCTION_NAME=self.FUNCTION_NAME, DIM=self.DIM)
+        REE_obj = REEGWOCONTROL(MAX_ITER=self.MAX_ITER, NUM_WOLVES=self.NUM_WOLVES, YEAR=self.YEAR,
                                         FUNCTION_NAME=self.FUNCTION_NAME, DIM=self.DIM)
         
         print(f"Starting ED-GWO works for {EPOCH} Epochs")
@@ -44,12 +45,16 @@ class MAINCONTROL:
         print(f"Starting CHGWOSCA works for {EPOCH} Epochs")
         CHGResult = self.Worker(CHG_obj, EPOCH)
 
+        print(f"Starting REEGWO works for {EPOCH} Epochs")
+        REEResult = self.Worker(REE_obj, EPOCH)
+
         print(f"All {EPOCH} Epochs completed")
         print("Plotting the results")
-        
-        plt.plot(EDGWOResult, label="ED-GWO")
-        plt.plot(GWOResult, label="GWO")
-        plt.plot(CHGResult, label="CHGWOSCA")
+
+        plt.plot(EDGWOResult, label="ED-GWO", color='black')
+        plt.plot(GWOResult, label="GWO", color='red')
+        plt.plot(CHGResult, label="CHGWOSCA", color='blue')
+        plt.plot(REEResult, label="REEGWO", color='green')
 
         plt.xlabel("Iterations")
         plt.ylabel("Fitness Value (Log10)")
