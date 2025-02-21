@@ -80,6 +80,7 @@ class GWOCONTROL:
         
         self.UB = function.ub
         self.LB = function.lb
+        #print(f"UB: {self.UB} || LB: {self.LB}")
         self.dim= function.dim
         self.f = function.func
 
@@ -94,7 +95,7 @@ class GWOCONTROL:
         return np.log10(curve)
 
 
-"""if __name__ == '__main__':
+if __name__ == '__main__':
     funcs_by_year = {
         "2021": ["F3", "F6", "F8", "F10"],
         "2022": ["F4", "F7", "F8", "F9"]
@@ -135,7 +136,7 @@ class GWOCONTROL:
             plt.show()
 
 
-            if(dim!=2):
+            """ if(dim!=2):
                 print(f"Dimension is {dim}, skipping 3D plot for CEC {year} {func_name}")
                 continue
 
@@ -157,4 +158,4 @@ class GWOCONTROL:
             ax.set_ylabel("Y")
             ax.set_zlabel("Fitness")
             plt.title(f"GWO Searching Path for CEC {year} {func_name}")
-            plt.show()"""
+            plt.show() """

@@ -36,8 +36,6 @@ class EDGWO:
         convergence_curve = []
         for t in range(self.max_iter):
             # 計算適應度並更新
-
-            R_P = np.random.rand()
             mean_pos = np.mean(self.wolves, axis=0)
             for i in range(self.num_wolves):
                 fitness = self.obj_function(self.wolves[i])
@@ -77,7 +75,7 @@ class EDGWO:
                 X3 = self.VectorComponentCalculation(a, index=i, Xm=mean_pos, targetlead=self.delta)
 
 
-                if(R_P<0.5):
+                if np.random.rand() < (0.5 * (1 - t/self.max_iter)):
                     self.wolves[i] = (X1 + X2 + X3) / 3
                 else:
                     r5 = np.random.rand()
@@ -103,6 +101,7 @@ class EDGWOCONTROL:
         
         self.UB = function.ub
         self.LB = function.lb
+        #print(f"UB: {self.UB} || LB: {self.LB}")
         self.dim= function.dim
         self.f = function.func
 
@@ -122,32 +121,38 @@ class EDGWOCONTROL:
 
 
 
-"""if __name__ == '__main__':
+if __name__ == '__main__':
+
+    funcs_by_year = {
+        "2021": ["F3", "F6", "F8", "F10"],
+        "2022": ["F4", "F7", "F8", "F9"]
+    }
+
     # 設定參數
     MAX_ITER = 500
     NUM_WOLVES = 30
-    YEAR = "2022"
-    FUNCTION_NAME = "F1"
     DIM = 10
 
     # CEC 函式呼叫方法  
-    function = CEC(YEAR,FUNCTION_NAME,DIM).get_function_info()  # 取得CEC Year年度，維度為 DIM 之 F1 函式的資訊
-    UB = function.ub
-    LB = function.lb
-    f = function.func # 取得函式
-    # 計算函式值 f([多個維度組成的陣列])   -> 例如 f([x,y])
+    for year in funcs_by_year:
+        for func_name in funcs_by_year[year]:
+            function = CEC(year,func_name,DIM).get_function_info()  # 取得CEC Year年度，維度為 DIM 之 F1 函式的資訊
+            UB = function.ub
+            LB = function.lb
+            f = function.func # 取得函式
+            # 計算函式值 f([多個維度組成的陣列])   -> 例如 f([x,y])
 
     
-    # 執行 GWO
-    gwo = EDGWO(obj_function=f, dim=DIM, lb=LB, ub=UB, num_wolves=NUM_WOLVES, max_iter=MAX_ITER)
-    best_position, best_value, curve = gwo.optimize()
+            # 執行 GWO
+            gwo = EDGWO(obj_function=f, dim=DIM, lb=LB, ub=UB, num_wolves=NUM_WOLVES, max_iter=MAX_ITER)
+            best_position, best_value, curve = gwo.optimize()
 
-    print("Best solution found:", best_position)
-    print("Best fitness:", best_value)
+            print(f"[CEC {year}-{func_name}] Best solution found:", best_position)
+            print(f"[CEC {year}-{func_name}] Best fitness:", best_value)
 
-    # 繪製收斂曲線
-    plt.plot(np.log10(curve))
-    plt.xlabel("Iterations")
-    plt.ylabel("Fitness Value (Log10)")
-    plt.title(f"ED-GWO Convergence {YEAR}-{FUNCTION_NAME}-{DIM}D")
-    plt.show()"""
+            # 繪製收斂曲線
+            plt.plot(np.log10(curve))
+            plt.xlabel("Iterations")
+            plt.ylabel("Fitness Value (Log10)")
+            plt.title(f"ED-GWO Convergence {year}-{func_name}-{DIM}D")
+            plt.show()
