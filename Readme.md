@@ -27,8 +27,14 @@
 ![CEC2021-F10](./_EXP_PIC/CEC2021-F10.png)
 
 ## 實驗結果與論文對照(GWO+EDGWO+CHGWOSCA+REEGWO+MSGWO)
-![P_CEC2021-F6](./_EXP_PIC/P_CEC2021-F6.png)
-![R_CEC2021-F3](./_EXP_PIC/R_CEC2021-F6.png)
+<div style="display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; padding: 5px;">
+        <img src="./_EXP_PIC/P_CEC2021-F6.png" alt="P_CEC2021-F6" style="width: 100%;">
+    </div>
+    <div style="flex: 1; padding: 5px;">
+        <img src="./_EXP_PIC/R_CEC2021-F6.png" alt="R_CEC2021-F6" style="width: 100%;">
+    </div>
+</div>
 
 完成日期: 2024/02/21
 
