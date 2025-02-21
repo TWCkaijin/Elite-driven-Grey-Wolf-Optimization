@@ -2,7 +2,7 @@
 > 程式碼內仍有大量的註解內容，其為為後續更新做準備或具備除錯用途
 ## 使用方法: 
 1. 透過執行 `main.py` 來執行程式，會依序呈現不同的適應函數結果，每次呈現皆會有EDGWO和GWO的結果。
-2. 透過個別執行 `EDGWO.py` 和 `GWO.py` 來執行程式，可以得到單一演算法對於每個是應函數的結果。
+2. 透過個別執行 `EDGWO.py` 、 `GWO.py` 、`CHGWOSCA.py`、`REEGWO.py`、`MSGWO.py`來執行程式，可以得到單一演算法對於每個是應函數的結果。
 
 ## 程式碼說明:
 1. `main.py`: 主程式，此程式包含觀察者主架構組件，可以操控所有變量，並且可以呼叫EDGWO和GWO演算法。
@@ -27,7 +27,8 @@
 ![CEC2021-F10](./_EXP_PIC/CEC2021-F10.png)
 
 ## 實驗結果與論文對照(GWO+EDGWO+CHGWOSCA+REEGWO+MSGWO)
-
+![P_CEC2021-F6](./_EXP_PIC/P_CEC2021-F6.png)
+![R_CEC2021-F3](./_EXP_PIC/R_CEC2021-F6.png)
 
 完成日期: 2024/02/21
 
