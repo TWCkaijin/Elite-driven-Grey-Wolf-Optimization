@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib.pyplot as plt
+from CECData import CEC
 
 # 定義 Grey Wolf Optimization (GWO)
 class GWO:
@@ -59,48 +61,67 @@ class GWO:
         
         return self.alpha, self.alpha_score, convergence_curve
     
-import matplotlib.pyplot as plt
+
+
+    
+
 
 # Rastrigin 測試函數 (全域最小值 f(0,0) = 0)
 def rastrigin(X):
     A = 10
     return A * len(X) + sum([(x**2 - A * np.cos(2 * np.pi * x)) for x in X])
 
-# 設定參數
-dim = 2
-lb, ub = [-5.12] * dim, [5.12] * dim
-max_iter = 100
 
-# 執行 GWO
-gwo = GWO(obj_function=rastrigin, dim=dim, lb=lb, ub=ub, num_wolves=20, max_iter=max_iter)
-best_position, best_value, curve = gwo.optimize()
 
-print("Best solution found:", best_position)
-print("Best fitness:", best_value)
+if __name__ == '__main__':
 
-# 繪製收斂曲線
-plt.plot(curve)
-plt.xlabel("Iterations")
-plt.ylabel("Fitness Value")
-plt.title("GWO Convergence Curve")
-plt.show()
+    dim = 10
 
-X = np.linspace(-5.12, 5.12, 100)
-Y = np.linspace(-5.12, 5.12, 100)
-X, Y = np.meshgrid(X, Y)
-Z = rastrigin([X, Y])
+    # CEC 函式呼叫方法
+    function = CEC("2022","F5",dim).get_function_info()  # 取得維度為2之F1函式的資訊
+    UB = function.ub
+    LB = function.lb
+    dim = function.dim
+    f = function.func # 取得函式
+    # 計算函式值 f([多個維度組成的陣列])   -> 例如 f([x,y])
 
-fig = plt.figure(figsize=(8, 6))
-ax = fig.add_subplot(111, projection='3d')
-ax.plot_surface(X, Y, Z, cmap='coolwarm', alpha=0.7)
 
-# 畫出狼群搜索過程
-wolves_path = np.array(gwo.wolves)
-for i in range(len(wolves_path)):
-    ax.scatter(wolves_path[i][:, 0], wolves_path[i][:, 1], rastrigin(wolves_path[i].T), color='black', marker='o')
 
-ax.set_xlabel("X")
-ax.set_ylabel("Y")
-ax.set_zlabel("Fitness")
-plt.title("GWO Searching Path")
-plt.show()
+    # 設定參數
+    
+
+    max_iter = 100
+
+    # 執行 GWO
+    gwo = GWO(obj_function=f, dim=dim, lb=LB, ub=UB, num_wolves=20, max_iter=max_iter)
+    best_position, best_value, curve = gwo.optimize()
+
+    print("Best solution found:", best_position)
+    print("Best fitness:", best_value)
+
+    # 繪製收斂曲線
+    plt.plot(curve)
+    plt.xlabel("Iterations")
+    plt.ylabel("Fitness Value")
+    plt.title("GWO Convergence Curve")
+    plt.show()
+
+    X = np.linspace(-5.12, 5.12, 100)
+    Y = np.linspace(-5.12, 5.12, 100)
+    X, Y = np.meshgrid(X, Y)
+    Z = rastrigin([X, Y])
+
+    fig = plt.figure(figsize=(8, 6))
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot_surface(X, Y, Z, cmap='coolwarm', alpha=0.7)
+
+    """ # 畫出狼群搜索過程
+    wolves_path = np.array(gwo.wolves)
+    for i in range(len(wolves_path)):
+        ax.scatter(wolves_path[i][:, 0], wolves_path[i][:, 1], rastrigin(wolves_path[i].T), color='black', marker='o')
+    """
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
+    ax.set_zlabel("Fitness")
+    plt.title("GWO Searching Path")
+    plt.show()
