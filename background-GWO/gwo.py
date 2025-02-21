@@ -67,58 +67,66 @@ class GWO:
     
 
 if __name__ == '__main__':
-    YEAR = "2021"
-    FUNCTION_NAME = "F10"
+    funcs_by_year = {
+        "2021": ["F3", "F6", "F8", "F10"],
+        "2022": ["F4", "F7", "F8", "F9"]
+    }
     DIM = 10
-
-    # CEC 函式呼叫方法  
-    function = CEC(YEAR,FUNCTION_NAME,DIM).get_function_info()  # 取得CEC2022 維度為 DIM 之 F1 函式的資訊
-    UB = function.ub
-    LB = function.lb
-    dim= function.dim
-    f = function.func # 取得函式
-    # 計算函式值 f([多個維度組成的陣列])   -> 例如 f([x,y])
-
-
-
-    # 設定參數
     MAX_ITER = 500
-    NUM_WOLVES = 10
-    # 執行 GWO
-    gwo = GWO(obj_function=f, dim=DIM, lb=LB, ub=UB, num_wolves=NUM_WOLVES, max_iter=MAX_ITER)
-    best_position, best_value, curve = gwo.optimize()
+    NUM_WOLVES = 30
 
-    print("Best solution found:", best_position)
-    print("Best fitness:", best_value)
-
-    # 繪製收斂曲線
-    plt.plot(np.log10(curve))
-    plt.xlabel("Iterations")
-    plt.ylabel("Fitness Value (Log10)")
-    plt.title(f"GWO Convergence {YEAR}-{FUNCTION_NAME}-{DIM}D")
-    plt.show()
+    for year in funcs_by_year:
+        for func_name in funcs_by_year[year]:
+            # CEC 函式呼叫方法  
+            function = CEC(year,func_name,DIM).get_function_info()  # 取得CEC2022 維度為 DIM 之 F1 函式的資訊
+            UB = function.ub
+            LB = function.lb
+            dim= function.dim
+            f = function.func # 取得函式
+            # 計算函式值 f([多個維度組成的陣列])   -> 例如 f([x,y])
 
 
-    if(dim!=2):
-        print("Dimension must be 2 to plot 3D chart")
-        exit()
 
-    X = np.linspace(LB[0], UB[0], 100)
-    Y = np.linspace(LB[1], UB[1], 100)
-    X, Y = np.meshgrid(X, Y)
-    Z = np.array([f([X[i, j], Y[i, j]]) for i in range(X.shape[0]) for j in range(X.shape[1])]).reshape(X.shape)
+            # 設定參數
+            
+            # 執行 GWO
+            gwo = GWO(obj_function=f, dim=DIM, lb=LB, ub=UB, num_wolves=NUM_WOLVES, max_iter=MAX_ITER)
+            best_position, best_value, curve = gwo.optimize()
 
-    fig = plt.figure(figsize=(8, 6))
-    ax = fig.add_subplot(111, projection='3d')
-    ax.plot_surface(X, Y, Z, cmap='coolwarm', alpha=0.7)
+            print(f"[CEC {year}-{func_name}] Best solution found:", best_position)
+            print(f"[CEC {year}-{func_name}] Best fitness:", best_value)
 
-    """  # 畫出狼群搜索過程
-    wolves_path = np.array(gwo.wolves)
-    for i in range(len(wolves_path)):
-        ax.scatter(wolves_path[i][:, 0], wolves_path[i][:, 1], rastrigin(wolves_path[i].T), color='black', marker='o')
-    """
-    ax.set_xlabel("X")
-    ax.set_ylabel("Y")
-    ax.set_zlabel("Fitness")
-    plt.title("GWO Searching Path")
-    plt.show()
+            # 繪製收斂曲線
+            plt.figure(figsize=(8, 6))
+            plt.plot(np.log10(curve), label=f"CEC {year} {func_name}")
+            plt.xticks([i for i in range(0, MAX_ITER + 1, 50)])
+            plt.xlabel("Iterations")
+            plt.ylabel("Fitness Value (Log10)")
+            plt.title(f"GWO Convergence {year}-{func_name}-{DIM}D")
+            plt.legend()
+            plt.show()
+
+
+            if(dim!=2):
+                print(f"Dimension is {dim}, skipping 3D plot for CEC {year} {func_name}")
+                continue
+
+            X = np.linspace(LB[0], UB[0], 100)
+            Y = np.linspace(LB[1], UB[1], 100)
+            X, Y = np.meshgrid(X, Y)
+            Z = np.array([f([X[i, j], Y[i, j]]) for i in range(X.shape[0]) for j in range(X.shape[1])]).reshape(X.shape)
+
+            fig = plt.figure(figsize=(8, 6))
+            ax = fig.add_subplot(111, projection='3d')
+            ax.plot_surface(X, Y, Z, cmap='coolwarm', alpha=0.7)
+
+            """  # 畫出狼群搜索過程
+            wolves_path = np.array(gwo.wolves)
+            for i in range(len(wolves_path)):
+                ax.scatter(wolves_path[i][:, 0], wolves_path[i][:, 1], rastrigin(wolves_path[i].T), color='black', marker='o')
+            """
+            ax.set_xlabel("X")
+            ax.set_ylabel("Y")
+            ax.set_zlabel("Fitness")
+            plt.title(f"GWO Searching Path for CEC {year} {func_name}")
+            plt.show()
