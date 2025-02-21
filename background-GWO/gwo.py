@@ -93,6 +93,7 @@ if __name__ == '__main__':
 
     # 繪製收斂曲線
     plt.plot(np.log10(curve))
+    ticks = [i for i in range(0, MAX_ITER+1, 50)]
     plt.xlabel("Iterations")
     plt.ylabel("Fitness Value (Log10)")
     plt.title(f"GWO Convergence {YEAR}-{FUNCTION_NAME}-{DIM}D")
