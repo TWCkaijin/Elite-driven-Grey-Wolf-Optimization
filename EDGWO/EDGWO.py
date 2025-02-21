@@ -1,7 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from EDGWO.CECData import CEC
-
+try:
+    from EDGWO.CECData import CEC
+except:
+    from CECData import CEC
 # 定義 Grey Wolf Optimization (GWO)
 class EDGWO:
     def __init__(self, obj_function, dim, lb, ub, num_wolves=10, max_iter=100):
@@ -17,16 +19,16 @@ class EDGWO:
         self.alpha, self.beta, self.delta = np.random.uniform(self.lb, self.ub, self.dim),np.random.uniform(self.lb, self.ub, self.dim),np.random.uniform(self.lb, self.ub, self.dim)
         self.alpha_score, self.beta_score, self.delta_score = np.inf, np.inf, np.inf
 
-    def VectorComponentCalculation(self, a, index, Xm):
+    def VectorComponentCalculation(self, a, index, Xm, targetlead):
         r1, r2 = np.random.rand(), np.random.rand()
         A, C = 2 * a * r1 - a, 2 * r2
 
         if(A<1):
-            D = abs(C * self.alpha - self.wolves[index])
-            return self.alpha - A * D
+            D = abs(C * targetlead - self.wolves[index])
+            return targetlead - A * D
         else:
             r3, r4 = np.random.rand(), np.random.rand()
-            return self.alpha - Xm - r3 * (self.lb + (self.ub-self.lb) * r4)
+            return targetlead - Xm - r3 * (self.lb + (self.ub-self.lb) * r4)
         
 
     def optimize(self):
@@ -56,7 +58,7 @@ class EDGWO:
                 A1, C1 = 2 * a * r1 - a, 2 * r2
                 D_alpha = abs(C1 * self.alpha - self.wolves[i])
                 X1 = self.alpha - A1 * D_alpha """
-                X1 = self.VectorComponentCalculation(a=a, index=i, Xm=mean_pos)
+                X1 = self.VectorComponentCalculation(a=a, index=i, Xm=mean_pos, targetlead=self.alpha)
 
 
                 """ # calculating X2
@@ -64,14 +66,14 @@ class EDGWO:
                 A2, C2 = 2 * a * r1 - a, 2 * r2
                 D_beta = abs(C2 * self.beta - self.wolves[i])
                 X2 = self.beta - A2 * D_beta """
-                X2 = self.VectorComponentCalculation(a=a, index=i, Xm=mean_pos)
+                X2 = self.VectorComponentCalculation(a=a, index=i, Xm=mean_pos, targetlead=self.beta)
 
                 """ # calculating X3
                 r1, r2 = np.random.rand(), np.random.rand()
                 A3, C3 = 2 * a * r1 - a, 2 * r2
                 D_delta = abs(C3 * self.delta - self.wolves[i])
                 X3 = self.delta - A3 * D_delta """
-                X3 = self.VectorComponentCalculation(a=a, index=i, Xm=mean_pos)
+                X3 = self.VectorComponentCalculation(a=a, index=i, Xm=mean_pos, targetlead=self.delta)
 
 
                 if(R_P<0.5):
