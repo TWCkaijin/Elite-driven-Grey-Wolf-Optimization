@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 from EDGWO.EDGWO import EDGWOCONTROL
 from GWO.GWO import GWOCONTROL
+from CHGWOSCA.CHGWOSCA import CHGWOSCACONTROL
 
 
 
@@ -21,7 +22,7 @@ class MAINCONTROL:
             tmp = obj.Start()
             Result = (Result * i + tmp)/ (i+1) if Result is not None else tmp
             print(f"Epoch {i+1} completed",end='')
-        print()
+        print("\n")
         return Result
 
     def Start(self, EPOCH):
@@ -31,6 +32,8 @@ class MAINCONTROL:
                                         FUNCTION_NAME=self.FUNCTION_NAME, DIM=self.DIM)
         GWO_obj = GWOCONTROL(MAX_ITER=self.MAX_ITER, NUM_WOLVES=self.NUM_WOLVES, YEAR=self.YEAR,
                                     FUNCTION_NAME=self.FUNCTION_NAME, DIM=self.DIM)
+        CHG_obj = CHGWOSCACONTROL(MAX_ITER=self.MAX_ITER, NUM_WOLVES=self.NUM_WOLVES, YEAR=self.YEAR,
+                                        FUNCTION_NAME=self.FUNCTION_NAME, DIM=self.DIM)
         
         print(f"Starting ED-GWO works for {EPOCH} Epochs")
         EDGWOResult = self.Worker(EDGWO_obj, EPOCH)
@@ -38,9 +41,16 @@ class MAINCONTROL:
         print(f"Starting GWO works for {EPOCH} Epochs")
         GWOResult = self.Worker(GWO_obj, EPOCH)
 
+        print(f"Starting CHGWOSCA works for {EPOCH} Epochs")
+        CHGResult = self.Worker(CHG_obj, EPOCH)
+
         print(f"All {EPOCH} Epochs completed")
+        print("Plotting the results")
+        
         plt.plot(EDGWOResult, label="ED-GWO")
         plt.plot(GWOResult, label="GWO")
+        plt.plot(CHGResult, label="CHGWOSCA")
+
         plt.xlabel("Iterations")
         plt.ylabel("Fitness Value (Log10)")
         plt.title(f"CEC{self.YEAR}-{self.FUNCTION_NAME}-{self.DIM}D-{self.NUM_WOLVES}N-{EPOCH} EPOCH")

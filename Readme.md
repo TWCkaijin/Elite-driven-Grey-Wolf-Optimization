@@ -6,23 +6,24 @@
 
 ## 程式碼說明:
 1. `main.py`: 主程式，此程式包含觀察者主架構組件，可以操控所有變量，並且可以呼叫EDGWO和GWO演算法。
-2. `EDGWO.py`: EDGWO演算法，此程式包含EDGWO演算法的主要架構，包含初始化、適應函數、更新、選擇等。
-3. `GWO.py`: GWO演算法，此程式包含GWO演算法的主要架構，包含初始化、適應函數、更新、選擇等。
-4. `benchmark.py`: 適應函數，此程式包含所有的適應函數，可以透過此程式來呼叫適應函數。
+2. `CECData.py`: 適應函數，此程式包含所有的適應函數，可以透過此程式來呼叫適應函數。
+3. `EDGWO.py`: EDGWO演算法，此程式包含EDGWO演算法的主要架構，包含初始化、適應函數、更新、選擇等。
+4. `GWO.py`: GWO演算法主要架構。
+5. `CHGWOSCA.py`: CHGWOSCA演算法主要架構。
+
 
 ## 觀察者架構
 1. MainControl: 主要架構，包含所有的變量，並且可以呼叫EDGWO和GWO演算法。
 2. EDGWOControl: EDGWO架構，包含EDGWO演算法的變量，並且可以呼叫EDGWO演算法，並且可以呼叫GWO演算法及處裡回傳結果。
-3. GWOControl/EDGWO: GWO架構，包含演算法的變量，並且可以呼叫GWO演算法及處裡回傳結果
-4. GWO/EDGWO: 演算法架構，包含演算法的變量，並且可以呼叫演算法的初始化、適應函數、更新、選擇等。
+4. Alogs: 演算法架構，包含演算法的變量，並且可以呼叫演算法的初始化、適應函數、更新、選擇等。
 
 
 
 ## 實驗結果與論文對照
-![CEC2021-F3](./EXP_PIC/CEC2021-F3.png)
-![CEC2021-F6](./EXP_PIC/CEC2021-F6.png)
-![CEC2021-F8](./EXP_PIC/CEC2021-F8.png)
-![CEC2021-F10](./EXP_PIC/CEC2021-F10.png)
+![CEC2021-F3](./_EXP_PIC/CEC2021-F3.png)
+![CEC2021-F6](./_EXP_PIC/CEC2021-F6.png)
+![CEC2021-F8](./_EXP_PIC/CEC2021-F8.png)
+![CEC2021-F10](./_EXP_PIC/CEC2021-F10.png)
 
 完成日期: 2024/02/21
 
@@ -31,5 +32,5 @@
 </br>
 
 ## 持續更新: 
-1. CHGWOSCA 演算法(尚未上線)
-2. MSGWO 演算法(尚未上線)
+1. MSGWO 演算法(尚未上線)
+2. REEGWO 演算法(尚未上線)
