@@ -115,8 +115,8 @@ if __name__ == '__main__':
             # 計算函式值 f([多個維度組成的陣列])   -> 例如 f([x,y])
 
     
-            # 執行 GWO
-            pso = PSO(obj_function=f, dim=DIM, lb=LB, ub=UB, num_wolves=NUM_WOLVES, max_iter=MAX_ITER)
+            # 執行 PSO
+            pso = PSO(obj_function=f, dim=DIM, lb=LB, ub=UB, num_par=NUM_PARTICLES, max_iter=MAX_ITER)
             best_position, best_value, curve = pso.optimize()
 
             print(f"[CEC {year}-{func_name}] Best solution found:", best_position)
