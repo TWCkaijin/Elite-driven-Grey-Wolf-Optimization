@@ -109,7 +109,7 @@ if __name__ == '__main__':
             # 計算函式值 f([多個維度組成的陣列])   -> 例如 f([x,y])
 
     
-            # 執行 GWO
+            # 執行 BES
             bes = BES(obj_function=f, dim=DIM, lb=LB, ub=UB, num_par=NUM_PARTICLES, max_iter=MAX_ITER)
             best_position, best_value, curve = bes.optimize()
 
