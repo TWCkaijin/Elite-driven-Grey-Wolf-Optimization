@@ -6,6 +6,9 @@ from GWO.GWO import GWOCONTROL
 from CHGWOSCA.CHGWOSCA import CHGWOSCACONTROL
 from REEGWO.REEGWO import REEGWOCONTROL
 from MSGWO.MSGWO import MSGWOCONTROL
+from PSO.PSO import PSO
+from BES.BES import BES
+from HHO.HHO import HHO
 
 class Color:
     RED = '\033[31m'
