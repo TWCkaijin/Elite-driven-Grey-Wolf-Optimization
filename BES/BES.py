@@ -31,7 +31,7 @@ class BES:
             for i in range(self.num_par):
                 fitness = self.obj_function(self.particles[i])
 
-                self.energy[i] = 1 / (fitness + 1e-10) # 分母不為0
+                self.energy[i] = 1 / (fitness + 1e-10) # 分母不為 0
 
                 # 最佳位置
                 if self.energy[i] < self.best_energy[i]:
