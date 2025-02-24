@@ -25,6 +25,8 @@ class MAINCONTROL:
         for i in range(EPOCH):
             print('\r',end='')
             tmp = obj.Start()
+            if isinstance(tmp, tuple):  
+                tmp = tmp[1]  # 假設第二個值是 fitness
             Result = (Result * i + tmp)/ (i+1) if Result is not None else tmp
             print(f"Epoch {i+1} completed",end='')
         print("\n")
