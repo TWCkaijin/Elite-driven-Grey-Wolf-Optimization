@@ -2,7 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from DataSet import DataSet
 
-
+def logistics_chaotic_map(dim, iteration=10, value=1):
+    x0 = np.zeros(dim) + 0.7
+    for i in range(iteration):
+        x0 = 4 * x0 * (1 - x0)
+    return x0
 # 定義 Chimp Optimization Algorithm (ChOA)
 class ChOA:
     def __init__(self, obj_function, dim, lb, ub, num_chimps=10, max_iter=100):
@@ -22,12 +26,6 @@ class ChOA:
 
         # 初始化適應度
         self.scores = np.full(self.num_chimps, np.inf)
-
-    def logistics_chaotic_map(dim, iteration=10, value=1):
-        x0 = np.zeros(dim) + 0.7
-        for i in range(iteration):
-            x0 = 4 * x0 * (1 - x0)
-        return x0
 
     def optimize(self):
         convergence_curve = []
@@ -84,9 +82,9 @@ class ChOA:
 
 
 class ChOACONTROL:
-    def __init__(self, MAX_ITER, NUM_CHIMPS, YEAR, FUNCTION_NAME, DIM=10):
+    def __init__(self, MAX_ITER, NUM_WOLVES, YEAR, FUNCTION_NAME, DIM=10):
         self.MAX_ITER = MAX_ITER
-        self.NUM_CHIMPS = NUM_CHIMPS
+        self.NUM_CHIMPS = NUM_WOLVES
         self.YEAR = YEAR
         self.FUNCTION_NAME = FUNCTION_NAME
         self.DIM = DIM

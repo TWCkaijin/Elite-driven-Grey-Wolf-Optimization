@@ -60,9 +60,9 @@ class PSO:
     
 
 class PSOCONTROL:
-    def __init__(self,MAX_ITER, NUM_PARTICLES, YEAR, FUNCTION_NAME, DIM):
+    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION_NAME, DIM):
         self.MAX_ITER = MAX_ITER
-        self.NUM_PARTICLES = NUM_PARTICLES
+        self.NUM_PARTICLES = NUM_WOLVES
         self.YEAR = YEAR
         self.FUNCTION_NAME = FUNCTION_NAME
         self.DIM = DIM

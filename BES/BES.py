@@ -28,7 +28,7 @@ class BES:
             for i in range(self.num_par):
                 fitness = self.obj_function(self.particles[i])
 
-                self.energy[i] = 1 / (fitness + 1e-10) # 分母不為 0
+                self.energy[i] = fitness # 分母不為 0
 
                 # 最佳位置
                 if self.energy[i] < self.best_energy[i]:
@@ -53,9 +53,9 @@ class BES:
     
 
 class BESCONTROL:
-    def __init__(self,MAX_ITER, NUM_PARTICLES, YEAR, FUNCTION_NAME, DIM):
+    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION_NAME, DIM):
         self.MAX_ITER = MAX_ITER
-        self.NUM_PARTICLES = NUM_PARTICLES
+        self.NUM_PARTICLES = NUM_WOLVES
         self.YEAR = YEAR
         self.FUNCTION_NAME = FUNCTION_NAME
         self.DIM = DIM

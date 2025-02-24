@@ -55,9 +55,9 @@ class SCSO:
 
 
 class SCSOCONTROL:
-    def __init__(self, MAX_ITER, NUM_CATS, YEAR, FUNCTION_NAME, DIM=10):
+    def __init__(self, MAX_ITER, NUM_WOLVES, YEAR, FUNCTION_NAME, DIM=10):
         self.MAX_ITER = MAX_ITER
-        self.NUM_CATS = NUM_CATS
+        self.NUM_CATS = NUM_WOLVES
         self.YEAR = YEAR
         self.FUNCTION_NAME = FUNCTION_NAME
         self.DIM = DIM
