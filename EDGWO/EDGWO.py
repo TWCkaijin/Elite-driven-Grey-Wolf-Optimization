@@ -1,7 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
+
 from DataSet import DataSet
 
+
+# 定義 EDGWO
 class EDGWO:
     def __init__(self, obj_function, dim, lb, ub, num_wolves=10, max_iter=100):
         self.obj_function = obj_function  # 目標函數
@@ -15,12 +18,13 @@ class EDGWO:
         self.wolves = np.random.uniform(self.lb, self.ub, (self.num_wolves, self.dim))
         self.alpha, self.beta, self.delta = np.random.uniform(self.lb, self.ub, self.dim),np.random.uniform(self.lb, self.ub, self.dim),np.random.uniform(self.lb, self.ub, self.dim)
         self.alpha_score, self.beta_score, self.delta_score = np.inf, np.inf, np.inf
-
+    
+    # 三種全局探索
     def VectorComponentCalculation(self, a, index, Xm, targetlead):
         r1, r2 = np.random.rand(), np.random.rand()
         A, C = 2 * a * r1 - a, 2 * r2
 
-        if(A<1):
+        if A < 1: 
             D = abs(C * targetlead - self.wolves[index])
             return targetlead - A * D
         else:
@@ -44,8 +48,10 @@ class EDGWO:
                     self.beta_score, self.beta = fitness, self.wolves[i].copy()
                 elif fitness < self.delta_score:
                     self.delta_score, self.delta = fitness, self.wolves[i].copy()
-            # 更新狼群位置
-            a = 2 - t * (2 / self.max_iter)  # 動態調整 a
+
+            # 動態調整 (Elite vs. Ordinary)
+            a = 2 - t * (2 / self.max_iter)
+
             for i in range(self.num_wolves):
 
                 """ # calcu;ating X1
@@ -70,12 +76,16 @@ class EDGWO:
                 X3 = self.delta - A3 * D_delta """
                 X3 = self.VectorComponentCalculation(a, index=i, Xm=mean_pos, targetlead=self.delta)
 
-                if np.random.rand() < (0.5 * (1 - t/self.max_iter)) :
-                    self.wolves[i] = (X1 + X2 + X3) / 3
+
+                if (np.allclose(self.wolves[i], self.alpha) or np.allclose(self.wolves[i], self.beta) or np.allclose(self.wolves[i], self.delta)):
+                    self.wolves[i]=(X1 + X2 + X3) / 3
                 else:
-                    r5 = np.random.rand()
-                    l = -1+2*r5
-                    self.wolves[i] = self.alpha + np.linalg.norm(self.alpha-self.wolves[i])*np.exp(l)*np.cos(2*np.pi*l)
+                    if np.random.rand() < (0.5 * (1 - t / self.max_iter)):
+                        self.wolves[i] = (X1 + X2 + X3) / 3
+                    else:
+                        r5 = np.random.rand()
+                        l = -1 + 2 * r5
+                        self.wolves[i] = self.alpha + np.linalg.norm(self.alpha - self.wolves[i]) * np.exp(l) * np.cos(2 * np.pi * l)
 
                 # 限制範圍
                 self.wolves[i] = np.clip(self.wolves[i], self.lb, self.ub)
@@ -84,7 +94,7 @@ class EDGWO:
         return self.alpha, self.alpha_score, convergence_curve, self.wolves
 
 class EDGWOCONTROL:
-    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION):
+    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION=10):
         self.MAX_ITER = MAX_ITER
         self.NUM_WOLVES = NUM_WOLVES
         self.YEAR = YEAR
@@ -107,13 +117,10 @@ class EDGWOCONTROL:
 
 
 if __name__ == '__main__':
-
     funcs_by_year = DataSet.funcs_years
-
-    # 設定參數
+    DIM = 10
     MAX_ITER = 500
     NUM_WOLVES = 30
-    DIM = 10
 
     # CEC 函式呼叫方法  
     for year in funcs_by_year['CEC']:
@@ -121,20 +128,52 @@ if __name__ == '__main__':
             function = DataSet.get_function(year,func_name,DIM) # 取得CEC Year年度，維度為 DIM 之 F1 函式的資訊
             UB = function.ub
             LB = function.lb
+            dim= function.dim
             f = function.func # 取得函式
             # 計算函式值 f([多個維度組成的陣列])   -> 例如 f([x,y])
 
-    
+
+
+            # 設定參數
+            
             # 執行 GWO
             gwo = EDGWO(obj_function=f, dim=DIM, lb=LB, ub=UB, num_wolves=NUM_WOLVES, max_iter=MAX_ITER)
-            best_position, best_value, curve = gwo.optimize()
+            best_position, best_value, curve, _ = gwo.optimize()
 
             print(f"[CEC {year}-{func_name}] Best solution found:", best_position)
             print(f"[CEC {year}-{func_name}] Best fitness:", best_value)
 
             # 繪製收斂曲線
-            plt.plot(np.log10(curve))
+            plt.figure(figsize=(8, 6))
+            plt.plot(np.log10(curve), label=f"CEC {year} {func_name}")
+            plt.xticks([i for i in range(0, MAX_ITER + 1, 50)])
             plt.xlabel("Iterations")
             plt.ylabel("Fitness Value (Log10)")
-            plt.title(f"ED-GWO Convergence {year}-{func_name}-{DIM}D")
+            plt.title(f"EDGWO Convergence {year}-{func_name}-{DIM}D")
+            plt.legend()
             plt.show()
+
+
+            """ if(dim!=2):
+                print(f"Dimension is {dim}, skipping 3D plot for CEC {year} {func_name}")
+                continue
+
+            X = np.linspace(LB[0], UB[0], 100)
+            Y = np.linspace(LB[1], UB[1], 100)
+            X, Y = np.meshgrid(X, Y)
+            # Z = np.array([f([X[i, j], Y[i, j]]) for i in range(X.shape[0]) for j in range(X.shape[1])]).reshape(X.shape)
+            Z = np.vectorize(f)(X, Y)
+
+            fig = plt.figure(figsize=(8, 6))
+            ax = fig.add_subplot(111, projection='3d')
+            ax.plot_surface(X, Y, Z, cmap='coolwarm', alpha=0.7)
+
+            # 畫出狼群搜索過程
+            #wolves_path = np.array(gwo.wolves)
+            #for i in range(len(wolves_path)):
+            #    ax.scatter(wolves_path[i][:, 0], wolves_path[i][:, 1], rastrigin(wolves_path[i].T), color='black', marker='o')
+            ax.set_xlabel("X")
+            ax.set_ylabel("Y")
+            ax.set_zlabel("Fitness")
+            plt.title(f"GWO Searching Path for CEC {year} {func_name}")
+            plt.show() """

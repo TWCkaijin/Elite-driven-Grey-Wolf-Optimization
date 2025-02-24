@@ -62,7 +62,7 @@ class PSO:
 class PSOCONTROL:
     def __init__(self,MAX_ITER, NUM_PARTICLES, YEAR, FUNCTION):
         self.MAX_ITER = MAX_ITER
-        self.NUM_PARTICLES = NUM_PARTICLES
+        self.NUM_PARTICLES = NUM_WOLVES
         self.YEAR = YEAR
 
         self.UB = FUNCTION.ub
