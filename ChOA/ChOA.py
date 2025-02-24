@@ -44,7 +44,8 @@ class ChOA:
             self.chaser = self.chimps[sorted_indices[1]].copy()
             self.barrier = self.chimps[sorted_indices[2]].copy()
             self.driven = self.chimps[sorted_indices[3]].copy()
-
+            
+            # 未考慮 social incentive
             # 位置更新
             for i in range(self.num_chimps):
                 m = logistics_chaotic_map(1)
