@@ -1,16 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from EDGWO.EDGWO import EDGWOCONTROL
-from GWO.GWO import GWOCONTROL
-from CHGWOSCA.CHGWOSCA import CHGWOSCACONTROL
-from REEGWO.REEGWO import REEGWOCONTROL
-from MSGWO.MSGWO import MSGWOCONTROL
-from PSO.PSO import PSO
-from BES.BES import BES
-from HHO.HHO import HHO
-from ChOA.ChOA import ChOA
-
 from ConfigClass import Configs
 from ConfigClass import Color
 
@@ -73,4 +63,4 @@ if __name__ == '__main__':
             continue
         
         print(f"{Color.MAGENTA}DataSet: CEC {year}-{func_name} - Dimension: {dim}{Color.RESET}\n")
-        MAINCONTROL(MAX_ITER=500, NUM_WOLVES=30, YEAR=year, FUNCTION_NAME=func_name, DIM=dim).Start(10)
+        MAINCONTROL(MAX_ITER=300, NUM_WOLVES=30, YEAR=year, FUNCTION_NAME=func_name, DIM=dim).Start(5)

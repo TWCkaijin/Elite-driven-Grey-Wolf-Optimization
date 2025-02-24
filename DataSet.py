@@ -6,6 +6,7 @@ class DataSet:
         "2021": ["F3", "F4", "F6", "F7", "F8", "F9", "F10"],
         "2022": ["F2", "F6", "F7", "F8", "F9", "F10", "F11", "F12"]
     }
+
     def get_function(year,function_name,dim):
         return function_generate(year,function_name,dim).get_function_info()
 
@@ -24,11 +25,9 @@ class function_generate:
         return F
 
 class function_struct:
-    
-    
+
     def __init__(self,func,dim,lb,ub):
         self.func = func
         self.dim = dim
         self.lb = lb
         self.ub = ub
-

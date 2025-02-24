@@ -1,9 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-try:
-    from CECData import CEC
-except:
-    from GWO.CECData import CEC
+from DataSet import DataSet
 
 # 定義 Sand Cat Swarm Optimization (SCSO)
 class SCSO:
@@ -62,7 +59,7 @@ class SCSOCONTROL:
         self.FUNCTION_NAME = FUNCTION_NAME
         self.DIM = DIM
         
-        function = CEC(self.YEAR, self.FUNCTION_NAME, self.DIM).get_function_info()
+        function = DataSet.get_function(self.YEAR, self.FUNCTION_NAME, self.DIM)
         
         self.UB = function.ub
         self.LB = function.lb
@@ -88,7 +85,7 @@ if __name__ == '__main__':
 
     for year in funcs_by_year:
         for func_name in funcs_by_year[year]:
-            function = CEC(year, func_name, DIM).get_function_info()
+            function = DataSet.get_function(year, func_name, DIM)
             UB = function.ub
             LB = function.lb
             dim = function.dim

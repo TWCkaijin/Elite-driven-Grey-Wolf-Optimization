@@ -28,7 +28,6 @@ class EDGWO:
             return targetlead - Xm - r3 * (self.lb + (self.ub-self.lb) * r4)
             #return self.alpha - Xm - r3 * (self.lb + (self.ub-self.lb) * r4)
         
-
     def optimize(self):
         convergence_curve = []
         for t in range(self.max_iter):
@@ -71,8 +70,7 @@ class EDGWO:
                 X3 = self.delta - A3 * D_delta """
                 X3 = self.VectorComponentCalculation(a, index=i, Xm=mean_pos, targetlead=self.delta)
 
-
-                if np.random.rand() < (0.5 * (1 - t/self.max_iter)):
+                if np.random.rand() < (0.5 * (1 - t/self.max_iter)) :
                     self.wolves[i] = (X1 + X2 + X3) / 3
                 else:
                     r5 = np.random.rand()
@@ -84,7 +82,6 @@ class EDGWO:
 
             convergence_curve.append(self.alpha_score)
         return self.alpha, self.alpha_score, convergence_curve, self.wolves
-    
 
 class EDGWOCONTROL:
     def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION_NAME, DIM):
@@ -93,7 +90,7 @@ class EDGWOCONTROL:
         self.YEAR = YEAR
         self.FUNCTION_NAME = FUNCTION_NAME
         self.DIM = DIM
-        
+        np.allclose()
         function = DataSet.get_function(self.YEAR, self.FUNCTION_NAME, self.DIM)  # 取得CEC Year年度，維度為 DIM 之 F1 函式的資訊
         
         self.UB = function.ub
@@ -114,8 +111,6 @@ class EDGWOCONTROL:
         print("Best fitness:", best_value) """
 
         return (wolves, np.log10(curve))
-
-
 
 
 if __name__ == '__main__':

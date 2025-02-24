@@ -8,6 +8,7 @@ from PSO.PSO import PSOCONTROL
 from BES.BES import BESCONTROL
 from HHO.HHO import HHOCONTROL
 from ChOA.ChOA import ChOACONTROL
+from SCSO.SCSO import SCSOCONTROL
 
 class Color:
     RED = '\033[31m'
@@ -29,7 +30,8 @@ class Configs:
         "BES": BESCONTROL,
         "ChOA": ChOACONTROL,
         "PSO" :PSOCONTROL,
-        "HHO" :HHOCONTROL
+        "HHO" :HHOCONTROL,
+        "SCSO":SCSOCONTROL,
     }
     
 
