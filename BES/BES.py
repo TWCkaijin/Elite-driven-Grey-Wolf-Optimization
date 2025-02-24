@@ -1,9 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-try:
-    from BES.CECData import CEC
-except:
-    from CECData import CEC
+from DataSet import DataSet
 
 class BES:
     def __init__(self, obj_function, dim, lb, ub, num_par=30, max_iter=100):
@@ -52,7 +49,7 @@ class BES:
                 self.particles[i] = np.clip(self.particles[i], self.lb, self.ub)
 
             convergence_curve.append(self.gbest_energy)
-        return self.gbest_position, self.gbest_energy, convergence_curve
+        return self.gbest_position, self.gbest_energy, convergence_curve, self.particles
     
 
 class BESCONTROL:
@@ -63,7 +60,7 @@ class BESCONTROL:
         self.FUNCTION_NAME = FUNCTION_NAME
         self.DIM = DIM
         
-        function = CEC(self.YEAR, self.FUNCTION_NAME, self.DIM).get_function_info()  # 取得CEC Year年度，維度為 DIM 之 F1 函式的資訊
+        function = DataSet.get_function(self.YEAR, self.FUNCTION_NAME, self.DIM)  # 取得CEC Year年度，維度為 DIM 之 F1 函式的資訊
         
         self.UB = function.ub
         self.LB = function.lb
@@ -77,22 +74,19 @@ class BESCONTROL:
     def Start(self):
         bes = BES(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
                     num_par=self.NUM_PARTICLES, max_iter=self.MAX_ITER)
-        best_position, best_value, curve = bes.optimize()
+        best_position, best_value, curve, particles = bes.optimize()
         
         """ print("Best solution found:", best_position)
         print("Best fitness:", best_value) """
 
-        return np.log10(curve)
+        return (particles, np.log10(curve))
 
 
 
 
 if __name__ == '__main__':
 
-    funcs_by_year = {
-        "2021": ["F3", "F6", "F8", "F10"],
-        "2022": ["F4", "F7", "F8", "F9"]
-    }
+    funcs_by_year =  DataSet.funcs_years
 
     # 設定參數
     MAX_ITER = 500
@@ -102,7 +96,7 @@ if __name__ == '__main__':
     # CEC 函式呼叫方法  
     for year in funcs_by_year:
         for func_name in funcs_by_year[year]:
-            function = CEC(year,func_name,DIM).get_function_info()  # 取得CEC Year年度，維度為 DIM 之 F1 函式的資訊
+            function = DataSet.get_function(year,func_name,DIM)  # 取得CEC Year年度，維度為 DIM 之 F1 函式的資訊
             UB = function.ub
             LB = function.lb
             f = function.func # 取得函式

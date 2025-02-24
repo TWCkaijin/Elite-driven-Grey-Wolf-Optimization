@@ -1,9 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-try:
-    from CECData import CEC
-except:
-    from GWO.CECData import CEC
+
+from DataSet import DataSet
+
 
 # 定義 Grey Wolf Optimization (GWO)
 class GWO:
@@ -65,7 +64,7 @@ class GWO:
 
             convergence_curve.append(self.alpha_score)
         
-        return self.alpha, self.alpha_score, convergence_curve
+        return self.alpha, self.alpha_score, convergence_curve, self.wolves
     
 
 class GWOCONTROL:
@@ -76,7 +75,7 @@ class GWOCONTROL:
         self.FUNCTION_NAME = FUNCTION_NAME
         self.DIM = DIM
         
-        function = CEC(self.YEAR, self.FUNCTION_NAME, self.DIM).get_function_info()  # 取得CEC Year年度，維度為 DIM 之 F1 函式的資訊
+        function = DataSet.get_function(self.YEAR, self.FUNCTION_NAME, self.DIM)  # 取得CEC Year年度，維度為 DIM 之 F1 函式的資訊
         
         self.UB = function.ub
         self.LB = function.lb
@@ -87,19 +86,16 @@ class GWOCONTROL:
     def Start(self):
         gwo = GWO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
                     num_wolves=self.NUM_WOLVES, max_iter=self.MAX_ITER)
-        best_position, best_value, curve = gwo.optimize()
+        best_position, best_value, curve, wolves = gwo.optimize()
         
         """ print("Best solution found:", best_position)
         print("Best fitness:", best_value) """
 
-        return np.log10(curve)
+        return (wolves, np.log10(curve))
 
 
 if __name__ == '__main__':
-    funcs_by_year = {
-        "2021": ["F3", "F6", "F8", "F10"],
-        "2022": ["F4", "F7", "F8", "F9"]
-    }
+    funcs_by_year = DataSet.funcs_years
     DIM = 10
     MAX_ITER = 500
     NUM_WOLVES = 30
@@ -107,7 +103,7 @@ if __name__ == '__main__':
     for year in funcs_by_year:
         for func_name in funcs_by_year[year]:
             # CEC 函式呼叫方法  
-            function = CEC(year,func_name,DIM).get_function_info()  # 取得CEC2022 維度為 DIM 之 F1 函式的資訊
+            function = DataSet.get_function(year,func_name,DIM)  # 取得CEC2022 維度為 DIM 之 F1 函式的資訊
             UB = function.ub
             LB = function.lb
             dim= function.dim

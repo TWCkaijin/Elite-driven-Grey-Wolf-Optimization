@@ -9,8 +9,12 @@ from MSGWO.MSGWO import MSGWOCONTROL
 from PSO.PSO import PSO
 from BES.BES import BES
 from HHO.HHO import HHO
+from ChOA.ChOA import ChOA
 
-from TextColor import Color
+from ConfigClass import Configs
+from ConfigClass import Color
+
+from DataSet import DataSet
 
 class MAINCONTROL:
     def __init__(self, MAX_ITER, NUM_WOLVES, YEAR, FUNCTION_NAME, DIM):
@@ -24,48 +28,21 @@ class MAINCONTROL:
         Result= None
         for i in range(EPOCH):
             print('\r',end='')
-            tmp = obj.Start()
+            tmp = obj.Start()[-1]
             Result = (Result * i + tmp)/ (i+1) if Result is not None else tmp
             print(f"Epoch {i+1} completed",end='')
         print("\n")
         return Result
 
     def Start(self, EPOCH):
-        EDGWO_obj = EDGWOCONTROL(MAX_ITER=self.MAX_ITER, NUM_WOLVES=self.NUM_WOLVES, YEAR=self.YEAR,
-                                        FUNCTION_NAME=self.FUNCTION_NAME, DIM=self.DIM)
-        GWO_obj = GWOCONTROL(MAX_ITER=self.MAX_ITER, NUM_WOLVES=self.NUM_WOLVES, YEAR=self.YEAR,
-                                    FUNCTION_NAME=self.FUNCTION_NAME, DIM=self.DIM)
-        CHG_obj = CHGWOSCACONTROL(MAX_ITER=self.MAX_ITER, NUM_WOLVES=self.NUM_WOLVES, YEAR=self.YEAR,
-                                        FUNCTION_NAME=self.FUNCTION_NAME, DIM=self.DIM)
-        REE_obj = REEGWOCONTROL(MAX_ITER=self.MAX_ITER, NUM_WOLVES=self.NUM_WOLVES, YEAR=self.YEAR,
-                                        FUNCTION_NAME=self.FUNCTION_NAME, DIM=self.DIM)
-        MSG_obj = MSGWOCONTROL(MAX_ITER=self.MAX_ITER, NUM_WOLVES=self.NUM_WOLVES, YEAR=self.YEAR,
-                                        FUNCTION_NAME=self.FUNCTION_NAME, DIM=self.DIM)
-        
-        print(f"{Color.YELLOW}Starting ED-GWO works for {EPOCH} Epochs{Color.RESET}")
-        EDGWOResult = self.Worker(EDGWO_obj, EPOCH)
 
-        print(f"{Color.YELLOW}Starting GWO works for {EPOCH} Epochs{Color.RESET}")
-        GWOResult = self.Worker(GWO_obj, EPOCH)
-
-        print(f"{Color.YELLOW}Starting CHGWOSCA works for {EPOCH} Epochs{Color.RESET}")
-        CHGResult = self.Worker(CHG_obj, EPOCH)
-
-        print(f"{Color.YELLOW}Starting REEGWO works for {EPOCH} Epochs{Color.RESET}")
-        REEResult = self.Worker(REE_obj, EPOCH)
-
-        print(f"{Color.YELLOW}Starting MSGWO works for {EPOCH} Epochs{Color.RESET}")
-        MSGResult = self.Worker(MSG_obj, EPOCH)
-
-        print(f"{Color.GREEN}All {EPOCH} Epochs completed{Color.RESET}")
-        print(f"{Color.GREEN}Plotting the results{Color.RESET}")
-
-        plt.plot(EDGWOResult, label="ED-GWO", color='black')
-        plt.plot(GWOResult, label="GWO", color='red')
-        plt.plot(CHGResult, label="CHGWOSCA", color='blue')
-        plt.plot(REEResult, label="REEGWO", color='green')
-        plt.plot(MSGResult, label="MSGWO", color='purple')
-
+        for optimizer in Configs.optimizers:
+            print(f"{Color.MAGENTA}Starting {optimizer} works for {EPOCH} Epochs{Color.RESET}")
+            obj = Configs.optimizers[optimizer](MAX_ITER=self.MAX_ITER, NUM_WOLVES=self.NUM_WOLVES, YEAR=self.YEAR,
+                                                FUNCTION_NAME=self.FUNCTION_NAME, DIM=self.DIM)
+            Result = self.Worker(obj, EPOCH)
+            print(f"{Color.GREEN}{optimizer} completed{Color.RESET}")
+            plt.plot(Result, label=optimizer)
 
         plt.xlabel("Iterations")
         plt.ylabel("Fitness Value (Log10)")
@@ -77,26 +54,23 @@ class MAINCONTROL:
 if __name__ == '__main__':
 
 
-    funcs_by_year = {
-        "2021": ["F3", "F4", "F6", "F7", "F8", "F9", "F10"],
-        "2022": ["F2", "F6", "F7", "F8", "F9", "F10", "F11", "F12"]
-    }
+    funcs_by_year = DataSet.funcs_years
 
     while True:
         year = input("Enter the year of CEC (2021/2022): ")
         if year not in funcs_by_year:
             print("Invalid year")
-            exit()
+            continue
 
         func_name = input(f"Enter the function name ({', '.join(funcs_by_year[year])}): ")
         if func_name not in funcs_by_year[year]:
             print("Invalid function name\n\n")
-            exit()
+            continue
 
         dim = int(input("Enter the dimension (10 or 20): "))
         if dim not in [10, 20]:
             print("Invalid dimension")
-            exit()
+            continue
         
         print(f"{Color.MAGENTA}DataSet: CEC {year}-{func_name} - Dimension: {dim}{Color.RESET}\n")
         MAINCONTROL(MAX_ITER=500, NUM_WOLVES=30, YEAR=year, FUNCTION_NAME=func_name, DIM=dim).Start(10)

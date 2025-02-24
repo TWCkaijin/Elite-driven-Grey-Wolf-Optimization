@@ -1,9 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-try:
-    from HHO.CECData import CEC
-except:
-    from CECData import CEC
+
+from DataSet import DataSet
 
 class HHO:
     def __init__(self, obj_function, dim, lb, ub, num_hawks=30, max_iter=100):
@@ -53,7 +51,7 @@ class HHO:
             
             convergence_curve.append(self.best_score)
             
-        return self.best_position, self.best_score, convergence_curve
+        return self.best_position, self.best_score, convergence_curve, self.hawks
 
 
 class HHOCONTROL:
@@ -64,7 +62,7 @@ class HHOCONTROL:
         self.FUNCTION_NAME = FUNCTION_NAME
         self.DIM = DIM
         
-        function = CEC(self.YEAR, self.FUNCTION_NAME, self.DIM).get_function_info()
+        function = DataSet.get_function(self.YEAR, self.FUNCTION_NAME, self.DIM)
         self.UB = function.ub
         self.LB = function.lb
         self.dim = function.dim
@@ -76,17 +74,14 @@ class HHOCONTROL:
     def Start(self):
         hho = HHO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
                   num_hawks=self.NUM_HAWKS, max_iter=self.MAX_ITER)
-        best_position, best_value, curve = hho.optimize()
+        best_position, best_value, curve, hawks = hho.optimize()
         
-        return np.log10(curve)
+        return (hawks, np.log10(curve))
 
 
 if __name__ == '__main__':
 
-    funcs_by_year = {
-        "2021": ["F3", "F6", "F8", "F10"],
-        "2022": ["F4", "F7", "F8", "F9"]
-    }
+    funcs_by_year = DataSet.funcs_years
     
     MAX_ITER = 500
     NUM_HAWKS = 30
@@ -94,7 +89,7 @@ if __name__ == '__main__':
     
     for year in funcs_by_year:
         for func_name in funcs_by_year[year]:
-            function = CEC(year, func_name, DIM).get_function_info()
+            function = DataSet.get_function(year,func_name,DIM)
             UB = function.ub
             LB = function.lb
             f = function.func # 取得函式

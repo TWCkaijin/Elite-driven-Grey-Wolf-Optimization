@@ -1,9 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-try:
-    from CECData import CEC
-except:
-    from GWO.CECData import CEC
+from DataSet import DataSet
+
 
 # 定義 Chimp Optimization Algorithm (ChOA)
 class ChOA:
@@ -81,7 +79,7 @@ class ChOA:
 
             convergence_curve.append(self.scores[sorted_indices[0]])  # 紀錄最佳適應度
 
-        return self.attacker, self.scores[sorted_indices[0]], convergence_curve
+        return self.attacker, self.scores[sorted_indices[0]], convergence_curve, self.chimps
 
 
 class ChOACONTROL:
@@ -92,7 +90,7 @@ class ChOACONTROL:
         self.FUNCTION_NAME = FUNCTION_NAME
         self.DIM = DIM
 
-        function = CEC(self.YEAR, self.FUNCTION_NAME, self.DIM).get_function_info()
+        function = DataSet.get_function(self.YEAR, self.FUNCTION_NAME, self.DIM)
         self.UB = function.ub
         self.LB = function.lb
         self.dim = function.dim
@@ -101,22 +99,19 @@ class ChOACONTROL:
     def Start(self):
         choa = ChOA(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
                     num_chimps=self.NUM_CHIMPS, max_iter=self.MAX_ITER)
-        best_position, best_value, curve = choa.optimize()
-        return np.log10(np.abs(curve) + 1e-8)  # 避免 log(0) 錯誤
+        best_position, best_value, curve, chimps = choa.optimize()
+        return (chimps, np.log10(np.abs(curve) + 1e-8))  # 避免 log(0) 錯誤
 
 
 if __name__ == '__main__':
-    funcs_by_year = {
-        "2021": ["F3", "F6", "F8", "F10"],
-        "2022": ["F4", "F7", "F8", "F9"]
-    }
+    funcs_by_year = DataSet.funcs_years
     DIM = 10
     MAX_ITER = 500
     NUM_CHIMPS = 30
 
     for year in funcs_by_year:
         for func_name in funcs_by_year[year]:
-            function = CEC(year, func_name, DIM).get_function_info()
+            function = DataSet(year, func_name, DIM).get_function_info()
             UB = function.ub
             LB = function.lb
             dim = function.dim
