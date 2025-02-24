@@ -3,8 +3,13 @@ import opfunu as of
 
 class DataSet:
     funcs_years= {
-        "2021": ["F3", "F4", "F6", "F7", "F8", "F9", "F10"],
-        "2022": ["F2", "F6", "F7", "F8", "F9", "F10", "F11", "F12"]
+        "CEC":{
+            "2021": ["F3", "F4", "F6", "F7", "F8", "F9", "F10"],
+            "2022": ["F2", "F6", "F7", "F8", "F9", "F10", "F11", "F12"]
+        },
+        "gene":{
+            
+        }
     }
 
     def get_function(year,function_name,dim):
@@ -18,16 +23,16 @@ class function_generate:
             raise ValueError("Function not found")    
     
     def get_function_info(self):
-        return function_struct(self.func,self.dim,self.source.lb.tolist(),self.source.ub.tolist())
+        return function_struct(self.func,self.dim,self.source.lb.tolist(),self.source.ub.tolist(),"continue")
 
     def func(self,x):
         F = self.source.evaluate(x)
         return F
 
 class function_struct:
-
-    def __init__(self,func,dim,lb,ub):
+    def __init__(self,func,dim,lb,ub,function_type):
         self.func = func
         self.dim = dim
         self.lb = lb
         self.ub = ub
+        self.f_type =  function_type

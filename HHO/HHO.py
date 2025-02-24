@@ -55,21 +55,16 @@ class HHO:
 
 
 class HHOCONTROL:
-    def __init__(self, MAX_ITER, NUM_HAWKS, YEAR, FUNCTION_NAME, DIM):
+    def __init__(self, MAX_ITER, NUM_HAWKS, YEAR, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_HAWKS = NUM_HAWKS
         self.YEAR = YEAR
-        self.FUNCTION_NAME = FUNCTION_NAME
-        self.DIM = DIM
-        
-        function = DataSet.get_function(self.YEAR, self.FUNCTION_NAME, self.DIM)
-        self.UB = function.ub
-        self.LB = function.lb
-        self.dim = function.dim
-        self.f = function.func
-    
-    def info(self):
-        return f"HHO Convergence {self.YEAR}-{self.FUNCTION_NAME}-{self.DIM}D"
+
+        self.UB = FUNCTION.ub
+        self.LB = FUNCTION.lb
+        self.DIM = FUNCTION.dim
+        self.f = FUNCTION.func
+        self.f_type = FUNCTION.f_type
     
     def Start(self):
         hho = HHO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
@@ -87,8 +82,8 @@ if __name__ == '__main__':
     NUM_HAWKS = 30
     DIM = 10
     
-    for year in funcs_by_year:
-        for func_name in funcs_by_year[year]:
+    for year in funcs_by_year['CEC']:
+        for func_name in funcs_by_year['CEC'][year]:
             function = DataSet.get_function(year,func_name,DIM)
             UB = function.ub
             LB = function.lb

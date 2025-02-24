@@ -48,30 +48,27 @@ class SCSO:
             
             convergence_curve.append(self.best_score)
         
-        return self.best_cat, self.best_score, convergence_curve
+        return self.best_cat, self.best_score, convergence_curve, self.cats
 
 
 class SCSOCONTROL:
-    def __init__(self, MAX_ITER, NUM_CATS, YEAR, FUNCTION_NAME, DIM=10):
+    def __init__(self, MAX_ITER, NUM_CATS, YEAR, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_CATS = NUM_CATS
         self.YEAR = YEAR
-        self.FUNCTION_NAME = FUNCTION_NAME
-        self.DIM = DIM
-        
-        function = DataSet.get_function(self.YEAR, self.FUNCTION_NAME, self.DIM)
-        
-        self.UB = function.ub
-        self.LB = function.lb
-        self.dim = function.dim
-        self.f = function.func
+
+        self.UB = FUNCTION.ub
+        self.LB = FUNCTION.lb
+        self.DIM = FUNCTION.dim
+        self.f = FUNCTION.func
+        self.f_type = FUNCTION.f_type
 
     def Start(self):
         scso = SCSO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
                     num_cats=self.NUM_CATS, max_iter=self.MAX_ITER)
-        best_position, best_value, curve = scso.optimize()
+        best_position, best_value, curve, cats = scso.optimize()
         
-        return np.log10(curve)
+        return (cats, np.log10(curve))
 
 
 if __name__ == '__main__':
@@ -83,8 +80,8 @@ if __name__ == '__main__':
     MAX_ITER = 500
     NUM_CATS = 30
 
-    for year in funcs_by_year:
-        for func_name in funcs_by_year[year]:
+    for year in funcs_by_year['CEC']:
+        for func_name in funcs_by_year['CEC'][year]:
             function = DataSet.get_function(year, func_name, DIM)
             UB = function.ub
             LB = function.lb

@@ -71,23 +71,16 @@ class MSGWO:
     
 
 class MSGWOCONTROL:
-    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION_NAME, DIM):
+    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_WOLVES = NUM_WOLVES
         self.YEAR = YEAR
-        self.FUNCTION_NAME = FUNCTION_NAME
-        self.DIM = DIM
-        
-        function = DataSet.get_function(self.YEAR, self.FUNCTION_NAME, self.DIM)  # 取得CEC Year年度，維度為 DIM 之 F1 函式的資訊
-        
-        self.UB = function.ub
-        self.LB = function.lb
-        #print(f"UB: {self.UB} || LB: {self.LB}")
-        self.dim= function.dim
-        self.f = function.func
 
-    def info(self):
-        return f"MS-GWO Convergence {self.YEAR}-{self.FUNCTION_NAME}-{self.DIM}D"
+        self.UB = FUNCTION.ub
+        self.LB = FUNCTION.lb
+        
+        self.DIM= FUNCTION.dim
+        self.f = FUNCTION.func
 
     def Start(self):
         gwo = MSGWO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
@@ -112,8 +105,8 @@ if __name__ == '__main__':
     DIM = 10
 
     # CEC 函式呼叫方法  
-    for year in funcs_by_year:
-        for func_name in funcs_by_year[year]:
+    for year in funcs_by_year['CEC']:
+        for func_name in funcs_by_year['CEC'][year]:
             function = DataSet.get_function(year,func_name,DIM)  # 取得CEC Year年度，維度為 DIM 之 F1 函式的資訊
             UB = function.ub
             LB = function.lb
