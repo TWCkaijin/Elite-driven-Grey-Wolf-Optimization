@@ -6,6 +6,9 @@ from GWO.GWO import GWOCONTROL
 from CHGWOSCA.CHGWOSCA import CHGWOSCACONTROL
 from REEGWO.REEGWO import REEGWOCONTROL
 from MSGWO.MSGWO import MSGWOCONTROL
+from PSO.PSO import PSO
+from BES.BES import BES
+from HHO.HHO import HHO
 
 from TextColor import Color
 
@@ -75,8 +78,8 @@ if __name__ == '__main__':
 
 
     funcs_by_year = {
-        "2021": ["F3", "F6", "F8", "F10"],
-        "2022": ["F4", "F7", "F8", "F9"]
+        "2021": ["F3", "F4", "F6", "F7", "F8", "F9", "F10"],
+        "2022": ["F2", "F6", "F7", "F8", "F9", "F10", "F11", "F12"]
     }
 
     while True:
@@ -90,6 +93,10 @@ if __name__ == '__main__':
             print("Invalid function name\n\n")
             exit()
 
+        dim = int(input("Enter the dimension (10 or 20): "))
+        if dim not in [10, 20]:
+            print("Invalid dimension")
+            exit()
         
-        print(f"{Color.MAGENTA}DataSet: CEC {year}-{func_name}\n{Color.RESET}")
-        MAINCONTROL(MAX_ITER=500, NUM_WOLVES=30, YEAR=year, FUNCTION_NAME=func_name, DIM=10).Start(10)
+        print(f"{Color.MAGENTA}DataSet: CEC {year}-{func_name} - Dimension: {dim}{Color.RESET}\n")
+        MAINCONTROL(MAX_ITER=500, NUM_WOLVES=30, YEAR=year, FUNCTION_NAME=func_name, DIM=dim).Start(10)

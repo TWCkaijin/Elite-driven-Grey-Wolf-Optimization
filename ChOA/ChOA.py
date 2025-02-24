@@ -1,0 +1,138 @@
+import numpy as np
+import matplotlib.pyplot as plt
+try:
+    from CECData import CEC
+except:
+    from GWO.CECData import CEC
+
+# 定義 Chimp Optimization Algorithm (ChOA)
+class ChOA:
+    def __init__(self, obj_function, dim, lb, ub, num_chimps=10, max_iter=100):
+        self.obj_function = obj_function
+        self.dim = dim
+        self.lb = np.array(lb)
+        self.ub = np.array(ub)
+        self.num_chimps = num_chimps
+        self.max_iter = max_iter
+
+        # 初始化黑猩猩群體
+        self.chimps = np.random.uniform(self.lb, self.ub, (self.num_chimps, self.dim))
+        self.attacker = self.chimps[0].copy()
+        self.chaser = self.chimps[1].copy()
+        self.barrier = self.chimps[2].copy()
+        self.driven = self.chimps[3].copy()
+
+        # 初始化適應度
+        self.scores = np.full(self.num_chimps, np.inf)
+
+    def logistics_chaotic_map(dim, iteration=10, value=1):
+        x0 = np.zeros(dim) + 0.7
+        for i in range(iteration):
+            x0 = 4 * x0 * (1 - x0)
+        return x0
+
+    def optimize(self):
+        convergence_curve = []
+        for t in range(self.max_iter):
+            f = 2.5 - (t * (2.5 / self.max_iter))  # 動態調整因子 f
+
+            # 計算所有黑猩猩的適應度
+            for i in range(self.num_chimps):
+                self.scores[i] = self.obj_function(self.chimps[i])
+
+            # 排序黑猩猩，選出最好的四隻 (攻擊者、追逐者、障礙者、驅動者)
+            sorted_indices = np.argsort(self.scores)
+            self.attacker = self.chimps[sorted_indices[0]].copy()
+            self.chaser = self.chimps[sorted_indices[1]].copy()
+            self.barrier = self.chimps[sorted_indices[2]].copy()
+            self.driven = self.chimps[sorted_indices[3]].copy()
+
+            # 位置更新
+            for i in range(self.num_chimps):
+                m = logistics_chaotic_map(1)
+
+                r1, r2 = np.random.rand(), np.random.rand()
+                A1 = 2 * f * r1 - f
+                C1 = 2 * r2
+                D_attacker = abs(C1 * self.attacker - m * self.chimps[i])
+                X1 = self.attacker - A1 * D_attacker
+
+                r1, r2 = np.random.rand(), np.random.rand()
+                A2 = 2 * f * r1 - f
+                C2 = 2 * r2
+                D_chaser = abs(C2 * self.chaser - m * self.chimps[i])
+                X2 = self.chaser - A2 * D_chaser
+
+                r1, r2 = np.random.rand(), np.random.rand()
+                A3 = 2 * f * r1 - f
+                C3 = 2 * r2
+                D_barrier = abs(C3 * self.barrier - m * self.chimps[i])
+                X3 = self.barrier - A3 * D_barrier
+
+                r1, r2 = np.random.rand(), np.random.rand()
+                A4 = 2 * f * r1 - f
+                C4 = 2 * r2
+                D_driven = abs(C4 * self.driven - m * self.chimps[i])
+                X4 = self.driven - A4 * D_driven
+
+                # 更新位置
+                self.chimps[i] = (X1 + X2 + X3 + X4) / 4
+                self.chimps[i] = np.clip(self.chimps[i], self.lb, self.ub)
+
+            convergence_curve.append(self.scores[sorted_indices[0]])  # 紀錄最佳適應度
+
+        return self.attacker, self.scores[sorted_indices[0]], convergence_curve
+
+
+class ChOACONTROL:
+    def __init__(self, MAX_ITER, NUM_CHIMPS, YEAR, FUNCTION_NAME, DIM=10):
+        self.MAX_ITER = MAX_ITER
+        self.NUM_CHIMPS = NUM_CHIMPS
+        self.YEAR = YEAR
+        self.FUNCTION_NAME = FUNCTION_NAME
+        self.DIM = DIM
+
+        function = CEC(self.YEAR, self.FUNCTION_NAME, self.DIM).get_function_info()
+        self.UB = function.ub
+        self.LB = function.lb
+        self.dim = function.dim
+        self.f = function.func
+
+    def Start(self):
+        choa = ChOA(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
+                    num_chimps=self.NUM_CHIMPS, max_iter=self.MAX_ITER)
+        best_position, best_value, curve = choa.optimize()
+        return np.log10(np.abs(curve) + 1e-8)  # 避免 log(0) 錯誤
+
+
+if __name__ == '__main__':
+    funcs_by_year = {
+        "2021": ["F3", "F6", "F8", "F10"],
+        "2022": ["F4", "F7", "F8", "F9"]
+    }
+    DIM = 10
+    MAX_ITER = 500
+    NUM_CHIMPS = 30
+
+    for year in funcs_by_year:
+        for func_name in funcs_by_year[year]:
+            function = CEC(year, func_name, DIM).get_function_info()
+            UB = function.ub
+            LB = function.lb
+            dim = function.dim
+            f = function.func
+
+            choa = ChOA(obj_function=f, dim=DIM, lb=LB, ub=UB, num_chimps=NUM_CHIMPS, max_iter=MAX_ITER)
+            best_position, best_value, curve = choa.optimize()
+
+            print(f"[CEC {year}-{func_name}] Best solution found:", best_position)
+            print(f"[CEC {year}-{func_name}] Best fitness:", best_value)
+
+            plt.figure(figsize=(8, 6))
+            plt.plot(np.log10(np.abs(curve) + 1e-8), label=f"CEC {year} {func_name}")
+            plt.xticks([i for i in range(0, MAX_ITER + 1, 50)])
+            plt.xlabel("Iterations")
+            plt.ylabel("Fitness Value (Log10)")
+            plt.title(f"ChOA Convergence {year}-{func_name}-{DIM}D")
+            plt.legend()
+            plt.show()
