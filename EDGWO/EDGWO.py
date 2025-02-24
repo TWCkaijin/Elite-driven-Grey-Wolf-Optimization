@@ -86,7 +86,7 @@ class EDGWO:
                 self.wolves[i] = np.clip(self.wolves[i], self.lb, self.ub)
 
             convergence_curve.append(self.alpha_score)
-        return self.alpha, self.alpha_score, convergence_curve
+        return self.alpha, self.alpha_score, convergence_curve, self.wolves
     
 
 class EDGWOCONTROL:
@@ -111,12 +111,12 @@ class EDGWOCONTROL:
     def Start(self):
         gwo = EDGWO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
                     num_wolves=self.NUM_WOLVES, max_iter=self.MAX_ITER)
-        best_position, best_value, curve = gwo.optimize()
+        best_position, best_value, curve, wolves = gwo.optimize()
         
         """ print("Best solution found:", best_position)
         print("Best fitness:", best_value) """
 
-        return np.log10(curve)
+        return (wolves, np.log10(curve))
 
 
 

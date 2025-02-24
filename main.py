@@ -7,15 +7,7 @@ from CHGWOSCA.CHGWOSCA import CHGWOSCACONTROL
 from REEGWO.REEGWO import REEGWOCONTROL
 from MSGWO.MSGWO import MSGWOCONTROL
 
-class Color:
-    RED = '\033[31m'
-    GREEN = '\033[32m'
-    YELLOW = '\033[33m'
-    BLUE = '\033[34m'
-    MAGENTA = '\033[35m'
-    CYAN = '\033[36m'
-    WHITE = '\033[37m'
-    RESET = '\033[0m'
+from TextColor import Color
 
 class MAINCONTROL:
     def __init__(self, MAX_ITER, NUM_WOLVES, YEAR, FUNCTION_NAME, DIM):
