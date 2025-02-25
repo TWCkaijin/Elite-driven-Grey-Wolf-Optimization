@@ -3,13 +3,16 @@ import matplotlib.pyplot as plt
 from DataSet import DataSet
 
 class BES:
-    def __init__(self, obj_function, dim, lb, ub, num_par=30, max_iter=100):
+    def __init__(self, obj_function, dim, lb, ub, num_par=30, max_iter=100, w=0.7, c1=1.5, c2=1.5):
         self.obj_function = obj_function
         self.dim = dim
         self.lb = np.array(lb)
         self.ub = np.array(ub)
         self.num_par = num_par
         self.max_iter = max_iter
+        self.w = w
+        self.c1 = c1
+        self.c2 = c2
 
         # 初始化
         self.particles = np.random.uniform(self.lb, self.ub, (self.num_par, self.dim))
@@ -28,7 +31,7 @@ class BES:
             for i in range(self.num_par):
                 fitness = self.obj_function(self.particles[i])
 
-                self.energy[i] = fitness # 分母不為 0
+                self.energy[i] = fitness 
 
                 # 最佳位置
                 if self.energy[i] < self.best_energy[i]:
@@ -44,11 +47,17 @@ class BES:
                 r1 = np.random.rand(self.dim)
                 r2 = np.random.rand(self.dim)
 
-                self.particles[i] = self.particles[i] + r1 * (self.best_position[i] - self.particles[i]) + r2 * (self.gbest_position - self.particles[i])
+                # 更新速度
+                velocity = self.w * self.particles[i] + self.c1 * r1 * (self.best_position[i] - self.particles[i]) + self.c2 * r2 * (self.gbest_position - self.particles[i])
+
+                # 更新位置
+                self.particles[i] = self.particles[i] + velocity
+
                 # 邊界處理
                 self.particles[i] = np.clip(self.particles[i], self.lb, self.ub)
 
             convergence_curve.append(self.gbest_energy)
+
         return self.gbest_position, self.gbest_energy, convergence_curve, self.particles
     
 

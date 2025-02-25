@@ -27,7 +27,7 @@ class Configs:
         "CHGWOSCA": CHGWOSCACONTROL,
         "REEGWO": REEGWOCONTROL,
         "MSGWO": MSGWOCONTROL,
-        #"BES": BESCONTROL,
+        "BES": BESCONTROL,
         "ChOA": ChOACONTROL,
         "PSO" :PSOCONTROL,
         "HHO" :HHOCONTROL,
