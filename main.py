@@ -7,19 +7,21 @@ from ConfigClass import Color
 from DataSet import DataSet
 
 class MAINCONTROL:
-    def __init__(self, MAX_ITER, NUM_WOLVES, YEAR, FUNCTION_NAME, DIM):
+    def __init__(self, MAX_ITER, NUM_WOLVES, f_type, year, name, DIM):
         self.MAX_ITER = MAX_ITER
         self.NUM_WOLVES = NUM_WOLVES
-        self.YEAR = YEAR
-        self.FUNCTION_NAME = FUNCTION_NAME
+        self.f_type = f_type
+        self.year = year
+        self.name = name
         self.DIM = DIM
 
     def Worker(self, obj, EPOCH):
         Result= None
         for i in range(EPOCH):
             print('\r',end='')
-            tmp = obj.Start()[-1]
+            tmp = 1/(obj.Start()[-1]) if self.f_type == "GENE" else obj.Start()[-1]
             Result = (Result * i + tmp)/ (i+1) if Result is not None else tmp
+
             print(f"Epoch {i+1} completed",end='')
         print()
         return Result
@@ -28,8 +30,8 @@ class MAINCONTROL:
 
         for optimizer in Configs.optimizers:
             print(f"{Color.MAGENTA}Starting {optimizer} works for {EPOCH} Epochs{Color.RESET}")
-            obj = Configs.optimizers[optimizer](self.MAX_ITER, self.NUM_WOLVES, self.YEAR,
-                                                DataSet.get_function(self.YEAR, self.FUNCTION_NAME, self.DIM))
+            obj = Configs.optimizers[optimizer](self.MAX_ITER, self.NUM_WOLVES,
+                                                DataSet.get_function(I=self.f_type, II=self.year, III=self.name, dim=self.DIM))
             Result = self.Worker(obj, EPOCH)
             print(f"{Color.GREEN}{optimizer} completed{Color.RESET}\n\n")
             plt.plot(Result, label=optimizer)
@@ -37,7 +39,7 @@ class MAINCONTROL:
         print(f"{Color.GREEN}All Optimizers Completed, plotting the chart{Color.RESET}")
         plt.xlabel("Iterations")
         plt.ylabel("Fitness Value (Log10)")
-        plt.title(f"CEC{self.YEAR}-{self.FUNCTION_NAME}-{self.DIM}D-{self.NUM_WOLVES}N-{EPOCH} EPOCH")
+        plt.title(f"CEC{self.year}-{self.name}-{self.DIM}D-{self.NUM_WOLVES}N-{EPOCH} EPOCH")
         plt.legend()
         plt.show()
 
@@ -45,28 +47,43 @@ class MAINCONTROL:
 if __name__ == '__main__':
 
 
-    funcs_by_year = DataSet.funcs_years
+    funcs_by_year = DataSet().all_funcs
+    
 
     while True:
-        f_type = input("Enter the function type (CEC/gene): ")
+        
+        f_type = input(f"Enter the Dataset param ({' / '.join(funcs_by_year)}): ") # DataSet
+        year = None
+        name = None
+        dim = None
+
         if f_type not in funcs_by_year:
             print("Invalid function type")
             continue
+        if f_type == "CEC":
+            year = input(f"Enter the Year param ({' / '.join(funcs_by_year[f_type])}): ") # Year
+            if year not in funcs_by_year[f_type]:
+                print("Invalid param")
+                continue
 
-        year = input(f"Enter the year of CEC ({', '.join(funcs_by_year[f_type])}): ")
-        if year not in funcs_by_year[f_type]:
-            print("Invalid year")
+            name = input(f"Enter the Name param ({' / '.join(funcs_by_year[f_type][year])}): ") # Function Name
+            if name not in funcs_by_year[f_type][year]:
+                print("Invalid param\n\n")
+                continue
+            
+
+            dim = input(f"Enter the Dim param ({' / '.join(funcs_by_year[f_type][year][name])}): ") # Dimension
+            if dim not in funcs_by_year[f_type][year][name]:
+                print("Invalid param\n\n")
+                continue
+        elif(f_type == "GENE"):
+            name = input(f"Enter the Name param:\n{'\n'.join(funcs_by_year[f_type])}\nEnter the index: ")
+            name = list(funcs_by_year['GENE'].keys())[int(name)-1]
+            dim = funcs_by_year[f_type][name]
+            print(f"Selected: {name} - Dimension: {dim}")
+        else:
+            print("Invalid function type")
             continue
 
-        func_name = input(f"Enter the function name ({', '.join(funcs_by_year[f_type][year])}): ")
-        if func_name not in funcs_by_year[f_type][year]:
-            print("Invalid function name\n\n")
-            continue
-
-        dim = int(input("Enter the dimension (10 or 20): "))
-        if dim not in [10, 20]:
-            print("Invalid dimension")
-            continue
-        
-        print(f"{Color.MAGENTA}DataSet: CEC {year}-{func_name} - Dimension: {dim}{Color.RESET}\n")
-        MAINCONTROL(MAX_ITER=300, NUM_WOLVES=30, YEAR=year, FUNCTION_NAME=func_name, DIM=dim).Start(1)
+        print(f"{Color.MAGENTA}DataSet: {f_type}-{year}-{name} - Dimension: {dim}{Color.RESET}\n")
+        MAINCONTROL(MAX_ITER=50, NUM_WOLVES=30, f_type=f_type,year=year, name=name, DIM=int(dim)).Start(5)

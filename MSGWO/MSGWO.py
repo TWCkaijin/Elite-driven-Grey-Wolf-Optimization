@@ -4,15 +4,21 @@ import matplotlib.pyplot as plt
 from DataSet import DataSet
 
 class MSGWO:
-    def __init__(self, obj_function, dim, lb, ub, num_wolves=30, max_iter=100):
+    def __init__(self, obj_function, dim, lb, ub, num_wolves, max_iter, f_type):
         self.obj_function = obj_function  # 目標函數
         self.dim = dim                    # 變數維度
         self.lb = np.array(lb)            # 下界
         self.ub = np.array(ub)            # 上界
         self.num_wolves = num_wolves      # 狼群數量
         self.max_iter = max_iter          # 最大迭代次數
+        self.f_type = f_type              # 連續/離散問題
 
         # 初始化狼群位置
+
+        if self.f_type == "d":
+            self.ub = np.append(self.ub[:], DataSet.NN_K)
+            self.lb = np.append(self.lb[:], 1)
+            self.dim+=1
         self.wolves = np.random.uniform(self.lb, self.ub, (self.num_wolves, self.dim))
         self.alpha = np.random.uniform(self.lb, self.ub, self.dim)
         self.beta  = np.random.uniform(self.lb, self.ub, self.dim)
@@ -62,7 +68,11 @@ class MSGWO:
                 w_beta  = 0.3
                 w_delta = 0.2
                 X_new = w_alpha * X1 + w_beta * X2 + w_delta * X3
-                X_new = np.clip(X_new, self.lb, self.ub)
+
+                if self.f_type == "d":
+                    X_new[-1] = np.clip(X_new[-1], 1, DataSet.NN_K)
+                else:
+                    X_new = np.clip(X_new, self.lb, self.ub)
                 self.wolves[i] = X_new
 
             convergence_curve.append(self.alpha_score)
@@ -71,26 +81,29 @@ class MSGWO:
     
 
 class MSGWOCONTROL:
-    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION):
+    def __init__(self,MAX_ITER, NUM_WOLVES, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_WOLVES = NUM_WOLVES
-        self.YEAR = YEAR
 
         self.UB = FUNCTION.ub
         self.LB = FUNCTION.lb
         
         self.DIM= FUNCTION.dim
         self.f = FUNCTION.func
+        self.f_type = FUNCTION.f_type
 
     def Start(self):
         gwo = MSGWO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
-                    num_wolves=self.NUM_WOLVES, max_iter=self.MAX_ITER)
+                    num_wolves=self.NUM_WOLVES, max_iter=self.MAX_ITER, f_type=self.f_type)
         best_position, best_value, curve, wolves = gwo.optimize()
         
         """ print("Best solution found:", best_position)
         print("Best fitness:", best_value) """
 
-        return (wolves, np.log10(curve))
+        if self.f_type == "d":
+            return (wolves, np.array(curve))
+        else:
+            return (wolves, np.log10(curve))
 
 
 

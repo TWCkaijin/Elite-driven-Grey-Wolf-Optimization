@@ -4,14 +4,20 @@ from DataSet import DataSet
 
 # 定義 Sand Cat Swarm Optimization (SCSO)
 class SCSO:
-    def __init__(self, obj_function, dim, lb, ub, num_cats=10, max_iter=100):
+    def __init__(self, obj_function, dim, lb, ub, num_cats, max_iter, f_type):
         self.obj_function = obj_function  # 目標函數
         self.dim = dim                    # 變數維度
         self.lb = np.array(lb)            # 下界
         self.ub = np.array(ub)            # 上界
         self.num_cats = num_cats          # 沙貓數量
         self.max_iter = max_iter          # 最大迭代次數
+        self.f_type = f_type              # 連續/離散問題
         
+        if self.f_type == "d":
+            self.ub = np.append(self.ub[:], DataSet.NN_K)
+            self.lb = np.append(self.lb[:], 1)
+            self.dim += 1
+
         # 初始化沙貓位置
         self.cats = np.random.uniform(self.lb, self.ub, (self.num_cats, self.dim))
         self.best_cat = np.random.uniform(self.lb, self.ub, self.dim)
@@ -44,7 +50,11 @@ class SCSO:
                     new_position = r * (self.best_cat - np.random.rand() * self.cats[i])
                 
                 # 限制範圍
-                self.cats[i] = np.clip(new_position, self.lb, self.ub)
+                if self.f_type == "d":
+                    new_position[-1] = np.clip(new_position[-1], 1, DataSet.NN_K)
+                    self.cats[i] = new_position
+                else:
+                    self.cats[i] = np.clip(new_position, self.lb, self.ub)
             
             convergence_curve.append(self.best_score)
         
@@ -52,10 +62,9 @@ class SCSO:
 
 
 class SCSOCONTROL:
-    def __init__(self, MAX_ITER, NUM_CATS, YEAR, FUNCTION):
+    def __init__(self, MAX_ITER, NUM_CATS, FUNCTION):
         self.MAX_ITER = MAX_ITER
-        self.NUM_CATS = NUM_WOLVES
-        self.YEAR = YEAR
+        self.NUM_CATS = NUM_CATS
 
         self.UB = FUNCTION.ub
         self.LB = FUNCTION.lb
@@ -65,10 +74,13 @@ class SCSOCONTROL:
 
     def Start(self):
         scso = SCSO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
-                    num_cats=self.NUM_CATS, max_iter=self.MAX_ITER)
+                    num_cats=self.NUM_CATS, max_iter=self.MAX_ITER, f_type=self.f_type)
         best_position, best_value, curve, cats = scso.optimize()
         
-        return (cats, np.log10(curve))
+        if self.f_type == "d":
+            return (cats, np.array(curve))
+        else:
+            return (cats, np.log10(curve))
 
 
 if __name__ == '__main__':

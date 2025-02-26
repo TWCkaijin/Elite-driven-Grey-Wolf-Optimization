@@ -9,14 +9,19 @@ def logistics_chaotic_map(dim, iteration=10, value=1):
     return x0
 # 定義 Chimp Optimization Algorithm (ChOA)
 class ChOA:
-    def __init__(self, obj_function, dim, lb, ub, num_chimps=10, max_iter=100):
+    def __init__(self, obj_function, dim, lb, ub, num_chimps, max_iter,f_type):
         self.obj_function = obj_function
         self.dim = dim
         self.lb = np.array(lb)
         self.ub = np.array(ub)
         self.num_chimps = num_chimps
         self.max_iter = max_iter
+        self.f_type = f_type
 
+        if self.f_type == "d":
+            self.ub = np.append(self.ub[:], DataSet.NN_K)
+            self.lb = np.append(self.lb[:], 1)
+            self.dim+=1
         # 初始化黑猩猩群體
         self.chimps = np.random.uniform(self.lb, self.ub, (self.num_chimps, self.dim))
         self.attacker = self.chimps[0].copy()
@@ -80,7 +85,10 @@ class ChOA:
 
                 # 更新位置
                 self.chimps[i] = (X1 + X2 + X3 + X4) / 4
-                self.chimps[i] = np.clip(self.chimps[i], self.lb, self.ub)
+                if(self.f_type == "d"):
+                    self.chimps[i][-1] = np.clip(self.chimps[i][-1], 1, DataSet.NN_K)
+                else:
+                    self.chimps[i] = np.clip(self.chimps[i], self.lb, self.ub)
 
             convergence_curve.append(self.scores[sorted_indices[0]])  # 紀錄最佳適應度
 
@@ -88,10 +96,9 @@ class ChOA:
 
 
 class ChOACONTROL:
-    def __init__(self, MAX_ITER, NUM_CHIMPS, YEAR, FUNCTION):
+    def __init__(self, MAX_ITER, NUM_CHIMPS, FUNCTION):
         self.MAX_ITER = MAX_ITER
-        self.NUM_CHIMPS = NUM_WOLVES
-        self.YEAR = YEAR
+        self.NUM_CHIMPS = NUM_CHIMPS
 
         self.UB = FUNCTION.ub
         self.LB = FUNCTION.lb
@@ -101,9 +108,13 @@ class ChOACONTROL:
 
     def Start(self):
         choa = ChOA(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
-                    num_chimps=self.NUM_CHIMPS, max_iter=self.MAX_ITER)
+                    num_chimps=self.NUM_CHIMPS, max_iter=self.MAX_ITER, f_type=self.f_type)
         best_position, best_value, curve, chimps = choa.optimize()
-        return (chimps, np.log10(np.abs(curve) + 1e-8))  # 避免 log(0) 錯誤
+
+        if(self.f_type == "d"):
+            return (chimps, np.array(np.abs(curve) + 1e-8))
+        else:
+            return (chimps, np.log10(np.abs(curve) + 1e-8))  # 避免 log(0) 錯誤
 
 
 if __name__ == '__main__':

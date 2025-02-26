@@ -20,13 +20,8 @@
 
 
 
-## 實驗結果與論文對照(GWO+EDGWO)
-![CEC2021-F3](./_EXP_PIC/CEC2021-F3.png)
-![CEC2021-F6](./_EXP_PIC/CEC2021-F6.png)
-![CEC2021-F8](./_EXP_PIC/CEC2021-F8.png)
-![CEC2021-F10](./_EXP_PIC/CEC2021-F10.png)
 
-## 實驗結果與論文對照(GWO+EDGWO+CHGWOSCA+REEGWO+MSGWO)
+## 連續函數實驗結果與論文對照(GWO+EDGWO+CHGWOSCA+REEGWO+MSGWO)
 <div style="display: flex; flex-wrap: wrap;">
     <div style="flex: 1; padding: 5px;">
         <img src="./_EXP_PIC/P_CEC2021-F6.png" alt="P_CEC2021-F6" style="width: 100%;">
@@ -36,9 +31,11 @@
     </div>
 </div>
 
+
+
 完成日期: 2024/02/21
 
 ## 未來更新: 
 1. 更多演算法比較(正在進行BES、ChOA、HHO、PSO)
 2. LiveDemo 形式: 可同時觀測多個演算法的實時演算結果，進行可視化演算法比較
-3. 
+3. 離散資料(基因資料)套用演算法

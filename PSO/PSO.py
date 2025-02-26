@@ -4,17 +4,23 @@ import matplotlib.pyplot as plt
 from DataSet import DataSet
 
 class PSO:
-    def __init__(self, obj_function, dim, lb, ub, num_par=30, max_iter=30, w=0.7, c1=2, c2=2):
+    def __init__(self, obj_function, dim, lb, ub, num_par, max_iter, f_type):
         self.obj_function = obj_function
         self.dim = dim
         self.lb = np.array(lb)
         self.ub = np.array(ub)
         self.num_par = num_par
         self.max_iter = max_iter
-        self.w = w
-        self.c1 = c1
-        self.c2 = c2
+        self.f_type = f_type
+        self.w = 0.7
+        self.c1 = 2
+        self.c2 = 2
 
+
+        if self.f_type == "d":
+            self.ub = np.append(self.ub[:], DataSet.NN_K)
+            self.lb = np.append(self.lb[:], 1)
+            self.dim+=1
         # 初始化速度/位置
         self.particles = np.random.uniform(self.lb, self.ub, (self.num_par, self.dim))
         self.velocities = np.random.uniform(-abs(self.ub - self.lb), abs(self.ub - self.lb), (self.num_par, self.dim))
@@ -52,7 +58,10 @@ class PSO:
                 self.particles[i] += self.velocities[i]
 
                 # 邊界處理
-                self.particles[i] = np.clip(self.particles[i], self.lb, self.ub)
+                if(self.f_type == "d"):
+                    self.particles[i][-1] = np.clip(self.particles[i][-1], 1, DataSet.NN_K)
+                else:
+                    self.particles[i] = np.clip(self.particles[i], self.lb, self.ub)
 
             convergence_curve.append(self.gbest_score)
     
@@ -60,10 +69,9 @@ class PSO:
     
 
 class PSOCONTROL:
-    def __init__(self,MAX_ITER, NUM_PARTICLES, YEAR, FUNCTION):
+    def __init__(self,MAX_ITER, NUM_PARTICLES, FUNCTION):
         self.MAX_ITER = MAX_ITER
-        self.NUM_PARTICLES = NUM_WOLVES
-        self.YEAR = YEAR
+        self.NUM_PARTICLES = NUM_PARTICLES
 
         self.UB = FUNCTION.ub
         self.LB = FUNCTION.lb
@@ -73,13 +81,15 @@ class PSOCONTROL:
 
     def Start(self):
         pso = PSO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
-                    num_par=self.NUM_PARTICLES, max_iter=self.MAX_ITER)
+                    num_par=self.NUM_PARTICLES, max_iter=self.MAX_ITER, f_type=self.f_type)
         best_position, best_value, curve, particles = pso.optimize()
         
         """ print("Best solution found:", best_position)
         print("Best fitness:", best_value) """
-
-        return (particles, np.log10(curve))
+        if self.f_type == "d":
+            return (particles, np.array(curve))
+        else:
+            return (particles, np.log10(curve))
 
 
 

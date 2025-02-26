@@ -6,17 +6,24 @@ from DataSet import DataSet
 
 # 定義 EDGWO
 class EDGWO:
-    def __init__(self, obj_function, dim, lb, ub, num_wolves=10, max_iter=100):
+    def __init__(self, obj_function, dim, lb, ub, num_wolves, max_iter, f_type):
         self.obj_function = obj_function  # 目標函數
         self.dim = dim                    # 變數維度
         self.lb = np.array(lb)            # 下界
         self.ub = np.array(ub)            # 上界
         self.num_wolves = num_wolves      # 狼群數量
         self.max_iter = max_iter          # 最大迭代次數
+        self.f_type = f_type              # 連續/離散問題
 
+        if self.f_type == "d":
+            self.ub = np.append(self.ub[:], DataSet.NN_K)
+            self.lb = np.append(self.lb[:], 1)
+            self.dim+=1
         # 初始化狼群位置
         self.wolves = np.random.uniform(self.lb, self.ub, (self.num_wolves, self.dim))
         self.alpha, self.beta, self.delta = np.random.uniform(self.lb, self.ub, self.dim),np.random.uniform(self.lb, self.ub, self.dim),np.random.uniform(self.lb, self.ub, self.dim)
+
+        # 初始化狼群位置
         self.alpha_score, self.beta_score, self.delta_score = np.inf, np.inf, np.inf
     
     # 三種全局探索
@@ -88,16 +95,18 @@ class EDGWO:
                         self.wolves[i] = self.alpha + np.linalg.norm(self.alpha - self.wolves[i]) * np.exp(l) * np.cos(2 * np.pi * l)
 
                 # 限制範圍
-                self.wolves[i] = np.clip(self.wolves[i], self.lb, self.ub)
+                if(self.f_type == "d"):
+                    self.wolves[i][-1] = np.clip(self.wolves[i][-1], 1, DataSet.NN_K)
+                else:
+                    self.wolves[i] = np.clip(self.wolves[i], self.lb, self.ub)
 
             convergence_curve.append(self.alpha_score)
         return self.alpha, self.alpha_score, convergence_curve, self.wolves
 
 class EDGWOCONTROL:
-    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION=10):
+    def __init__(self,MAX_ITER, NUM_WOLVES, FUNCTION=10):
         self.MAX_ITER = MAX_ITER
         self.NUM_WOLVES = NUM_WOLVES
-        self.YEAR = YEAR
 
         self.UB = FUNCTION.ub
         self.LB = FUNCTION.lb
@@ -106,14 +115,17 @@ class EDGWOCONTROL:
         self.f_type = FUNCTION.f_type
 
     def Start(self):
-        gwo = EDGWO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
-                    num_wolves=self.NUM_WOLVES, max_iter=self.MAX_ITER)
-        best_position, best_value, curve, wolves = gwo.optimize()
+        edgwo = EDGWO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
+                    num_wolves=self.NUM_WOLVES, max_iter=self.MAX_ITER, f_type=self.f_type)
+        best_position, best_value, curve, wolves = edgwo.optimize()
         
         """ print("Best solution found:", best_position)
         print("Best fitness:", best_value) """
 
-        return (wolves, np.log10(curve))
+        if self.f_type == "d":
+            return (wolves, np.array(curve))
+        else:
+            return (wolves, np.log10(curve))
 
 
 if __name__ == '__main__':
@@ -137,8 +149,8 @@ if __name__ == '__main__':
             # 設定參數
             
             # 執行 GWO
-            gwo = EDGWO(obj_function=f, dim=DIM, lb=LB, ub=UB, num_wolves=NUM_WOLVES, max_iter=MAX_ITER)
-            best_position, best_value, curve, _ = gwo.optimize()
+            edgwo = EDGWO(obj_function=f, dim=DIM, lb=LB, ub=UB, num_wolves=NUM_WOLVES, max_iter=MAX_ITER)
+            best_position, best_value, curve, _ = edgwo.optimize()
 
             print(f"[CEC {year}-{func_name}] Best solution found:", best_position)
             print(f"[CEC {year}-{func_name}] Best fitness:", best_value)

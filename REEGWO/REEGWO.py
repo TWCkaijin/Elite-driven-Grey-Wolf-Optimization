@@ -3,14 +3,19 @@ import matplotlib.pyplot as plt
 from DataSet import DataSet
 
 class REEGWO:
-    def __init__(self, obj_function, dim, lb, ub, num_wolves=30, max_iter=100):
+    def __init__(self, obj_function, dim, lb, ub, num_wolves, max_iter, f_type):
         self.obj_function = obj_function  
         self.dim = dim
         self.lb = np.array(lb)
         self.ub = np.array(ub)
         self.num_wolves = num_wolves
         self.max_iter = max_iter
+        self.f_type = f_type
 
+        if self.f_type == "d":
+            self.ub = np.append(self.ub[:], DataSet.NN_K)
+            self.lb = np.append(self.lb[:], 1)
+            self.dim+=1
         # 初始化狼群位置
         self.wolves = np.random.uniform(self.lb, self.ub, (self.num_wolves, self.dim))
         self.alpha = np.random.uniform(self.lb, self.ub, self.dim)
@@ -61,7 +66,10 @@ class REEGWO:
                 X_new = w_alpha * X1 + w_beta * X2 + w_delta * X3
 
                 # 邊界處理
-                X_new = np.clip(X_new, self.lb, self.ub)
+                if self.f_type == "d":
+                    X_new[-1] = np.clip(X_new[-1], 1, DataSet.NN_K) 
+                else:
+                    X_new = np.clip(X_new, self.lb, self.ub)
                 self.wolves[i] = X_new
 
             convergence_curve.append(self.alpha_score)
@@ -70,11 +78,10 @@ class REEGWO:
     
 
 class REEGWOCONTROL:
-    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION):
+    def __init__(self,MAX_ITER, NUM_WOLVES, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_WOLVES = NUM_WOLVES
-        self.YEAR = YEAR
- 
+
         self.UB = FUNCTION.ub
         self.LB = FUNCTION.lb
 
@@ -84,13 +91,16 @@ class REEGWOCONTROL:
 
     def Start(self):
         gwo = REEGWO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
-                    num_wolves=self.NUM_WOLVES, max_iter=self.MAX_ITER)
+                    num_wolves=self.NUM_WOLVES, max_iter=self.MAX_ITER, f_type=self.f_type)
         best_position, best_value, curve, wolves = gwo.optimize()
         
         """ print("Best solution found:", best_position)
         print("Best fitness:", best_value) """
 
-        return (wolves, np.log10(curve))
+        if self.f_type == "d":
+            return (wolves, np.array(curve))
+        else:
+            return (wolves, np.log10(curve))
 
 
 

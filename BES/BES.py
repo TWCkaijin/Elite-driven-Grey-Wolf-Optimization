@@ -3,32 +3,39 @@ import matplotlib.pyplot as plt
 from DataSet import DataSet
 
 class BES:
-    def __init__(self, obj_function, dim, lb, ub, num_par=30, max_iter=100):
+    def __init__(self, obj_function, dim, lb, ub, num_par, max_iter, f_type):
         self.obj_function = obj_function
         self.dim = dim
         self.lb = np.array(lb)
         self.ub = np.array(ub)
         self.num_par = num_par
         self.max_iter = max_iter
+        self.f_type = f_type
+
+        if self.f_type == "d":
+            self.ub = np.append(self.ub[:], DataSet.NN_K)
+            self.lb = np.append(self.lb[:], 1)
+            self.dim+=1
 
         # 初始化
         self.particles = np.random.uniform(self.lb, self.ub, (self.num_par, self.dim))
-        self.energy = np.ones(self.num_par)  # 初始設定為1
         self.best_position = np.zeros((self.num_par, self.dim))  # 最佳位置
-        self.best_energy = np.full(self.num_par, np.inf)  # 最佳能量
 
-        # 最佳解(全局)
-        self.gbest_position = np.random.uniform(self.lb, self.ub, self.dim)
+        self.energy = np.ones(self.num_par)  # 初始設定為1
+        self.best_energy = np.full(self.num_par, np.inf)  # 最佳能量
+        
+        self.gbest_position = np.random.uniform(self.lb, self.ub, self.dim) # 最佳解(全局)
         self.gbest_energy = np.inf
+
 
     def optimize(self):
         convergence_curve = []
 
         for t in range(self.max_iter):
             for i in range(self.num_par):
-                fitness = self.obj_function(self.particles[i])
 
-                self.energy[i] = fitness # 分母不為 0
+                fitness = self.obj_function(self.particles[i])
+                self.energy[i] = fitness
 
                 # 最佳位置
                 if self.energy[i] < self.best_energy[i]:
@@ -46,17 +53,19 @@ class BES:
 
                 self.particles[i] = self.particles[i] + r1 * (self.best_position[i] - self.particles[i]) + r2 * (self.gbest_position - self.particles[i])
                 # 邊界處理
-                self.particles[i] = np.clip(self.particles[i], self.lb, self.ub)
+                if(self.f_type == "d"):
+                    self.particles[i][-1] = np.clip(self.particles[i][-1], 1, DataSet.NN_K)
+                else:
+                    self.particles[i] = np.clip(self.particles[i], self.lb, self.ub)
 
             convergence_curve.append(self.gbest_energy)
         return self.gbest_position, self.gbest_energy, convergence_curve, self.particles
     
 
 class BESCONTROL:
-    def __init__(self,MAX_ITER, NUM_PARTICLES, YEAR, FUNCTION):
+    def __init__(self,MAX_ITER, NUM_PARTICLES, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_PARTICLES = NUM_PARTICLES
-        self.YEAR = YEAR
 
         
         self.UB = FUNCTION.ub
@@ -67,13 +76,15 @@ class BESCONTROL:
 
     def Start(self):
         bes = BES(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
-                    num_par=self.NUM_PARTICLES, max_iter=self.MAX_ITER)
+                    num_par=self.NUM_PARTICLES, max_iter=self.MAX_ITER, f_type=self.f_type)
         best_position, best_value, curve, particles = bes.optimize()
         
         """ print("Best solution found:", best_position)
         print("Best fitness:", best_value) """
-
-        return (particles, np.log10(curve))
+        if self.f_type == "d":
+            return (particles, np.array(curve))
+        else:
+            return (particles, np.log10(curve))
 
 
 
