@@ -85,10 +85,7 @@ class ChOA:
 
                 # 更新位置
                 self.chimps[i] = (X1 + X2 + X3 + X4) / 4
-                if(self.f_type == "d"):
-                    self.chimps[i][-1] = np.clip(self.chimps[i][-1], 1, DataSet.NN_K)
-                else:
-                    self.chimps[i] = np.clip(self.chimps[i], self.lb, self.ub)
+                self.chimps[i] = np.clip(self.chimps[i], self.lb, self.ub)
 
             convergence_curve.append(self.scores[sorted_indices[0]])  # 紀錄最佳適應度
 
@@ -96,7 +93,7 @@ class ChOA:
 
 
 class ChOACONTROL:
-    def __init__(self, MAX_ITER, NUM_WOLVES, YEAR, FUNCTION):
+    def __init__(self, MAX_ITER, NUM_CHIMPS, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_CHIMPS = NUM_CHIMPS
 

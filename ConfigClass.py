@@ -31,7 +31,7 @@ class Configs:
         "BES": BESCONTROL,
         "ChOA": ChOACONTROL,
         "PSO" :PSOCONTROL,
-        #"HHO" :HHOCONTROL,
+        "HHO" :HHOCONTROL,
         "SCSO":SCSOCONTROL,
         "REINEDGWO": REINEDGWOCONTROL
     }

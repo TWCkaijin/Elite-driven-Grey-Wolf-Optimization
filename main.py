@@ -19,7 +19,7 @@ class MAINCONTROL:
         Result= None
         for i in range(EPOCH):
             print('\r',end='')
-            tmp = 1/(obj.Start()[-1]) if self.f_type == "GENE" else obj.Start()[-1]
+            tmp = (1/(obj.Start()[-1])) if self.f_type == "GENE" else obj.Start()[-1]
             Result = (Result * i + tmp)/ (i+1) if Result is not None else tmp
 
             print(f"Epoch {i+1} completed",end='')
@@ -86,4 +86,4 @@ if __name__ == '__main__':
             continue
 
         print(f"{Color.MAGENTA}DataSet: {f_type}-{year}-{name} - Dimension: {dim}{Color.RESET}\n")
-        MAINCONTROL(MAX_ITER=50, NUM_WOLVES=30, f_type=f_type,year=year, name=name, DIM=int(dim)).Start(5)
+        MAINCONTROL(MAX_ITER=int(input("Input Ieration per epoch: ")), NUM_WOLVES=30, f_type=f_type,year=year, name=name, DIM=int(dim)).Start(int(input("Input Epochs: ")))

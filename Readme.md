@@ -21,21 +21,62 @@
 
 
 
-## 連續函數實驗結果與論文對照(GWO+EDGWO+CHGWOSCA+REEGWO+MSGWO)
-<div style="display: flex; flex-wrap: wrap;">
-    <div style="flex: 1; padding: 5px;">
-        <img src="./_EXP_PIC/P_CEC2021-F6.png" alt="P_CEC2021-F6" style="width: 100%;">
+### 1. 連續函數實驗結果與論文對照(GWO / EDGWO / CHGWOSCA / REEGWO / MSGWO)
+<div>
+    <div style="display: flex; flex-wrap: wrap;">
+        <div style="flex: 1; padding: 5px;">
+            <img src="./_OLD_EXP_PIC/P_CEC2021-F7.png" alt="P_CEC2021-F6" style="width: 100%;">
+        </div>
+        <div style="flex: 1; padding: 5px;">
+            <img src="./_OLD_EXP_PIC/R_CEC2021-F7.png" alt="R_CEC2021-F6" style="width: 100%;">
+        </div>
     </div>
-    <div style="flex: 1; padding: 5px;">
-        <img src="./_EXP_PIC/R_CEC2021-F6.png" alt="R_CEC2021-F6" style="width: 100%;">
+    完成日期: 2024/02/21
+</div>
+
+### 2. 連續函數實驗結果與論文對照(10種)
+<div>
+    <div style="display: flex; flex-wrap: wrap;">
+        <div style="flex: 1; padding: 5px;">
+            <img src="./_OLD_EXP_PIC/P_CEC2021-F7.png" alt="P_CEC2021-F6" style="width: 100%;">
+        </div>
+        <div style="flex: 1; padding: 5px;">
+            <img src="_EXP_PIC\CEC-2022-F7-10D.png" 
+            alt="R_CEC2021-F6" style="width: 100%;">
+        </div>
     </div>
+    完成日期: 2024/02/21
+</div>
+
+### 3. 自優化(REIN-EDGWO) vs EDGWO 實驗對照 
+<div>
+    <div style="display: flex; flex-wrap: wrap;">
+        <div style="flex: 1; padding: 5px;">
+            <img src="_EDGWO vs. REIN_EDGWO\2021_F6_10D.png" alt="P_CEC2021-F6" style="width: 100%;">
+        </div>
+        <div style="flex: 1; padding: 5px;">
+            <img src="_EDGWO vs. REIN_EDGWO\2021_F7_20D.png" alt="R_CEC2021-F6" style="width: 100%;">
+        </div>
+    </div>
+    完成日期: 2024/02/26
+</div>
+
+### 3. 離散資料實驗結果與論文對照(10種optimizer)
+<div>
+    <div style="display: flex; flex-wrap: wrap;">
+        <div style="flex: 1; padding: 5px;">
+            <img src="" alt="P_CEC2021-F6" style="width: 100%;">
+        </div>
+        <div style="flex: 1; padding: 5px;">
+            <img src="_" alt="R_CEC2021-F6" style="width: 100%;">
+        </div>
+    </div>
+    完成日期: 2024/02/26
 </div>
 
 
 
-完成日期: 2024/02/21
 
-## 未來更新: 
-1. 更多演算法比較(正在進行BES、ChOA、HHO、PSO)
-2. LiveDemo 形式: 可同時觀測多個演算法的實時演算結果，進行可視化演算法比較
-3. 離散資料(基因資料)套用演算法
+
+## 未來可改進: 
+1. LiveDemo 形式 _(已大致完成)_: 可同時觀測多個演算法的實時演算結果，進行可視化演算法比較

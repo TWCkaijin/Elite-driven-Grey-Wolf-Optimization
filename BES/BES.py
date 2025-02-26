@@ -62,10 +62,7 @@ class BES:
                 self.particles[i] = self.particles[i] + velocity
 
                 # 邊界處理
-                if(self.f_type == "d"):
-                    self.particles[i][-1] = np.clip(self.particles[i][-1], 1, DataSet.NN_K)
-                else:
-                    self.particles[i] = np.clip(self.particles[i], self.lb, self.ub)
+                self.particles[i] = np.clip(self.particles[i], self.lb, self.ub)
 
             convergence_curve.append(self.gbest_energy)
 
@@ -73,10 +70,9 @@ class BES:
     
 
 class BESCONTROL:
-    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION):
+    def __init__(self,MAX_ITER, NUM_WOLVES,FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_PARTICLES = NUM_WOLVES
-        self.YEAR = YEAR
 
         
         self.UB = FUNCTION.ub

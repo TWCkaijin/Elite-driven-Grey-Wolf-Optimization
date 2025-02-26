@@ -58,10 +58,7 @@ class PSO:
                 self.particles[i] += self.velocities[i]
 
                 # 邊界處理
-                if(self.f_type == "d"):
-                    self.particles[i][-1] = np.clip(self.particles[i][-1], 1, DataSet.NN_K)
-                else:
-                    self.particles[i] = np.clip(self.particles[i], self.lb, self.ub)
+                self.particles[i] = np.clip(self.particles[i], self.lb, self.ub)
 
             convergence_curve.append(self.gbest_score)
     
@@ -69,7 +66,7 @@ class PSO:
     
 
 class PSOCONTROL:
-    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION):
+    def __init__(self,MAX_ITER, NUM_PARTICLES,  FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_PARTICLES = NUM_PARTICLES
 

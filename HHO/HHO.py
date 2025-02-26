@@ -4,15 +4,21 @@ import matplotlib.pyplot as plt
 from DataSet import DataSet
 
 class HHO:
-    def __init__(self, obj_function, dim, lb, ub, num_hawks=30, max_iter=100):
+    def __init__(self, obj_function, dim, lb, ub, num_hawks, max_iter, f_type):
         self.obj_function = obj_function
         self.dim = dim
         self.lb = np.array(lb)
         self.ub = np.array(ub)
         self.num_hawks = num_hawks
         self.max_iter = max_iter
+        self.f_type = f_type
         
         # 初始化獵鷹群位置
+        if self.f_type == "d":
+            self.ub = np.append(self.ub[:], DataSet.NN_K)
+            self.lb = np.append(self.lb[:], 1)
+            self.dim += 1
+
         self.hawks = np.random.uniform(self.lb, self.ub, (self.num_hawks, self.dim))
         self.best_position = None
         self.best_score = np.inf
@@ -46,8 +52,8 @@ class HHO:
                         delta_X = abs(self.best_position - self.hawks[i])
                         self.hawks[i] = delta_X * np.exp(-E * t) * np.cos(2 * np.pi * r) + self.best_position
                 
-                # 確保邊界限制
-                self.hawks[i] = np.clip(self.hawks[i], self.lb, self.ub)
+
+                    self.hawks[i] = np.clip(self.hawks[i], self.lb, self.ub)
             
             convergence_curve.append(self.best_score)
             
@@ -55,7 +61,7 @@ class HHO:
 
 
 class HHOCONTROL:
-    def __init__(self, MAX_ITER, NUM_WOLVES, YEAR, FUNCTION):
+    def __init__(self, MAX_ITER, NUM_HAWKS, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_HAWKS = NUM_HAWKS
         
@@ -67,10 +73,13 @@ class HHOCONTROL:
     
     def Start(self):
         hho = HHO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
-                  num_hawks=self.NUM_HAWKS, max_iter=self.MAX_ITER)
+                  num_hawks=self.NUM_HAWKS, max_iter=self.MAX_ITER, f_type=self.f_type)
         best_position, best_value, curve, hawks = hho.optimize()
         
-        return (hawks, np.log10(curve))
+        if self.f_type == "d":
+            return (hawks, np.array(curve))
+        else:
+            return (hawks, np.log10(curve))
 
 
 if __name__ == '__main__':

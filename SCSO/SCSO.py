@@ -50,11 +50,7 @@ class SCSO:
                     new_position = r * (self.best_cat - np.random.rand() * self.cats[i])
                 
                 # 限制範圍
-                if self.f_type == "d":
-                    new_position[-1] = np.clip(new_position[-1], 1, DataSet.NN_K)
-                    self.cats[i] = new_position
-                else:
-                    self.cats[i] = np.clip(new_position, self.lb, self.ub)
+                self.cats[i] = np.clip(new_position, self.lb, self.ub)
             
             convergence_curve.append(self.best_score)
         
@@ -62,7 +58,7 @@ class SCSO:
 
 
 class SCSOCONTROL:
-    def __init__(self, MAX_ITER, NUM_WOLVES, YEAR, FUNCTION):
+    def __init__(self, MAX_ITER, NUM_CATS, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_CATS = NUM_CATS
 

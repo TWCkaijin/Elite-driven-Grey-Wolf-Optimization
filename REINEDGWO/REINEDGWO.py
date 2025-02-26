@@ -4,13 +4,19 @@ import matplotlib.pyplot as plt
 from DataSet import DataSet
 
 class REIN_EDGWO:
-    def __init__(self, obj_function, dim, lb, ub, num_wolves=10, MAX_ITER=100):
+    def __init__(self, obj_function, dim, lb, ub, num_wolves, MAX_ITER, f_type):
         self.obj_function = obj_function  # 目標函數
         self.dim = dim                    # 變數維度
         self.lb = np.array(lb)            # 下界
         self.ub = np.array(ub)            # 上界
         self.num_wolves = num_wolves      # 狼群數量
         self.MAX_ITER = MAX_ITER          # 最大迭代次數
+        self.f_type = f_type
+
+        if self.f_type == "d":
+            self.ub = np.append(self.ub[:], DataSet.NN_K)
+            self.lb = np.append(self.lb[:], 1)
+            self.dim+=1
 
         # 初始化狼群位置
         self.wolves = np.random.uniform(self.lb, self.ub, (self.num_wolves, self.dim))
@@ -85,15 +91,16 @@ class REIN_EDGWO:
                 indices = np.random.choice(range(self.num_wolves), size=Reset_num, replace=False)
                 for idx in indices:
                     self.wolves[idx] = np.random.uniform(self.lb, self.ub, self.dim)
+
+
                 
             convergence_curve.append(self.alpha_score)
         return self.alpha, self.alpha_score, convergence_curve, self.wolves
     
 class REINEDGWOCONTROL:
-    def __init__(self,MAX_ITER, NUM_WOLVES, YEAR, FUNCTION=10):
+    def __init__(self,MAX_ITER, NUM_WOLVES,  FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_WOLVES = NUM_WOLVES
-        self.YEAR = YEAR
 
         self.UB = FUNCTION.ub
         self.LB = FUNCTION.lb
@@ -103,13 +110,15 @@ class REINEDGWOCONTROL:
 
     def Start(self):
         gwo = REIN_EDGWO(obj_function=self.f, dim=self.DIM, lb=self.LB, ub=self.UB, 
-                    num_wolves=self.NUM_WOLVES, MAX_ITER=self.MAX_ITER)
+                    num_wolves=self.NUM_WOLVES, MAX_ITER=self.MAX_ITER, f_type=self.f_type)
         best_position, best_value, curve, wolves = gwo.optimize()
         
         """ print("Best solution found:", best_position)
         print("Best fitness:", best_value) """
-
-        return (wolves, np.log10(curve))
+        if self.f_type == "d":
+            return (wolves, np.array(curve))
+        else:
+            return (wolves, np.log10(curve))
     
 if __name__ == '__main__':
     funcs_by_year = DataSet.funcs_years

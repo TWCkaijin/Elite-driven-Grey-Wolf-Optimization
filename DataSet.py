@@ -16,6 +16,8 @@ class DataSet:
         }
     }
     NN_K = 12
+    param_UB = 100
+    param_LB = -100
 
     def __init__(self):
 
@@ -89,7 +91,8 @@ class GENEFUNC:
         self.dim = dim
         self.data = sio.loadmat(f'_geneData/{self.name}.mat')['X']
         self.labels = sio.loadmat(f'_geneData/{self.name}.mat')['Y']
-        self.X_train, self.X_test, self.Y_train, self.Y_test = train_test_split(self.data, self.labels, test_size=0.2, random_state=42)
+        self.X_train, self.X_test = self.data[:int(len(self.data)*0.8)], self.data[int(len(self.data)*0.8):]
+        self.Y_train, self.Y_test = self.labels[:int(len(self.labels)*0.8)], self.labels[int(len(self.labels)*0.8):]
         self.Y_test = self.Y_test.ravel()
         self.Y_train = self.Y_train.ravel()
 
@@ -111,6 +114,18 @@ class GENEFUNC:
 
         X_train_weighted = self.X_train * weights
         X_test_weighted = self.X_test * weights
+
+
+        if np.isnan(weights).any():
+            print(weights)
+            raise ValueError("Weights contain NaN values")
+        elif np.isnan(k).any():
+            print(k)
+            raise ValueError("k contains NaN values")
+        elif np.isnan(X_train_weighted).any():
+            print(X_train_weighted)
+            raise ValueError("X_train_weighted contains NaN values")
+        
 
         knn = KNN(n_neighbors=k)
         knn.fit(X_train_weighted, self.Y_train)
