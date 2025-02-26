@@ -96,7 +96,7 @@ class ChOA:
 
 
 class ChOACONTROL:
-    def __init__(self, MAX_ITER, NUM_CHIMPS, FUNCTION):
+    def __init__(self, MAX_ITER, NUM_WOLVES, YEAR, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_CHIMPS = NUM_CHIMPS
 

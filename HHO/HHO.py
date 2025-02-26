@@ -55,7 +55,7 @@ class HHO:
 
 
 class HHOCONTROL:
-    def __init__(self, MAX_ITER, NUM_HAWKS, FUNCTION):
+    def __init__(self, MAX_ITER, NUM_WOLVES, YEAR, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_HAWKS = NUM_HAWKS
         

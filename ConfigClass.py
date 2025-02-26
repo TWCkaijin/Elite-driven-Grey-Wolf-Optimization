@@ -9,6 +9,7 @@ from BES.BES import BESCONTROL
 from HHO.HHO import HHOCONTROL
 from ChOA.ChOA import ChOACONTROL
 from SCSO.SCSO import SCSOCONTROL
+from REINEDGWO.REINEDGWO import REINEDGWOCONTROL
 
 class Color:
     RED = '\033[31m'
@@ -32,6 +33,7 @@ class Configs:
         "PSO" :PSOCONTROL,
         #"HHO" :HHOCONTROL,
         "SCSO":SCSOCONTROL,
-    } 
+        "REINEDGWO": REINEDGWOCONTROL
+    }
     
 
