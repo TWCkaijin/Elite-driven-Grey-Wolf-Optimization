@@ -98,7 +98,6 @@ class EDGWO:
                 self.wolves[i] = np.clip(self.wolves[i], self.lb, self.ub)
 
             convergence_curve.append(self.alpha_score)
-            print(f"iter: {t+1}, fitness: {self.alpha_score}")
         return self.alpha, self.alpha_score, convergence_curve, self.wolves
 
 class EDGWOCONTROL:

@@ -58,7 +58,7 @@ class DataSet:
     def get_GENE_data_dict(self):
         return {
             "1.  ALLAML":7129,
-            "2.  BreatEW_data":31,
+            "2.  BreastEW_data":31,
             "3.  colon":2000,
             "4.  HeartEW_data":14,
             "5.  Leukemia_1":5327,

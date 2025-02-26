@@ -29,12 +29,16 @@ class MAINCONTROL:
     def Start(self, EPOCH):
 
         for optimizer in Configs.optimizers:
-            print(f"{Color.MAGENTA}Starting {optimizer} works for {EPOCH} Epochs{Color.RESET}")
-            obj = Configs.optimizers[optimizer](self.MAX_ITER, self.NUM_WOLVES,
-                                                DataSet.get_function(I=self.f_type, II=self.year, III=self.name, dim=self.DIM))
-            Result = self.Worker(obj, EPOCH)
-            print(f"{Color.GREEN}{optimizer} completed{Color.RESET}\n\n")
-            plt.plot(Result, label=optimizer)
+            try:
+                print(f"{Color.MAGENTA}Starting {optimizer} works for {EPOCH} Epochs{Color.RESET}")
+                obj = Configs.optimizers[optimizer](self.MAX_ITER, self.NUM_WOLVES,
+                                                    DataSet.get_function(I=self.f_type, II=self.year, III=self.name, dim=self.DIM))
+                Result = self.Worker(obj, EPOCH)
+                print(f"{Color.GREEN}{optimizer} completed{Color.RESET}\n\n")
+                plt.plot(Result, label=optimizer)
+            except Exception as e:
+                print(f"{Color.RED}Error in {optimizer}:\n{e}{Color.RESET}")
+                continue
         
         print(f"{Color.GREEN}All Optimizers Completed, plotting the chart{Color.RESET}")
         plt.xlabel("Iterations")
