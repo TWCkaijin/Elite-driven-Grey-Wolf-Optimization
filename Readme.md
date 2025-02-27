@@ -20,7 +20,7 @@
 1. MainControl: 主要架構，包含所有的變量，並且可以呼叫EDGWO和GWO演算法。
 2. EDGWOControl: EDGWO架構，包含EDGWO演算法的變量，並且可以呼叫EDGWO演算法，並且可以呼叫其它演算法及處裡回傳結果。
 3. Algos: 包含11種演算法架構，內有演算法的變量，並且可以呼叫演算法的初始化、適應函數、更新、選擇等。
-   > `REIN-EDGWO.py`為優化版的EDGWO演算法
+   > `REINEDGWO.py`為優化版的EDGWO演算法
 
 
 ### 1. 連續函數實驗結果與論文對照(GWO / EDGWO / CHGWOSCA / REEGWO / MSGWO)
