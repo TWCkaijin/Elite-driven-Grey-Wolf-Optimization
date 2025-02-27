@@ -106,16 +106,13 @@
 - **透過實驗數據顯示 REIN-EDGWO 在某些函數上優於 EDGWO**
 - **以Dataset驗證演算法之效能
 
-#### package requires 
+## package requires 
 opfunu 
 numpy
 Matplotlib
 tqdm 
 scipy
 scikit-learn
-
-
-
 
 
 ## 未來可改進: 
