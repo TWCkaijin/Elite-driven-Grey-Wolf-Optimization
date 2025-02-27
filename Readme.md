@@ -107,12 +107,12 @@
 - **以Dataset驗證演算法之效能
 
 ## package requires 
-opfunu 
-numpy
-Matplotlib
-tqdm 
-scipy
-scikit-learn
+-opfunu 
+-numpy
+-Matplotlib
+-tqdm 
+-scipy
+-scikit-learn
 
 
 ## 未來可改進: 
