@@ -49,10 +49,13 @@
 | 📌 F12 ![論文 F12](./convergence_curve/CEC2022/2022_F12_10D_paper.jpg) | ✅ F12 ![我的 F12](./convergence_curve/CEC2022/2022_F12_10D.png) |
 
 ### CEC2022 In 20-Dimension
+| 論文數據 | 我的結果 |
+|:--------:|:--------:|
 | 📌 F7 ![論文 F7](./convergence_curve/CEC2022/2022_F7_20D_paper.jpg) | ✅ F7 ![我的 F7](./convergence_curve/CEC2022/2022_F7_20D.png) |
 | 📌 F9 ![論文 F9](./convergence_curve/CEC2022/2022_F9_20D_paper.jpg) | ✅ F9 ![我的 F9](./convergence_curve/CEC2022/2022_F9_20D.png) |
 | 📌 F10 ![論文 F10](./convergence_curve/CEC2022/2022_F10_20D_paper.jpg) | ✅ F10 ![我的 F10](./convergence_curve/CEC2022/2022_F10_20D.png) |
 | 📌 F11 ![論文 F11](./convergence_curve/CEC2022/2022_F11_20D_paper.jpg) | ✅ F11 ![我的 F11](./convergence_curve/CEC2022/2022_F11_20D.png) |
+
 
 
 
