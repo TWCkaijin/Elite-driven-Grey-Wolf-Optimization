@@ -4,6 +4,5 @@
 test*
 __pycache__
 *.pyc
-LiveDemo*
 __init__*
 DataSet*

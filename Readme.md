@@ -93,9 +93,6 @@
         <div style="flex: 1; padding: 5px;">
             <img src="_EXP_PIC\GENE-ALLAML-30N.png" alt="P_CEC2021-F6" style="width: 100%;">
         </div>
-        <div style="flex: 1; padding: 5px;">
-            <img src="_" alt="R_CEC2021-F6" style="width: 100%;">
-        </div>
     </div>
 </div>
 
@@ -104,7 +101,7 @@
 - **實作了 EDGWO，並針對 EDGWO 進行強化**
 - **比較了多種演算法的適應值與收斂速度**
 - **透過實驗數據顯示 REIN-EDGWO 在某些函數上優於 EDGWO**
-- **以Dataset驗證演算法之效能
+- **以Dataset驗證演算法之效能**
 
 ## package requires 
 opfunu 
@@ -116,4 +113,4 @@ scikit-learn
 
 
 ## 未來可改進: 
-1. LiveDemo 形式 _(已大致完成)_: 可同時觀測多個演算法的實時演算結果，進行可視化演算法比較
+1. LiveDemo 形式 _(基礎已完成)_: 可觀測演算法的實時演算結果，進行可視化演算法比較
