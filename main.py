@@ -21,7 +21,7 @@ class MAINCONTROL:
 
     def Worker(self, obj, EPOCH, idx):
         Result= None
-        bar = tqdm(range(EPOCH), position=idx, leave=False, dynamic_ncols=True)
+        bar = tqdm(range(EPOCH), position=idx, leave=True, dynamic_ncols=True)
         for i in bar:
             bar.set_description(f"{obj.__name__:<16}-Epoch {i+1}/{EPOCH}")
             tmp = (1/(obj.Start()[-1])) if self.f_type == "GENE" else obj.Start()[-1]
@@ -59,10 +59,12 @@ class MAINCONTROL:
 
         print(f"{Color.GREEN}All Optimizers Completed, plotting the chart{Color.RESET}")
         plt.xlabel("Iterations")
-        plt.ylabel("Fitness Value (Log10)")
         if self.f_type == "GENE":
+            plt.ylabel("Accuracy")
             plt.title(f"{self.name}-{self.DIM}D-{self.NUM_WOLVES}N-{EPOCH} EPOCH")
         else:
+            
+            plt.ylabel("Fitness Value (Log10)")
             plt.title(f"CEC{self.year}-{self.name}-{self.DIM}D-{self.NUM_WOLVES}N-{EPOCH} EPOCH")
         plt.legend()
         plt.show()
@@ -70,18 +72,23 @@ class MAINCONTROL:
 
     def Single_Start(self, EPOCH):
 
-        for optimizer in Configs.optimizers:
+        for idx, optimizer in enumerate(Configs.optimizers):
             print(f"{Color.MAGENTA}Starting {optimizer} works for {EPOCH} Epochs{Color.RESET}")
             obj = Configs.optimizers[optimizer](self.MAX_ITER, self.NUM_WOLVES,
                                                 DataSet.get_function(I=self.f_type, II=self.year, III=self.name, dim=self.DIM))
-            Result = self.Worker(obj, EPOCH)
+            Result = self.Worker(obj, EPOCH, idx)
             print(f"{Color.GREEN}{optimizer} completed{Color.RESET}\n\n")
             plt.plot(Result, label=optimizer)
         
         print(f"{Color.GREEN}All Optimizers Completed, plotting the chart{Color.RESET}")
         plt.xlabel("Iterations")
-        plt.ylabel("Fitness Value (Log10)")
-        plt.title(f"CEC{self.year}-{self.name}-{self.DIM}D-{self.NUM_WOLVES}N-{EPOCH} EPOCH")
+        if self.f_type == "GENE":
+            plt.ylabel("Accuracy")
+            plt.title(f"{self.name}-{self.DIM}D-{self.NUM_WOLVES}N-{EPOCH} EPOCH")
+        else:
+            
+            plt.ylabel("Fitness Value (Log10)")
+            plt.title(f"CEC{self.year}-{self.name}-{self.DIM}D-{self.NUM_WOLVES}N-{EPOCH} EPOCH")
         plt.legend()
         plt.show()
 
@@ -90,9 +97,12 @@ if __name__ == '__main__':
 
 
     funcs_by_year = DataSet().all_funcs
-    
-
-    while True:
+    qc = ['q','Q','quit','Quit']
+    f_type = None
+    year = None
+    name = None
+    dim = None
+    while f_type not in qc and  year not in qc and  name not in qc and  dim not in qc:
         
         f_type = input(f"Enter the Dataset param ({' / '.join(funcs_by_year)}): ") # DataSet
         year = None
@@ -102,6 +112,8 @@ if __name__ == '__main__':
         if f_type not in funcs_by_year:
             print("Invalid function type")
             continue
+
+
         if f_type == "CEC":
             year = input(f"Year param ({' / '.join(funcs_by_year[f_type])}): ") # Year
             if year not in funcs_by_year[f_type]:
@@ -112,27 +124,32 @@ if __name__ == '__main__':
             if name not in funcs_by_year[f_type][year]:
                 print("Invalid param\n\n")
                 continue
-            
-
+    
             dim = input(f"Dim param ({' / '.join(funcs_by_year[f_type][year][name])}): ") # Dimension
             if dim not in funcs_by_year[f_type][year][name]:
                 print("Invalid param\n\n")
                 continue
+
         elif(f_type == "GENE"):
             print(f"Name param:\n{'\n'.join(funcs_by_year[f_type])}")
             name = input(f"Enter the index: ")
             name = list(funcs_by_year['GENE'].keys())[int(name)-1]
             dim = funcs_by_year[f_type][name]
             print(f"Selected: {name} - Dimension: {dim}")
+            
         else:
             print("Invalid function type")
             continue
         
 
+
         print(f"{Color.MAGENTA}DataSet: {f_type}-{year}-{name} - Dimension: {dim}{Color.RESET}\n")
-        ITER = int(input(f"{Color.BLUE}Input Ieration per epoch: {Color.RESET}"))
-        EPOCH = int(input(f"{Color.BLUE}Input Epochs: {Color.RESET}"))
-        process = input(f"{Color.BLUE}Use multi process? (Y/N): {Color.RESET}")
+        try: 
+            ITER = int(input(f"{Color.BLUE}Input Ieration per epoch: {Color.RESET}"))
+            EPOCH = int(input(f"{Color.BLUE}Input Epochs: {Color.RESET}"))
+            process = input(f"{Color.BLUE}Use multi process? (Y/N): {Color.RESET}")
+        except:
+            print(f"{Color.RED}Invalid input{Color.RESET}")
         if process=='Y' or process=='y':
             try:
                 MAINCONTROL(MAX_ITER=ITER, NUM_WOLVES=30, f_type=f_type,year=year, name=name, DIM=int(dim)).Multi_Start(EPOCH)
@@ -143,3 +160,6 @@ if __name__ == '__main__':
                 MAINCONTROL(MAX_ITER=ITER, NUM_WOLVES=30, f_type=f_type,year=year, name=name, DIM=int(dim)).Single_Start(EPOCH)
         else:
             MAINCONTROL(MAX_ITER=ITER, NUM_WOLVES=30, f_type=f_type,year=year, name=name, DIM=int(dim)).Single_Start(EPOCH)
+
+
+    print(f"{Color.RED}Quitting...{Color.RESET}")
