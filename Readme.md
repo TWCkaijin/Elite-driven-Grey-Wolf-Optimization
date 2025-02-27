@@ -24,12 +24,36 @@
 
 
 ### 1. 連續函數實驗結果與論文對照
+#### CEC2021 In 10-Dimension
 | 論文數據 | 我的結果 |
 |----------|---------|
 | 📌 F3 ![論文 F3](./convergence_curve/CEC2021/2021_F3_10D_paper.jpg) | ✅ F3 ![我的 F3](./convergence_curve/CEC2021/2021_F3_10D.png) |
 | 📌 F6 ![論文 F6](./convergence_curve/CEC2021/2021_F6_10D_paper.jpg) | ✅ F6 ![我的 F6](./convergence_curve/CEC2021/2021_F6_10D.png) |
 | 📌 F8 ![論文 F8](./convergence_curve/CEC2021/2021_F8_10D_paper.jpg) | ✅ F8 ![我的 F8](./convergence_curve/CEC2021/2021_F8_10D.png) |
 | 📌 F10 ![論文 F10](./convergence_curve/CEC2021/2021_F10_10D_paper.jpg) | ✅ F10 ![我的 F10](./convergence_curve/CEC2021/2021_F10_10D.png) |
+
+#### CEC2021 In 20-Dimension
+| 論文數據 | 我的結果 |
+|:--------:|:--------:|
+| 📌 F4 ![論文 F4](./convergence_curve/CEC2021/2021_F4_20D_paper.jpg) | ✅ F4 ![我的 F4](./convergence_curve/CEC2021/2021_F4_20D.png) |
+| 📌 F7 ![論文 F7](./convergence_curve/CEC2021/2021_F7_20D_paper.jpg) | ✅ F7 ![我的 F7](./convergence_curve/CEC2021/2021_F7_20D.png) |
+| 📌 F8 ![論文 F8](./convergence_curve/CEC2021/2021_F8_20D_paper.jpg) | ✅ F8 ![我的 F8](./convergence_curve/CEC2021/2021_F8_20D.png) |
+| 📌 F9 ![論文 F9](./convergence_curve/CEC2021/2021_F9_20D_paper.jpg) | ✅ F9 ![我的 F9](./convergence_curve/CEC2021/2021_F9_20D.png) |
+
+#### CEC2022 In 10-Dimension
+| 論文數據 | 我的結果 |
+|:--------:|:--------:|
+| 📌 F2 ![論文 F2](./convergence_curve/CEC2022/2022_F2_10D_paper.jpg) | ✅ F2 ![我的 F2](./convergence_curve/CEC2022/2022_F2_10D.png) |
+| 📌 F6 ![論文 F6](./convergence_curve/CEC2022/2022_F6_10D_paper.jpg) | ✅ F6 ![我的 F6](./convergence_curve/CEC2022/2022_F6_10D.png) |
+| 📌 F8 ![論文 F8](./convergence_curve/CEC2022/2022_F8_10D_paper.jpg) | ✅ F8 ![我的 F8](./convergence_curve/CEC2022/2022_F8_10D.png) |
+| 📌 F12 ![論文 F12](./convergence_curve/CEC2022/2022_F12_10D_paper.jpg) | ✅ F12 ![我的 F12](./convergence_curve/CEC2022/2022_F12_10D.png) |
+
+#### CEC2022 In 20-Dimension
+| 📌 F7 ![論文 F7](./convergence_curve/CEC2022/2022_F7_20D_paper.jpg) | ✅ F7 ![我的 F7](./convergence_curve/CEC2022/2022_F7_20D.png) |
+| 📌 F9 ![論文 F9](./convergence_curve/CEC2022/2022_F9_20D_paper.jpg) | ✅ F9 ![我的 F9](./convergence_curve/CEC2022/2022_F9_20D.png) |
+| 📌 F10 ![論文 F10](./convergence_curve/CEC2022/2022_F10_20D_paper.jpg) | ✅ F10 ![我的 F10](./convergence_curve/CEC2022/2022_F10_20D.png) |
+| 📌 F11 ![論文 F11](./convergence_curve/CEC2022/2022_F11_20D_paper.jpg) | ✅ F11 ![我的 F11](./convergence_curve/CEC2022/2022_F11_20D.png) |
+
 
 <div style="display: flex; flex-wrap: wrap; align-items: center;">
     <div style="flex: 1; text-align: center;">
