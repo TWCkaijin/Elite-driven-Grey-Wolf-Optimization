@@ -58,16 +58,14 @@ class DataSet:
     def get_GENE_data_dict(self):
         return {
             "1.  ALLAML":7129,
-            "2.  BreastEW_data":31,
-            "3.  colon":2000,
-            "4.  HeartEW_data":14,
-            "5.  Leukemia_1":5327,
-            "6.  Leukemia_2":7129,
-            "7.  Leukemia_3":11225,
-            "8.  Leukemia":3312,
-            "9.  lung_discrete":325,
-            "10. lung":3312,
-            "11. lymphoma":4026,
+            "2.  colon":2000,
+            "3.  Leukemia_1":5327,
+            "4.  Leukemia_2":7129,
+            "5.  Leukemia_3":11225,
+            "6.  Leukemia":3312,
+            "7.  lung_discrete":325,
+            "8. lung":3312,
+            "9. lymphoma":4026,
         }
         
 
