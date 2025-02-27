@@ -16,6 +16,7 @@
 3. `演算法.py`: 各式演算法，包含演算法的主要架構，包含初始化、適應函數、更新、選擇以該演算法與主程式的交互介面。
 
 
+# 實驗數據
 ## 觀察者架構
 1. MainControl: 主要架構，包含所有的變量，並且可以呼叫EDGWO和GWO演算法。
 2. EDGWOControl: EDGWO架構，包含EDGWO演算法的變量，並且可以呼叫EDGWO演算法，並且可以呼叫其它演算法及處裡回傳結果。
@@ -23,8 +24,8 @@
    > `REINEDGWO.py`為優化版的EDGWO演算法
 
 
-### 1. 連續函數實驗結果與論文對照
-#### CEC2021 In 10-Dimension
+## 1. 連續函數實驗結果與論文對照
+### CEC2021 In 10-Dimension
 | 論文數據 | 我的結果 |
 |----------|---------|
 | 📌 F3 ![論文 F3](./convergence_curve/CEC2021/2021_F3_10D_paper.jpg) | ✅ F3 ![我的 F3](./convergence_curve/CEC2021/2021_F3_10D.png) |
@@ -32,7 +33,7 @@
 | 📌 F8 ![論文 F8](./convergence_curve/CEC2021/2021_F8_10D_paper.jpg) | ✅ F8 ![我的 F8](./convergence_curve/CEC2021/2021_F8_10D.png) |
 | 📌 F10 ![論文 F10](./convergence_curve/CEC2021/2021_F10_10D_paper.jpg) | ✅ F10 ![我的 F10](./convergence_curve/CEC2021/2021_F10_10D.png) |
 
-#### CEC2021 In 20-Dimension
+### CEC2021 In 20-Dimension
 | 論文數據 | 我的結果 |
 |:--------:|:--------:|
 | 📌 F4 ![論文 F4](./convergence_curve/CEC2021/2021_F4_20D_paper.jpg) | ✅ F4 ![我的 F4](./convergence_curve/CEC2021/2021_F4_20D.png) |
@@ -40,7 +41,7 @@
 | 📌 F8 ![論文 F8](./convergence_curve/CEC2021/2021_F8_20D_paper.jpg) | ✅ F8 ![我的 F8](./convergence_curve/CEC2021/2021_F8_20D.png) |
 | 📌 F9 ![論文 F9](./convergence_curve/CEC2021/2021_F9_20D_paper.jpg) | ✅ F9 ![我的 F9](./convergence_curve/CEC2021/2021_F9_20D.png) |
 
-#### CEC2022 In 10-Dimension
+### CEC2022 In 10-Dimension
 | 論文數據 | 我的結果 |
 |:--------:|:--------:|
 | 📌 F2 ![論文 F2](./convergence_curve/CEC2022/2022_F2_10D_paper.jpg) | ✅ F2 ![我的 F2](./convergence_curve/CEC2022/2022_F2_10D.png) |
@@ -48,37 +49,13 @@
 | 📌 F8 ![論文 F8](./convergence_curve/CEC2022/2022_F8_10D_paper.jpg) | ✅ F8 ![我的 F8](./convergence_curve/CEC2022/2022_F8_10D.png) |
 | 📌 F12 ![論文 F12](./convergence_curve/CEC2022/2022_F12_10D_paper.jpg) | ✅ F12 ![我的 F12](./convergence_curve/CEC2022/2022_F12_10D.png) |
 
-#### CEC2022 In 20-Dimension
+### CEC2022 In 20-Dimension
 | 📌 F7 ![論文 F7](./convergence_curve/CEC2022/2022_F7_20D_paper.jpg) | ✅ F7 ![我的 F7](./convergence_curve/CEC2022/2022_F7_20D.png) |
 | 📌 F9 ![論文 F9](./convergence_curve/CEC2022/2022_F9_20D_paper.jpg) | ✅ F9 ![我的 F9](./convergence_curve/CEC2022/2022_F9_20D.png) |
 | 📌 F10 ![論文 F10](./convergence_curve/CEC2022/2022_F10_20D_paper.jpg) | ✅ F10 ![我的 F10](./convergence_curve/CEC2022/2022_F10_20D.png) |
 | 📌 F11 ![論文 F11](./convergence_curve/CEC2022/2022_F11_20D_paper.jpg) | ✅ F11 ![我的 F11](./convergence_curve/CEC2022/2022_F11_20D.png) |
 
 
-<div style="display: flex; flex-wrap: wrap; align-items: center;">
-    <div style="flex: 1; text-align: center;">
-        <p>📌 <b>論文數據 (F3)</b></p>
-        <img src="./results/paper_F3.png" width="400">
-    </div>
-    <div style="flex: 1; text-align: center;">
-        <p>✅ <b>我的結果 (F3)</b></p>
-        <img src="./results/my_F3.png" width="400">
-    </div>
-</div>
-
-### 2. 連續函數實驗結果與論文對照(10種)
-<div>
-    <div style="display: flex; flex-wrap: wrap;">
-        <div style="flex: 1; padding: 5px;">
-            <img src="./_OLD_EXP_PIC/P_CEC2021-F7.png" alt="P_CEC2021-F6" style="width: 100%;">
-        </div>
-        <div style="flex: 1; padding: 5px;">
-            <img src="_EXP_PIC\CEC-2022-F7-10D.png" 
-            alt="R_CEC2021-F6" style="width: 100%;">
-        </div>
-    </div>
-    完成日期: 2024/02/21
-</div>
 
 ### 3. 自優化(REIN-EDGWO) vs EDGWO 實驗對照 :
 我們有稍微針對EDGWO進行了一些改進，並且將其命名為REIN-EDGWO，並且進行了一些實驗，結果如下:
