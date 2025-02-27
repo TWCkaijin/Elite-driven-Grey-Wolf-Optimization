@@ -23,7 +23,7 @@
    > `REINEDGWO.py`為優化版的EDGWO演算法
 
 
-### 1. 連續函數實驗結果與論文對照(GWO / EDGWO / CHGWOSCA / REEGWO / MSGWO)
+### 1. 連續函數實驗結果與論文對照
 <div>
     <div style="display: flex; flex-wrap: wrap;">
         <div style="flex: 1; padding: 5px;">
