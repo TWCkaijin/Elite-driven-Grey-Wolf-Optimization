@@ -27,10 +27,10 @@
 <div>
     <div style="display: flex; flex-wrap: wrap;">
         <div style="flex: 1; padding: 5px;">
-            <img src="./_OLD_EXP_PIC/P_CEC2021-F7.png" alt="P_CEC2021-F6" style="width: 100%;">
+            <img src="./convergence_curve/CEC2021/2021_F3_10D.png" alt="P_CEC2021-F6" style="width: 50%;">
         </div>
         <div style="flex: 1; padding: 5px;">
-            <img src="./_OLD_EXP_PIC/R_CEC2021-F7.png" alt="R_CEC2021-F6" style="width: 100%;">
+            <img src="./convergence_curve/CEC2021/2021_F3_10D_paper.png" alt="R_CEC2021-F6" style="width: 50%;">
         </div>
     </div>
     完成日期: 2024/02/21
