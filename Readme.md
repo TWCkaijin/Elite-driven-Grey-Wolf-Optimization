@@ -1,7 +1,7 @@
 # 移動優化灰狼演算法 Elite-driven-Grey-Wolf-Optimization
 > 程式碼內仍有大量的註解內容，其為為後續更新做準備或具備除錯用途
 ## 使用方法: 
-本專案實作了 **Elite-driven Grey Wolf Optimization (EDGWO)**，並比較多種論文中提及的優化演算法的性能，適用於不同的數據集與適應函數 (CEC Dataset與Gene Dataset)。使用者可以透過輸入選擇特定的函數來進行優化，並透過**平行計算**執行多種演算法，最終輸出優化結果與可視化圖表。
+本專案實作了 **Elite-driven Grey Wolf Optimization (EDGWO)**，並比較多種論文中提及的優化演算法的性能，適用於不同的數據集與適應函數 **(CEC Dataset與Gene Dataset)**。使用者可以透過輸入選擇特定的函數來進行優化，並透過**平行計算**執行多種演算法，最終輸出優化結果與可視化圖表。
 1. ### 執行 `main.py` 進行優化測試
    主程式會執行不同的優化演算法，並針對所選**fitness function**進行多次iterations，運行後可透過輸入來選擇測試參數。
 2. ### 設定優化演算法 `ConfigClass.py`
@@ -97,8 +97,22 @@
             <img src="_" alt="R_CEC2021-F6" style="width: 100%;">
         </div>
     </div>
-    完成日期: 2024/02/26
 </div>
+
+## 總結 (Summary)
+本專案：
+- **實作了 EDGWO，並針對 EDGWO 進行強化**
+- **比較了多種演算法的適應值與收斂速度**
+- **透過實驗數據顯示 REIN-EDGWO 在某些函數上優於 EDGWO**
+- **以Dataset驗證演算法之效能
+
+#### package requires 
+opfunu 
+numpy
+Matplotlib
+tqdm 
+scipy
+scikit-learn
 
 
 
