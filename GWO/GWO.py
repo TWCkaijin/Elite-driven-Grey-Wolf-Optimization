@@ -76,6 +76,7 @@ class GWO:
     
 
 class GWOCONTROL:
+    __name__ = "GWO"
     def __init__(self,MAX_ITER, NUM_WOLVES, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_WOLVES = NUM_WOLVES

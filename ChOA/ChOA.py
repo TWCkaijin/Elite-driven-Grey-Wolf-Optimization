@@ -98,6 +98,7 @@ class ChOA:
 
 
 class ChOACONTROL:
+    __name__ = "ChOA"
     def __init__(self, MAX_ITER, NUM_CHIMPS, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_CHIMPS = NUM_CHIMPS

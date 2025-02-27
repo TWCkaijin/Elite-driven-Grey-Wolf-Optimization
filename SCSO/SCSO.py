@@ -62,6 +62,7 @@ class SCSO:
 
 
 class SCSOCONTROL:
+    __name__ = "SCSO"
     def __init__(self, MAX_ITER, NUM_CATS, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_CATS = NUM_CATS

@@ -83,6 +83,7 @@ class HHO:
         return self.best_position, self.best_score, convergence_curve, self.hawks
 
 class HHOCONTROL:
+    __name__ = "HHO"
     def __init__(self, MAX_ITER, NUM_HAWKS, FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_HAWKS = NUM_HAWKS

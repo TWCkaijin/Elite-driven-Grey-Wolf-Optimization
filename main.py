@@ -8,6 +8,7 @@ from ConfigClass import Configs
 from ConfigClass import Color
 
 from DataSet import DataSet
+from tqdm import tqdm
 
 class MAINCONTROL:
     def __init__(self, MAX_ITER, NUM_WOLVES, f_type, year, name, DIM):
@@ -18,26 +19,32 @@ class MAINCONTROL:
         self.name = name    
         self.DIM = DIM
 
-    def Worker(self, obj, EPOCH):
+    def Worker(self, obj, EPOCH, idx):
         Result= None
-        print(f"{Color.BLUE}Starting {obj.__name__} with {EPOCH} EPOCH{Color.RESET}")
-        for i in range(EPOCH):
+        bar = tqdm(range(EPOCH), position=idx, leave=False, dynamic_ncols=True)
+        for i in bar:
+            bar.set_description(f"{obj.__name__:<16}-Epoch {i+1}/{EPOCH}")
             tmp = (1/(obj.Start()[-1])) if self.f_type == "GENE" else obj.Start()[-1]
             Result = (Result * i + tmp)/ (i+1) if Result is not None else tmp
-            print(f"{Color.YELLOW}{obj}Epoch {i+1}/{EPOCH}", end='')
         print()
 
         return Result
 
-    def Start(self, EPOCH):
+    def Multi_Start(self, EPOCH):
         results = []
-        print(f"\n\n{Color.GREEN}Starting Optimizers with parellel computing{Color.RESET}")
+        print(f"{Color.GREEN}Starting Optimizers with parellel computing{Color.RESET}")
         with concurrent.futures.ProcessPoolExecutor() as executor:
-            future_to_optimizer = {
-                executor.submit(self.Worker, 
-                                Configs.optimizers[optimizer](self.MAX_ITER, self.NUM_WOLVES, DataSet.get_function(self.f_type, self.year, self.name, self.DIM))
-                                , EPOCH): optimizer for optimizer in Configs.optimizers
-            }
+            future_to_optimizer = {}
+
+            #分發任務
+            for idx, optimizer in enumerate(Configs.optimizers):
+                opt = Configs.optimizers[optimizer](self.MAX_ITER, self.NUM_WOLVES, DataSet.get_function(self.f_type, self.year, self.name, self.DIM))
+                #print(f"{Color.BLUE}\n\nStarting {opt.__name__} with {EPOCH} EPOCH{Color.RESET}")
+                exer = executor.submit(self.Worker, opt, EPOCH, idx)
+
+                future_to_optimizer[exer] = optimizer
+
+            #全部完成後回收執行續
             for future in concurrent.futures.as_completed(future_to_optimizer):
                 optimizer = future_to_optimizer[future]
                 try:
@@ -47,9 +54,29 @@ class MAINCONTROL:
                     print(f"{Color.RED}Error in {optimizer}:\n{e}{Color.RESET}")
 
         for optimizer, result in results:
-            print(f"{Color.GREEN}{optimizer} completed{Color.RESET}\n\n")
+            print(f"{Color.GREEN}{optimizer} completed{Color.RESET}")
             plt.plot(result, label=optimizer)
-        
+
+        print(f"{Color.GREEN}All Optimizers Completed, plotting the chart{Color.RESET}")
+        plt.xlabel("Iterations")
+        plt.ylabel("Fitness Value (Log10)")
+        if self.f_type == "GENE":
+            plt.title(f"{self.name}-{self.DIM}D-{self.NUM_WOLVES}N-{EPOCH} EPOCH")
+        else:
+            plt.title(f"CEC{self.year}-{self.name}-{self.DIM}D-{self.NUM_WOLVES}N-{EPOCH} EPOCH")
+        plt.legend()
+        plt.show()
+
+
+    def Single_Start(self, EPOCH):
+
+        for optimizer in Configs.optimizers:
+            print(f"{Color.MAGENTA}Starting {optimizer} works for {EPOCH} Epochs{Color.RESET}")
+            obj = Configs.optimizers[optimizer](self.MAX_ITER, self.NUM_WOLVES,
+                                                DataSet.get_function(I=self.f_type, II=self.year, III=self.name, dim=self.DIM))
+            Result = self.Worker(obj, EPOCH)
+            print(f"{Color.GREEN}{optimizer} completed{Color.RESET}\n\n")
+            plt.plot(Result, label=optimizer)
         
         print(f"{Color.GREEN}All Optimizers Completed, plotting the chart{Color.RESET}")
         plt.xlabel("Iterations")
@@ -76,29 +103,43 @@ if __name__ == '__main__':
             print("Invalid function type")
             continue
         if f_type == "CEC":
-            year = input(f"Enter the Year param ({' / '.join(funcs_by_year[f_type])}): ") # Year
+            year = input(f"Year param ({' / '.join(funcs_by_year[f_type])}): ") # Year
             if year not in funcs_by_year[f_type]:
                 print("Invalid param")
                 continue
 
-            name = input(f"Enter the Name param ({' / '.join(funcs_by_year[f_type][year])}): ") # Function Name
+            name = input(f"Name param ({' / '.join(funcs_by_year[f_type][year])}): ") # Function Name
             if name not in funcs_by_year[f_type][year]:
                 print("Invalid param\n\n")
                 continue
             
 
-            dim = input(f"Enter the Dim param ({' / '.join(funcs_by_year[f_type][year][name])}): ") # Dimension
+            dim = input(f"Dim param ({' / '.join(funcs_by_year[f_type][year][name])}): ") # Dimension
             if dim not in funcs_by_year[f_type][year][name]:
                 print("Invalid param\n\n")
                 continue
         elif(f_type == "GENE"):
-            name = input(f"Enter the Name param:\n{'\n'.join(funcs_by_year[f_type])}\nEnter the index: ")
+            print(f"Name param:\n{'\n'.join(funcs_by_year[f_type])}")
+            name = input(f"Enter the index: ")
             name = list(funcs_by_year['GENE'].keys())[int(name)-1]
             dim = funcs_by_year[f_type][name]
             print(f"Selected: {name} - Dimension: {dim}")
         else:
             print("Invalid function type")
             continue
+        
 
         print(f"{Color.MAGENTA}DataSet: {f_type}-{year}-{name} - Dimension: {dim}{Color.RESET}\n")
-        MAINCONTROL(MAX_ITER=int(input("Input Ieration per epoch: ")), NUM_WOLVES=30, f_type=f_type,year=year, name=name, DIM=int(dim)).Start(int(input("Input Epochs: ")))
+        ITER = int(input(f"{Color.BLUE}Input Ieration per epoch: {Color.RESET}"))
+        EPOCH = int(input(f"{Color.BLUE}Input Epochs: {Color.RESET}"))
+        process = input(f"{Color.BLUE}Use multi process? (Y/N): {Color.RESET}")
+        if process=='Y' or process=='y':
+            try:
+                MAINCONTROL(MAX_ITER=ITER, NUM_WOLVES=30, f_type=f_type,year=year, name=name, DIM=int(dim)).Multi_Start(EPOCH)
+                
+            except Exception as e:
+                print(f"{Color.RED}Error running with multiprocess: {e}{Color.RESET}")
+                print(f"{Color.RED}Try to run with single process{Color.RESET}")
+                MAINCONTROL(MAX_ITER=ITER, NUM_WOLVES=30, f_type=f_type,year=year, name=name, DIM=int(dim)).Single_Start(EPOCH)
+        else:
+            MAINCONTROL(MAX_ITER=ITER, NUM_WOLVES=30, f_type=f_type,year=year, name=name, DIM=int(dim)).Single_Start(EPOCH)

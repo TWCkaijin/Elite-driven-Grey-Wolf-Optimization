@@ -65,7 +65,7 @@
 <div>
     <div style="display: flex; flex-wrap: wrap;">
         <div style="flex: 1; padding: 5px;">
-            <img src="" alt="P_CEC2021-F6" style="width: 100%;">
+            <img src="_EXP_PIC\GENE-ALLAML-30N.png" alt="P_CEC2021-F6" style="width: 100%;">
         </div>
         <div style="flex: 1; padding: 5px;">
             <img src="_" alt="R_CEC2021-F6" style="width: 100%;">

@@ -74,6 +74,7 @@ class BES:
     
 
 class BESCONTROL:
+    __name__ = "BES"
     def __init__(self,MAX_ITER, NUM_WOLVES,FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_PARTICLES = NUM_WOLVES

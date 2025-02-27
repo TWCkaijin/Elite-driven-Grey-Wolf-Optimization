@@ -102,6 +102,7 @@ class REIN_EDGWO:
         return self.alpha, self.alpha_score, convergence_curve, self.wolves
     
 class REINEDGWOCONTROL:
+    __name__ = "REINEDGWO"
     def __init__(self,MAX_ITER, NUM_WOLVES,  FUNCTION):
         self.MAX_ITER = MAX_ITER
         self.NUM_WOLVES = NUM_WOLVES

@@ -104,6 +104,7 @@ class EDGWO:
         return self.alpha, self.alpha_score, convergence_curve, self.wolves
 
 class EDGWOCONTROL:
+    __name__ = "EDGWO"
     def __init__(self,MAX_ITER, NUM_WOLVES, FUNCTION=10):
         self.MAX_ITER = MAX_ITER
         self.NUM_WOLVES = NUM_WOLVES

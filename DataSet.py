@@ -91,6 +91,7 @@ class GENEFUNC:
         self.dim = dim
         self.data = sio.loadmat(f'_geneData/{self.name}.mat')['X']
         self.labels = sio.loadmat(f'_geneData/{self.name}.mat')['Y']
+        train_test_split(self.data, self.labels, test_size=0.2, random_state=42)
         self.X_train, self.X_test = self.data[:int(len(self.data)*0.8)], self.data[int(len(self.data)*0.8):]
         self.Y_train, self.Y_test = self.labels[:int(len(self.labels)*0.8)], self.labels[int(len(self.labels)*0.8):]
         self.Y_test = self.Y_test.ravel()
