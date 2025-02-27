@@ -1,6 +1,7 @@
 # 移動優化灰狼演算法 Elite-driven-Grey-Wolf-Optimization
 > 程式碼內仍有大量的註解內容，其為為後續更新做準備或具備除錯用途
 ## 使用方法: 
+本專案實作了 **Elite-driven Grey Wolf Optimization (EDGWO)**，並比較多種論文中提及的優化演算法的性能，適用於不同的數據集與適應函數 (CEC Dataset與Gene Dataset)。程式允許使用者選擇特定的函數來進行優化，並透過**平行計算**執行多種演算法，最終輸出優化結果與可視化圖表。
 1. 透過執行 `main.py` 來執行程式，會依序呈現不同的適應函數結果，每次呈現皆會有EDGWO和GWO的結果。
 2. 執行 `LiveDemo.py` 來觀察演算法的實時演算結果，進行可視化演算法比較。(但方法尚未完善)
 
