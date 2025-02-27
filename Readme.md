@@ -107,12 +107,12 @@
 - **提供收斂曲線圖與數離散資料實驗結果，量化演算法優化效果，使結果更具說服力。**
 
 ## package requires 
--opfunu 
--numpy
--Matplotlib
--tqdm 
--scipy
--scikit-learn
+- opfunu 
+- numpy
+- Matplotlib
+- tqdm 
+- scipy
+- scikit-learn
 
 
 ## 未來可改進: 
