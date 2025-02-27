@@ -69,7 +69,13 @@ class MSGWO:
                 w_delta = 0.2
                 X_new = w_alpha * X1 + w_beta * X2 + w_delta * X3
 
-                X_new = np.clip(X_new, self.lb, self.ub)
+
+                # 限制範圍
+                if self.f_type =='d':
+                    self.wolves[i] = np.clip(X_new, 1, DataSet.NN_K)
+                    self.wolves[i][-1] = np.clip(self.wolves[i][-1], DataSet.param_LB, DataSet.param_UB)
+                else:
+                    X_new = np.clip(X_new, self.lb, self.ub)
                 self.wolves[i] = X_new
 
             convergence_curve.append(self.alpha_score)

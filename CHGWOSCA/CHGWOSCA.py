@@ -71,13 +71,17 @@ class CHGWOSCA:
                 # 混合
                 X_new = w * X_gwo + (1-w) * X_sca
 
-                X_new = np.clip(X_new, self.lb, self.ub) # 邊界處理
+                if self.f_type == "d": #邊界處理
+                    X_new[-1] = np.clip(X_new[-1], 1, DataSet.NN_K)
+                    X_new[:-1] = np.clip(X_new[:-1], DataSet.param_LB, DataSet.param_UB) 
+                else:
+                    X_new = np.clip(X_new, self.lb, self.ub)
                 self.wolves[i] = X_new
 
             convergence_curve.append(self.alpha_score)
 
         return self.alpha, self.alpha_score, convergence_curve, self.wolves
-      
+
 
 class CHGWOSCACONTROL:
     def __init__(self,MAX_ITER, NUM_WOLVES, FUNCTION):

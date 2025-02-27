@@ -94,8 +94,11 @@ class EDGWO:
                         l = -1 + 2 * r5
                         self.wolves[i] = self.alpha + np.linalg.norm(self.alpha - self.wolves[i]) * np.exp(l) * np.cos(2 * np.pi * l)
 
-                # 限制範圍
-                self.wolves[i] = np.clip(self.wolves[i], self.lb, self.ub)
+                if self.f_type== 'd':# 限制範圍
+                    self.wolves[i][-1] = np.clip(self.wolves[i][-1], 1, DataSet.NN_K)
+                    self.wolves[i][:-1] = np.clip(self.wolves[i][:-1], DataSet.param_LB, DataSet.param_UB)
+                else:
+                    self.wolves[i] = np.clip(self.wolves[i], self.lb, self.ub)
 
             convergence_curve.append(self.alpha_score)
         return self.alpha, self.alpha_score, convergence_curve, self.wolves

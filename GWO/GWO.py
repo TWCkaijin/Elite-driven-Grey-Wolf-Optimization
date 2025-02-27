@@ -64,8 +64,11 @@ class GWO:
 
                 self.wolves[i] = (X1 + X2 + X3) / 3
 
-                # 限制範圍
-                self.wolves[i] = np.clip(self.wolves[i], self.lb, self.ub)
+                if self.f_type =='d':# 限制範圍
+                    self.wolves[i][:-1] = np.clip(self.wolves[i][:-1], 1, DataSet.NN_K)
+                    self.wolves[i][-1] = np.clip(self.wolves[i][-1], DataSet.param_LB, DataSet.param_UB)
+                else:
+                    self.wolves[i] = np.clip(self.wolves[i], self.lb, self.ub)
 
             convergence_curve.append(self.alpha_score)
         

@@ -50,7 +50,11 @@ class SCSO:
                     new_position = r * (self.best_cat - np.random.rand() * self.cats[i])
                 
                 # 限制範圍
-                self.cats[i] = np.clip(new_position, self.lb, self.ub)
+                if self.f_type == "d":
+                    new_position[-1] = np.clip(new_position[-1], 1, DataSet.NN_K)
+                    new_position[:-1] = np.clip(new_position[:-1], DataSet.param_LB, DataSet.param_UB)
+                else:
+                    self.cats[i] = np.clip(new_position, self.lb, self.ub)
             
             convergence_curve.append(self.best_score)
         

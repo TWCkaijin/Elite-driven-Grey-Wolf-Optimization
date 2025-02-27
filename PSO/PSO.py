@@ -57,13 +57,16 @@ class PSO:
                 # 更新位置
                 self.particles[i] += self.velocities[i]
 
-                # 邊界處理
-                self.particles[i] = np.clip(self.particles[i], self.lb, self.ub)
+                if self.f_type =="d":# 邊界處理
+                    self.particles[i][-1] = np.clip(self.particles[i][-1], 1, DataSet.NN_K)
+                    self.particles[i][:-1] = np.clip(self.particles[i][:-1], DataSet.param_LB, DataSet.param_UB)
+                else:
+                    self.particles[i] = np.clip(self.particles[i], self.lb, self.ub)
 
             convergence_curve.append(self.gbest_score)
     
         return self.gbest, self.gbest_score, convergence_curve, self.particles
-    
+
 
 class PSOCONTROL:
     def __init__(self,MAX_ITER, NUM_PARTICLES,  FUNCTION):

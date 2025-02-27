@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+import concurrent.futures
+import time
+
 from ConfigClass import Configs
 from ConfigClass import Color
 
@@ -12,33 +15,41 @@ class MAINCONTROL:
         self.NUM_WOLVES = NUM_WOLVES
         self.f_type = f_type
         self.year = year
-        self.name = name
+        self.name = name    
         self.DIM = DIM
 
     def Worker(self, obj, EPOCH):
         Result= None
+        print(f"{Color.BLUE}Starting {obj.__name__} with {EPOCH} EPOCH{Color.RESET}")
         for i in range(EPOCH):
-            print('\r',end='')
             tmp = (1/(obj.Start()[-1])) if self.f_type == "GENE" else obj.Start()[-1]
             Result = (Result * i + tmp)/ (i+1) if Result is not None else tmp
-
-            print(f"Epoch {i+1} completed",end='')
+            print(f"{Color.YELLOW}{obj}Epoch {i+1}/{EPOCH}", end='')
         print()
+
         return Result
 
     def Start(self, EPOCH):
+        results = []
+        print(f"\n\n{Color.GREEN}Starting Optimizers with parellel computing{Color.RESET}")
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            future_to_optimizer = {
+                executor.submit(self.Worker, 
+                                Configs.optimizers[optimizer](self.MAX_ITER, self.NUM_WOLVES, DataSet.get_function(self.f_type, self.year, self.name, self.DIM))
+                                , EPOCH): optimizer for optimizer in Configs.optimizers
+            }
+            for future in concurrent.futures.as_completed(future_to_optimizer):
+                optimizer = future_to_optimizer[future]
+                try:
+                    result = future.result()
+                    results.append((optimizer, result))
+                except Exception as e:
+                    print(f"{Color.RED}Error in {optimizer}:\n{e}{Color.RESET}")
 
-        for optimizer in Configs.optimizers:
-            try:
-                print(f"{Color.MAGENTA}Starting {optimizer} works for {EPOCH} Epochs{Color.RESET}")
-                obj = Configs.optimizers[optimizer](self.MAX_ITER, self.NUM_WOLVES,
-                                                    DataSet.get_function(I=self.f_type, II=self.year, III=self.name, dim=self.DIM))
-                Result = self.Worker(obj, EPOCH)
-                print(f"{Color.GREEN}{optimizer} completed{Color.RESET}\n\n")
-                plt.plot(Result, label=optimizer)
-            except Exception as e:
-                print(f"{Color.RED}Error in {optimizer}:\n{e}{Color.RESET}")
-                continue
+        for optimizer, result in results:
+            print(f"{Color.GREEN}{optimizer} completed{Color.RESET}\n\n")
+            plt.plot(result, label=optimizer)
+        
         
         print(f"{Color.GREEN}All Optimizers Completed, plotting the chart{Color.RESET}")
         plt.xlabel("Iterations")

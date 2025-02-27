@@ -72,8 +72,11 @@ class HHO:
                         Z = Y + np.random.rand(self.dim) * LF
                         self.hawks[i] = Z if self.obj_function(Z) < self.obj_function(Y) else Y
                 
-                # 確保邊界限制
-                self.hawks[i] = np.clip(self.hawks[i], self.lb, self.ub)
+                if self.f_type=='d':# 邊界限制
+                    self.hawks[i][-1] = np.clip(self.hawks[i][-1], 1, DataSet.NN_K)
+                    self.hawks[i][:-1] = np.clip(self.hawks[i][:-1], DataSet.param_LB, DataSet.param_UB)
+                else:
+                    self.hawks[i] = np.clip(self.hawks[i], self.lb, self.ub)
             
             convergence_curve.append(self.best_score)
         

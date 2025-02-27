@@ -66,7 +66,11 @@ class REEGWO:
                 X_new = w_alpha * X1 + w_beta * X2 + w_delta * X3
 
                 # 邊界處理
-                X_new = np.clip(X_new, self.lb, self.ub)
+                if self.f_type =='d':  
+                    X_new[-1] = np.clip(X_new[-1], 1, DataSet.NN_K)
+                    X_new[:-1] = np.clip(X_new[:-1], DataSet.param_LB, DataSet.param_UB)
+                else:
+                    X_new = np.clip(X_new, self.lb, self.ub)
                 self.wolves[i] = X_new
 
             convergence_curve.append(self.alpha_score)

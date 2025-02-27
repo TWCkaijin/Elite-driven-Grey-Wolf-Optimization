@@ -85,7 +85,12 @@ class ChOA:
 
                 # 更新位置
                 self.chimps[i] = (X1 + X2 + X3 + X4) / 4
-                self.chimps[i] = np.clip(self.chimps[i], self.lb, self.ub)
+
+                if self.f_type == "d": # 邊界處理
+                    self.chimps[i][-1] = np.clip(self.chimps[i][-1], 1, DataSet.NN_K)
+                    self.chimps[i][:-1] = np.clip(self.chimps[i][:-1], DataSet.param_LB, DataSet.param_UB)
+                else:
+                    self.chimps[i] = np.clip(self.chimps[i], self.lb, self.ub)
 
             convergence_curve.append(self.scores[sorted_indices[0]])  # 紀錄最佳適應度
 
