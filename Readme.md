@@ -2,11 +2,11 @@
 > 程式碼內仍有大量的註解內容，其為為後續更新做準備或具備除錯用途
 ## 使用方法: 
 本專案實作了 **Elite-driven Grey Wolf Optimization (EDGWO)**，並比較多種論文中提及的優化演算法的性能，適用於不同的數據集與適應函數 (CEC Dataset與Gene Dataset)。程式允許使用者選擇特定的函數來進行優化，並透過**平行計算**執行多種演算法，最終輸出優化結果與可視化圖表。
-1. ### 執行 'main.py' 進行優化測試
+1. ### 執行 `main.py` 進行優化測試
    主程式會執行不同的優化演算法，並針對所選**fitness function**進行多次iterations，運行後可透過輸入來選擇測試參數。
-2. ### 設定優化演算法 'ConfigClass.py'
-   透過調整 'ConfigClass.py' 選擇可用演算法的class
-3. ### Fitness function/Dataset 'DataSet.py'
+2. ### 設定優化演算法 `ConfigClass.py`
+   透過調整 `ConfigClass.py` 選擇可用演算法的class
+3. ### Fitness function/Dataset `DataSet.py`
    該檔案負責管理 CEC 和基因數據集的Fitness function
 
 ## 程式碼說明:
