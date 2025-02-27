@@ -101,10 +101,10 @@
 
 ## 總結 (Summary)
 本專案：
-- **實作了 EDGWO，並針對 EDGWO 進行強化**
+- **實作了 EDGWO，並針對 EDGWO 進行強化，透過實驗數據顯示REIN-EDGWO 在多數函數上優於 EDGWO**
 - **比較了多種演算法的適應值與收斂速度**
-- **透過實驗數據顯示 REIN-EDGWO 在某些函數上優於 EDGWO**
 - **以Dataset驗證演算法之效能
+- **提供收斂曲線圖與數離散資料實驗結果，量化演算法優化效果，使結果更具說服力。
 
 ## package requires 
 -opfunu 
