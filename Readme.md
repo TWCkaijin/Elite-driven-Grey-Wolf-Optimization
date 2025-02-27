@@ -24,16 +24,15 @@
 
 
 ### 1. 連續函數實驗結果與論文對照
-<div>
-    <div style="display: flex; flex-wrap: wrap;">
-        <div style="flex: 1; padding: 5px;">
-            <img src="./convergence_curve/CEC2021/2021_F3_10D.png" alt="P_CEC2021-F6" style="width: 50%;">
-        </div>
-        <div style="flex: 1; padding: 5px;">
-            <img src="./convergence_curve/CEC2021/2021_F3_10D_paper.png" alt="R_CEC2021-F6" style="width: 50%;">
-        </div>
+<div style="display: flex; flex-wrap: wrap; align-items: center;">
+    <div style="flex: 1; text-align: center;">
+        <p>📌 <b>論文數據 (F2)</b></p>
+        <img src="./convergence_curve/CEC2021/2021_F3_10D.png" width="400">
     </div>
-    完成日期: 2024/02/21
+    <div style="flex: 1; text-align: center;">
+        <p>✅ <b>我的結果 (F2)</b></p>
+        <img src="./convergence_curve/CEC2021/2021_F3_10D.png" width="400">
+    </div>
 </div>
 
 ### 2. 連續函數實驗結果與論文對照(10種)
