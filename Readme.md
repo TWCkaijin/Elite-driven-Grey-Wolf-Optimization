@@ -109,7 +109,7 @@
 而我們的做法是使浮點數來代表該維度的加權數字，使期能有在指定區間內有更多種組合方式(但相對的，也更難找到Optimal)。
 
 兩者相同的是，都是透過KNN來進行分類，並且計算準確率當作適應函數值。
-| **ALLAML** ![論文 F4](./_EXP_PIC/ALLAML-30.png) | **Leukemin_1**![我的 F4(跑太久待更新...)](_EXP_PIC\Leukemin_1-30N.png) |
+| **ALLAML** ![論文 F4](./_EXP_PIC/ALLAML-30.png) | **Leukemin_1**![我的 F4(訓練太久待更新...)](_EXP_PIC\Leukemin_1-30N.png) |
 |:--------:|:--------:|
 | **Leukemin_2** ![Leukemin_2](_EXP_PIC\Leukemin_2-30N.png)|**Lung_discrete** ![Leukemin_2](_EXP_PIC\lung_discret-30.png)|
 
