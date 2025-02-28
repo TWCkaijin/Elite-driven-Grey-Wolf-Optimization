@@ -3,7 +3,6 @@ import scipy.io as sio
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier as KNN
 from sklearn.model_selection import train_test_split
-import sklearn
 
 class DataSet:
     funcs_years= {
@@ -16,8 +15,8 @@ class DataSet:
         }
     }
     NN_K = 12
-    param_UB = 100
-    param_LB = -100
+    param_UB = 10
+    param_LB = -10
 
     def __init__(self):
 
@@ -64,8 +63,8 @@ class DataSet:
             "5.  Leukemia_3":11225,
             "6.  Leukemia":3312,
             "7.  lung_discrete":325,
-            "8. lung":3312,
-            "9. lymphoma":4026,
+            "8.  lung":3312,
+            "9.  lymphoma":4026,
         }
         
 

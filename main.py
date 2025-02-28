@@ -23,7 +23,7 @@ class MAINCONTROL:
         Result= None
         bar = tqdm(range(EPOCH), position=idx, leave=True, dynamic_ncols=True)
         for i in bar:
-            bar.set_description(f"{obj.__name__:<16}-Epoch {i+1}/{EPOCH}")
+            bar.set_description(f"{obj.__name__:<16}-Epoch {i}/{EPOCH}")
             tmp = (1/(obj.Start()[-1])) if self.f_type == "GENE" else obj.Start()[-1]
             Result = (Result * i + tmp)/ (i+1) if Result is not None else tmp
         print()
