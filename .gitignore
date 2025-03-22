@@ -6,3 +6,4 @@ __pycache__
 *.pyc
 __init__*
 DataSet*
+.DS_Store

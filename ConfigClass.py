@@ -1,15 +1,15 @@
 
-from EDGWO.EDGWO import EDGWOCONTROL
-from GWO.GWO import GWOCONTROL
-from CHGWOSCA.CHGWOSCA import CHGWOSCACONTROL
-from REEGWO.REEGWO import REEGWOCONTROL
-from MSGWO.MSGWO import MSGWOCONTROL
-from PSO.PSO import PSOCONTROL
-from BES.BES import BESCONTROL
-from HHO.HHO import HHOCONTROL
-from ChOA.ChOA import ChOACONTROL
-from SCSO.SCSO import SCSOCONTROL
-from REINEDGWO.REINEDGWO import REINEDGWOCONTROL
+from optimizers.EDGWO import EDGWOCONTROL
+from optimizers.GWO import GWOCONTROL
+from optimizers.CHGWOSCA import CHGWOSCACONTROL
+from optimizers.REEGWO import REEGWOCONTROL
+from optimizers.MSGWO import MSGWOCONTROL
+from optimizers.PSO import PSOCONTROL
+from optimizers.BES import BESCONTROL
+from optimizers.HHO import HHOCONTROL
+from optimizers.ChOA import ChOACONTROL
+from optimizers.SCSO import SCSOCONTROL
+from optimizers.REINEDGWO import REINEDGWOCONTROL
 
 class Color:
     RED = '\033[31m'
