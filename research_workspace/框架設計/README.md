@@ -7,11 +7,11 @@
   2. 類別不平衡：Credit Fraud (284k樣本, 0.17%異常)
   3. 混合特徵類型：UCI Adult (數值+類別型)
 - 合成數據集：使用`sklearn.datasets.make_classification`生成可控雜訊結構的數據。
-- 資料來源:
--- Gistette [手寫數字辨識](https://archive.ics.uci.edu/dataset/170/gisette)
--- Madelon [高維度/非線性資料](https://github.com/juansucre/madelon)
--- Credit Fraud [信用卡交易/詐騙數](https://paperswithcode.com/dataset/kaggle-credit-card-fraud-dataset)
--- UCI Adult [預測年收入](https://archive.ics.uci.edu/dataset/2/adult)
+## 資料來源:
+- Gistette [手寫數字辨識](https://archive.ics.uci.edu/dataset/170/gisette)
+- Madelon [高維度/非線性資料](https://github.com/juansucre/madelon)
+- Credit Fraud [信用卡交易/詐騙數](https://paperswithcode.com/dataset/kaggle-credit-card-fraud-dataset)
+- UCI Adult [預測年收入](https://archive.ics.uci.edu/dataset/2/adult)
 
 
 ## 2. 雜訊類型
