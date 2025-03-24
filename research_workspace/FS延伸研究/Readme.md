@@ -1,0 +1,34 @@
+# FS_GWO 研究說明
+
+## 研究目標
+
+- 研究GWO類優化器在特徵選擇領域上的做法，主要分為三個部分：
+  1. 適應特徵選擇問題的方法；
+  2. 在特徵選擇上遇到雜訊時的反應；
+  3. 結合前兩者，探討GWO類優化器在特徵選擇問題上的應用。
+
+## 目前研究說明
+
+- BGWO for FS
+
+- FS for face recognition(classcification)
+  - 使用了經典電腦視覺方法來搭配GWO處裡視覺辨識。
+  - 先背知識點太多，暫緩執行。
+
+- GWO&CSA with Unconstrain FS
+
+- GWO&GOA for text FS
+
+- hybrid Gradient descent GWO for FS
+  - 增加gradient decent(梯度下降方法)來加入局部收斂，加快收斂factor的同時，可以確立局部收斂的穩定性。
+  - HowTo: 透過目標函數的「準確度上升率」來給予激勵機制或懲罰機制。
+
+## 留言板
+
+- 我其實很好奇為什麼我們一開始在在FS時效果可以這麼好。GWO FS在一開始的定義上其實只是找出最佳參數，但我們的結果出現了多次 acc = 100% 的情況。 kai 2025/3/22
+
+## 研究進度
+
+- 2025/3/22: 開始研究hybrid Gradient descent GWO for FS
+- 2025/3/23: 開始研究FS for face recognition(classcification)
+- 2025/3/
