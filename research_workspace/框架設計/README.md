@@ -43,17 +43,15 @@
 
 並且進行了一些實驗，與 EDGWO 比較收斂性，結果如下:
 
-<div>
-    <div style="display: flex; flex-wrap: wrap;">
-        <div style="flex: 1; padding: 5px;">
-            <img src="./exp_result_1/_EDGWO vs. REIN_EDGWO/2021_F3_10D.png" alt="P_CEC2021-F3" style="width: 70%;">
-        </div>
-        <div style="flex: 1; padding: 5px;">
-            <img src="./exp_result_1/_EDGWO vs. REIN_EDGWO/2021_F4_20D.png" alt="R_CEC2021-F4" style="width: 70%;">
-        </div>
-       <div style="flex: 1; padding: 5px;">
-            <img src="./exp_result_1/_EDGWO vs. REIN_EDGWO/2021_F7_20D.png" alt="R_CEC2021-F7" style="width: 70%;">
-        </div>
+<div style="display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; padding: 5px;">
+        <img src="./exp_result_1/_EDGWO%20vs.%20REIN_EDGWO/2021_F3_10D.png" style="width: 70%;">
+    </div>
+    <div style="flex: 1; padding: 5px;">
+        <img src="./exp_result_1/_EDGWO%20vs.%20REIN_EDGWO/2021_F4_20D.png" style="width: 70%;">
+    </div>
+    <div style="flex: 1; padding: 5px;">
+        <img src="./exp_result_1/_EDGWO%20vs.%20REIN_EDGWO/2021_F7_20D.png" style="width: 70%;">
     </div>
 </div>
 
