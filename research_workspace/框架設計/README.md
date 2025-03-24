@@ -23,7 +23,7 @@
 | Adversarial perturbation | FGSM攻擊 $X + \epsilon * \text{sign}(V)$ | 惡意竄改數據              | $\epsilon \in \{0.1, 0.3, 0.5\}$ |
 
 ---
-# 二、基於噪聲特徵的EDGWO改進方法
+# 二、基於雜訊特徵的EDGWO改進方法
 
 ## 先前實作
 
