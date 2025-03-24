@@ -120,7 +120,7 @@ if __name__ == '__main__':
                 print("Invalid param")
                 continue
 
-            name = input(f"Name param ({' / '.join(funcs_by_year[f_type][year])}): ") # Function Name
+            name = input(f"Name param ({' / '.join(funcs_by_year[f_type][year])}): ").upper() # Function Name
             if name not in funcs_by_year[f_type][year]:
                 print("Invalid param\n\n")
                 continue
@@ -145,11 +145,12 @@ if __name__ == '__main__':
 
         print(f"{Color.MAGENTA}DataSet: {f_type}-{year}-{name} - Dimension: {dim}{Color.RESET}\n")
         try: 
-            ITER = int(input(f"{Color.BLUE}Input Ieration per epoch: {Color.RESET}"))
-            EPOCH = int(input(f"{Color.BLUE}Input Epochs: {Color.RESET}"))
+            ITER = int(input(f"{Color.BLUE}Input Ierations(500): {Color.RESET}"))
+            EPOCH = int(input(f"{Color.BLUE}Input Epochs(10): {Color.RESET}")) 
             process = input(f"{Color.BLUE}Use multi process? (Y/N): {Color.RESET}")
         except:
             print(f"{Color.RED}Invalid input{Color.RESET}")
+            continue
         if process=='Y' or process=='y':
             try:
                 MAINCONTROL(MAX_ITER=ITER, NUM_WOLVES=30, f_type=f_type,year=year, name=name, DIM=int(dim)).Multi_Start(EPOCH)
