@@ -83,7 +83,9 @@ $$
 - 想法：在Alpha/Beta/Delta狼更新時，加入抗雜訊評估
 - 實施方法：對Elite Wolves進行Robustness test：加入5% Gaussian noise 後重新評估適應度
 
+\[
 \alpha = \arg\min\left( f_{\text{original}} + 0.3 \cdot f_{\text{noisy}} \right)
+\]
   
   
 
