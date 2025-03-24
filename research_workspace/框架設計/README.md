@@ -20,7 +20,7 @@
 
 ---
 參考資料:
-- Gistette https://archive.ics.uci.edu/dataset/170/gisette
-- Madelon https://github.com/juansucre/madelon
-- Credit Fraud https://paperswithcode.com/dataset/kaggle-credit-card-fraud-dataset
-- UCI Adult https://archive.ics.uci.edu/dataset/2/adult
+- Gistette [手寫數字辨識](https://archive.ics.uci.edu/dataset/170/gisette)
+- Madelon [高維度/非線性資料](https://github.com/juansucre/madelon)
+- Credit Fraud [信用卡交易/詐騙數](https://paperswithcode.com/dataset/kaggle-credit-card-fraud-dataset)
+- UCI Adult [預測年收入](https://archive.ics.uci.edu/dataset/2/adult)
