@@ -78,6 +78,15 @@ $$
 
 ``` 註： A向量 -> 隨機抽樣的特徵 subset;B向量 -> 選取的特徵 subset ```
 
+### 2. 抗噪精英優先
+
+- 想法：在Alpha/Beta/Delta狼更新時，加入抗雜訊評估
+- 實施方法：對Elite Wolves進行Robustness test：加入5% Gaussian noise 後重新評估適應度
+  \[\alpha = \arg\min\left( f_{\text{original}} + 0.3 \cdot f_{\text{noisy}} \right)\]
+  
+  
+
+
 ---
 參考資料:
 [《Robust Feature Selection via Nonconvex Sparse Learning》 (JMLR 2023)](https://dl.acm.org/doi/10.5555/3454287.3455398)
