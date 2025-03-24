@@ -27,16 +27,17 @@
 
 ## 先前實作
 
-## 預計優化方向
-1. 動態多目標適應機制
-   - **問題**：單目標優化(準確率+特徵數)在雜訊下易overfitting
-   - **解決方法**：引入[Pareto前沿](https://blog.csdn.net/theonepiece/article/details/125653138)概念，定義雙適應度函數：
+## 1. 動態多目標適應機制
+
+- **問題**：單目標優化（準確率+特徵數）在雜訊下易 overfitting  
+- **解決方法**：引入 Pareto 前沿概念，定義雙適應度函數：
+
 $$
 \begin{cases} 
 f_1 = \lambda \cdot \text{ErrorRate} + (1 - \lambda) \cdot |S| \\ 
 f_2 = \text{FeatureStability} & (\text{特徵選擇穩定性}) 
 \end{cases}
-$$  
+$$ 
 
 ---
 參考資料:
