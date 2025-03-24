@@ -25,7 +25,38 @@
 ---
 # 二、基於雜訊特徵的EDGWO改進方法
 
-## 先前實作
+## 先前優化EDGWO實作
+1. ##### 指數衰減 `(a = 2 * np.exp(-t / self.MAX_ITER))`
+
+    - 作用：控制搜索範圍，讓早期探索空間較大，後期收斂較快。
+    - 優勢：避免收斂過慢，提高全局(global)搜索能力。
+
+2. ##### 自適應突變 `(if (self.PreAlpha_score - self.alpha_score) < eps)`
+
+    - 作用：當最佳適應值變化極小時，對 10% 的個體進行突變，擾動隨時間遞減。
+    - 優勢：避免陷入局部最佳解，提供額外的探索能力。
+
+3. ##### 多樣性維護 `(if diversity < 0.01 * np.mean(self.ub - self.lb):)`
+
+    - 作用：當群體多樣性過低時，隨機重置 20% 的狼，確保狼群不會過度集中。
+    - 優勢：防止搜索範圍過度收縮，提高演算法的適應性。
+
+並且進行了一些實驗，與 EDGWO 比較收斂性，結果如下:
+
+<div>
+    <div style="display: flex; flex-wrap: wrap;">
+        <div style="flex: 1; padding: 5px;">
+            <img src="./exp_result_1/_EDGWO vs. REIN_EDGWO\2021_F3_10D.png" alt="P_CEC2021-F3" style="width: 70%;">
+        </div>
+        <div style="flex: 1; padding: 5px;">
+            <img src="./exp_result_1/_EDGWO vs. REIN_EDGWO\2021_F4_20D.png" alt="R_CEC2021-F4" style="width: 70%;">
+        </div>
+       <div style="flex: 1; padding: 5px;">
+            <img src="./exp_result_1/_EDGWO vs. REIN_EDGWO\2021_F7_20D.png" alt="R_CEC2021-F7" style="width: 70%;">
+        </div>
+    </div>
+</div>
+
 
 ## 預計優化方向
 ### 1.動態多目標適應機制
