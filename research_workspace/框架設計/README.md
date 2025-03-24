@@ -35,7 +35,7 @@
 
 $$
 \begin{cases} 
-f_1 = \lambda \cdot \text{ErrorRate} + (1 - \lambda) \cdot |S| \\ & (\text{特徵選擇穩定性}) 
+f_1 = \lambda \cdot \text{ErrorRate} + (1 - \lambda) \cdot |S| \ & (\text{特徵數}) \
 f_2 = \text{FeatureStability} & (\text{特徵選擇穩定性}) 
 \end{cases}
 $$ 
