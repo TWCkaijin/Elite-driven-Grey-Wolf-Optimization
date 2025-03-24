@@ -78,7 +78,7 @@ $$
 
 ``` 註： A向量 -> 隨機抽樣的特徵 subset;B向量 -> 選取的特徵 subset ```
 
-### 2. 抗噪精英優先
+### 2. 抗雜訊精英優先
 
 - 想法：在Alpha/Beta/Delta狼更新時，加入抗雜訊評估
 - 實施方法：對Elite Wolves進行Robustness test：加入5% Gaussian noise 後重新評估適應度
