@@ -40,7 +40,7 @@ f_2 = \text{FeatureStability} & (\text{特徵選擇穩定性})
 \end{cases}
 $$ 
 
-``` 註： 簡單來說，這個方法就是在兩個衝突的要素之間做取捨(特徵數量/準確率) ```
+``` 註： 簡單來說，這個方法就是在兩個衝突的要素之間做取捨(特徵數量 vs. 準確率) ```
 
 穩定性透過Bootstrap採樣計算[Jaccard](https://blog.csdn.net/qq_34333481/article/details/84024513)相似度。
 
