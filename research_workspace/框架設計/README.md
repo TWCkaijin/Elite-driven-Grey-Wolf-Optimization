@@ -29,8 +29,8 @@
 
 ## 預計優化方向
 1. 動態多目標適應機制
-   - 問題：單目標優化(準確率+特徵數)在雜訊下易overfitting
-   - 解決方法：引入[Pareto前沿](https://blog.csdn.net/theonepiece/article/details/125653138)概念，定義雙適應度函數：
+   - **問題**：單目標優化(準確率+特徵數)在雜訊下易overfitting
+   - **解決方法**：引入[Pareto前沿](https://blog.csdn.net/theonepiece/article/details/125653138)概念，定義雙適應度函數：
      $$f_1 = \alpha \cdot \text{ErrorRate} + (1 - \alpha) \cdot |S|$$
      $$f_2 = \text{FeatureStability} \quad (\text{特徵選擇穩定性})$$
 
@@ -38,3 +38,4 @@
 
 ---
 參考資料:
+[《Robust Feature Selection via Nonconvex Sparse Learning》 (JMLR 2023)](https://dl.acm.org/doi/10.5555/3454287.3455398)
