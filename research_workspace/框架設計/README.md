@@ -86,6 +86,9 @@ $$
 $$
 \alpha = \arg \min \left( f_{\text{original}} + 0.3 \cdot f_{\text{noisy}} \right)
 $$
+
+``` 註： 雜訊比例和權重可調整(也可以用 ```
+
   
   
 
