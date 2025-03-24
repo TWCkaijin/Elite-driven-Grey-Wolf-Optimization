@@ -47,13 +47,13 @@
 
 <div style="display: flex; flex-wrap: wrap;">
     <div style="flex: 1; padding: 5px;">
-        <img src="./research_workspace/框架設計/2021_F3_10D.png" style="width: 70%;">
+        <img src="./2021_F3_10D.png" style="width: 70%;">
     </div>
     <div style="flex: 1; padding: 5px;">
-        <img src="./research_workspace/框架設計/2021_F4_20D.png" style="width: 70%;">
+        <img src="./2021_F4_20D.png" style="width: 70%;">
     </div>
     <div style="flex: 1; padding: 5px;">
-        <img src="./research_workspace/框架設計/2021_F7_20D.png" style="width: 70%;">
+        <img src="./2021_F7_20D.png" style="width: 70%;">
     </div>
 </div>
 
