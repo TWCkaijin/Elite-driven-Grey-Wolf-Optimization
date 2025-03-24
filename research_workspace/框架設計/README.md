@@ -72,7 +72,7 @@ f_2 = \text{FeatureStability} & (\text{特徵選擇穩定性})
 \end{cases}
 $$
 
-``` 註： 簡單來說，這個方法就是在兩個衝突的要素之間做取捨(特徵數量 vs. 準確率) ```
+``` 註： 簡單來說，這個方法就是在兩個衝突的要素之間做折衷做取捨(特徵數量 vs. 準確率) ```
 
 穩定性透過Bootstrap採樣計算[Jaccard](https://blog.csdn.net/qq_34333481/article/details/84024513)相似度。
 
@@ -87,9 +87,18 @@ $$
 \alpha = \arg \min \left( f_{\text{original}} + 0.3 \cdot f_{\text{noisy}} \right)
 $$
 
-``` 註： 雜訊比例和權重可調整(也可以用 ```
+``` 註： 雜訊比例和權重可調整 ```
 
-  
+# 三、實驗設計與評估指標
+
+
+# 四、預期分析與優化驗證
+
+# 五、論文撰寫(暫定)
+1. Abstract: 聚焦「討論雜訊資料集在此演算法的表現與優化」
+2. Method: 用流程圖對比EDGWO與REINEDGWO的改進方法
+3. Experiments: 呈現跨數據集統計結果，也可附上可視化結果
+4. Discussion: 分析算法在(1)不同噪聲類型、(2)超高維數據下的行為差異
   
 
 
