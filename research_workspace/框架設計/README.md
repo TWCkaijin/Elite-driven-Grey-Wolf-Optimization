@@ -22,6 +22,19 @@
 | Redundant feature    | 插入隨機特徵                   | 無關特徵          | 冗餘比例如 $\{0.2, 0.5\}$    |
 | Adversarial perturbation | FGSM攻擊 $X + \epsilon * \text{sign}(V)$ | 惡意竄改數據              | $\epsilon \in \{0.1, 0.3, 0.5\}$ |
 
-# 二、基於噪聲特徵的EDGWO改進策略
+---
+# 二、基於噪聲特徵的EDGWO改進方法
+
+## 先前實作
+
+## 預計優化方向
+1. 動態多目標適應機制
+   - 問題：單目標優化(準確率+特徵數)在雜訊下易overfitting
+   - 解決方法：引入[Pareto前沿](https://blog.csdn.net/theonepiece/article/details/125653138)概念，定義雙適應度函數：
+     $$f_1 = \alpha \cdot \text{ErrorRate} + (1 - \alpha) \cdot |S|$$
+     $$f_2 = \text{FeatureStability} \quad (\text{特徵選擇穩定性})$$
+
+
 
 ---
+參考資料:
