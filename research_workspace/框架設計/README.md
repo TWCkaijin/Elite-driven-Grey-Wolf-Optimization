@@ -35,10 +35,10 @@
 
 $$
 \begin{cases} 
-f_1 = \lambda \cdot \text{ErrorRate} + (1 - \lambda) \cdot |S| \ & (\text{特徵數}) \
+f_1 = \lambda \cdot \text{ErrorRate} + (1 - \lambda) \cdot |S| & (\text{特徵數}) \\ 
 f_2 = \text{FeatureStability} & (\text{特徵選擇穩定性}) 
 \end{cases}
-$$ 
+$$
 
 ``` 註： 簡單來說，這個方法就是在兩個衝突的要素之間做取捨(特徵數量 vs. 準確率) ```
 
