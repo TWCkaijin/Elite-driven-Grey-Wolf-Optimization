@@ -16,6 +16,8 @@
 | Redundant feature    | 插入隨機特徵                   | 無關特徵          | 冗餘比例如 $\{0.2, 0.5\}$    |
 | Adversarial perturbation | FGSM攻擊 $X + \epsilon * \text{sign}(V)$ | 惡意竄改數據              | $\epsilon \in \{0.1, 0.3, 0.5\}$ |
 
+# 二、基於噪聲特徵的EDGWO改進策略
+
 ---
 參考資料:
 - Gistette https://archive.ics.uci.edu/dataset/170/gisette
