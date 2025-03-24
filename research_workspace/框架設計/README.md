@@ -18,7 +18,7 @@
 
 ---
 參考資料:
-- https://archive.ics.uci.edu/dataset/170/gisette
+- /Gistette https://archive.ics.uci.edu/dataset/170/gisette
 - https://github.com/juansucre/madelon
 - https://paperswithcode.com/dataset/kaggle-credit-card-fraud-dataset
 - https://archive.ics.uci.edu/dataset/2/adult
