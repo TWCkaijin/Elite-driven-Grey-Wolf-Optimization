@@ -19,6 +19,19 @@
 
 - GWO&GOA for text FS
 
+1. 研究目標
+  - 結合GWO和GOA，以提升FS的效果。
+  - 改善文本分類的準確率，並降低不必要的特徵數量，以提高演算法的效率。
+
+2. 使用的演算法
+  - GWO：模擬灰狼的狩獵行為來進行全域搜尋，具有良好的全域探索能力。
+  - GOA：模擬草食動物尋找食物的行為，適合局部搜尋和細節優化。
+  - GWO-GOA 混合：利用GWO的全域搜尋能力和GOA的局部搜尋能力，讓特徵選取更精確。
+
+3. 結論
+  - 相較於單獨使用GWO或GOA，GWO-GOA 混合方法能選取較少但更具代表性的特徵。
+  - 未來可以進一步結合其他演算法，如PSO或GA。
+
 - hybrid Gradient descent GWO for FS
   - 增加gradient decent(梯度下降方法)來加入局部收斂，加快收斂factor的同時，可以確立局部收斂的穩定性。
   - HowTo: 透過目標函數的「準確度上升率」來給予激勵機制或懲罰機制。
@@ -31,4 +44,4 @@
 
 - 2025/3/22: 開始研究hybrid Gradient descent GWO for FS
 - 2025/3/23: 開始研究FS for face recognition(classcification)
-- 2025/3/
+- 2025/3/27: 大致閱讀GWO&GOA for text FS
