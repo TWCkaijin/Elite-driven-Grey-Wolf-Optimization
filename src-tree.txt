@@ -1,0 +1,340 @@
+.
+├── ConfigClass.py
+├── DataSet.py
+├── LiveDemo.py
+├── Readme.md
+├── __pycache__
+│   ├── ConfigClass.cpython-312.pyc
+│   └── DataSet.cpython-312.pyc
+├── _discard
+│   ├── GWO_mark.md
+│   └── main.cpp
+├── _geneData
+│   ├── ALLAML.mat
+│   ├── BreastEW_data.mat
+│   ├── DM
+│   │   └── test_data.csv
+│   ├── HeartEW_data.mat
+│   ├── Leukemia_1.mat
+│   ├── Leukemia_2.mat
+│   ├── Leukemia_3.mat
+│   ├── colon.mat
+│   ├── leukemia.mat
+│   ├── lung.mat
+│   ├── lung_discrete.mat
+│   └── lymphoma.mat
+├── exp_result_1
+│   ├── _EDGWO vs. REIN_EDGWO
+│   │   ├── 2021_F10_10D.png
+│   │   ├── 2021_F3_10D.png
+│   │   ├── 2021_F4_20D.png
+│   │   ├── 2021_F6_10D.png
+│   │   ├── 2021_F7_20D.png
+│   │   ├── 2021_F8_10D.png
+│   │   ├── 2021_F8_20D.png
+│   │   └── 2021_F9_20D.png
+│   ├── _EXP_PIC
+│   │   ├── ALLAML-30.png
+│   │   ├── CEC-2022-F7-10D.png
+│   │   ├── Leukemin_1-30N.png
+│   │   ├── Leukemin_2-30N.png
+│   │   └── lung_discret-30.png
+│   ├── _OLD_EXP_PIC
+│   │   ├── CEC2021-F10.png
+│   │   ├── CEC2021-F3.png
+│   │   ├── CEC2021-F6.png
+│   │   ├── CEC2021-F8.png
+│   │   ├── P_CEC2021-F7.png
+│   │   └── R_CEC2021-F7.png
+│   └── convergence_curve
+│       ├── CEC2021
+│       │   ├── 2021_F10_10D.png
+│       │   ├── 2021_F10_10D_paper.jpg
+│       │   ├── 2021_F3_10D.png
+│       │   ├── 2021_F3_10D_paper.jpg
+│       │   ├── 2021_F4_20D.png
+│       │   ├── 2021_F4_20D_paper.jpg
+│       │   ├── 2021_F6_10D.png
+│       │   ├── 2021_F6_10D_paper.jpg
+│       │   ├── 2021_F7_20D.png
+│       │   ├── 2021_F7_20D_paper.jpg
+│       │   ├── 2021_F8_10D.png
+│       │   ├── 2021_F8_10D_paper.jpg
+│       │   ├── 2021_F8_20D.png
+│       │   ├── 2021_F8_20D_paper.jpg
+│       │   ├── 2021_F9_20D.png
+│       │   └── 2021_F9_20D_paper.jpg
+│       └── CEC2022
+│           ├── 2022_F10_20D.png
+│           ├── 2022_F10_20D_paper.jpg
+│           ├── 2022_F11_20D.png
+│           ├── 2022_F11_20D_paper.jpg
+│           ├── 2022_F12_10D.png
+│           ├── 2022_F12_10D_paper.jpg
+│           ├── 2022_F2_10D.png
+│           ├── 2022_F2_10D_paper.jpg
+│           ├── 2022_F6_10D.png
+│           ├── 2022_F6_10D_paper.jpg
+│           ├── 2022_F7_20D.png
+│           ├── 2022_F7_20D_paper.jpg
+│           ├── 2022_F8_10D.png
+│           ├── 2022_F8_10D_paper.jpg
+│           ├── 2022_F9_20D.png
+│           └── 2022_F9_20D_paper.jpg
+├── main.py
+├── optimizers
+│   ├── BES.py
+│   ├── CHGWOSCA.py
+│   ├── ChOA.py
+│   ├── EDGWO.py
+│   ├── GWO.py
+│   ├── HHO.py
+│   ├── MSGWO.py
+│   ├── PSO.py
+│   ├── REEGWO.py
+│   ├── REINEDGWO.py
+│   ├── SCSO.py
+│   └── __pycache__
+│       ├── BES.cpython-312.pyc
+│       ├── CHGWOSCA.cpython-312.pyc
+│       ├── ChOA.cpython-312.pyc
+│       ├── EDGWO.cpython-312.pyc
+│       ├── GWO.cpython-312.pyc
+│       ├── HHO.cpython-312.pyc
+│       ├── MSGWO.cpython-312.pyc
+│       ├── PSO.cpython-312.pyc
+│       ├── REEGWO.cpython-312.pyc
+│       ├── REINEDGWO.cpython-312.pyc
+│       └── SCSO.cpython-312.pyc
+├── research_workspace
+│   ├── FS延伸研究
+│   │   ├── BGWO for FS.pdf
+│   │   ├── FS for face recognition(classcification).pdf
+│   │   ├── GWO&CSA with Unconstrain FS.pdf
+│   │   ├── GWO&GOA for text FS.pdf
+│   │   ├── Hybrid Gradient Descent GWO for FS.pdf
+│   │   └── Readme.md
+│   ├── Readme.md
+│   ├── auto-metaheuristic
+│   │   ├── 2024-Automated Design of Metaheuristic Algorithms A Survey.pdf
+│   │   ├── 2024-Automated Metaheuristic Algorithm Design with Autoregressive Learning.pdf
+│   │   ├── ResearchArchitect.md
+│   │   └── prof-tsai_metaheuristic
+│   │       ├── README.md
+│   │       ├── src
+│   │       │   ├── c++
+│   │       │   │   ├── 0-es
+│   │       │   │   │   ├── 1-onemax
+│   │       │   │   │   │   ├── Makefile
+│   │       │   │   │   │   ├── es_main.cpp
+│   │       │   │   │   │   ├── es_search.cpp
+│   │       │   │   │   │   ├── es_search.h
+│   │       │   │   │   │   ├── result
+│   │       │   │   │   │   └── standalone
+│   │       │   │   │   │       ├── Makefile
+│   │       │   │   │   │       └── es.cpp
+│   │       │   │   │   ├── 2-deception
+│   │       │   │   │   │   ├── Makefile
+│   │       │   │   │   │   ├── es_main.cpp
+│   │       │   │   │   │   ├── es_search.cpp
+│   │       │   │   │   │   ├── es_search.h
+│   │       │   │   │   │   └── result
+│   │       │   │   │   └── Makefile
+│   │       │   │   ├── 1-onemax
+│   │       │   │   │   ├── Makefile
+│   │       │   │   │   ├── main
+│   │       │   │   │   │   ├── ga.h
+│   │       │   │   │   │   ├── gar.h
+│   │       │   │   │   │   ├── gax2.h
+│   │       │   │   │   │   ├── gaxu.h
+│   │       │   │   │   │   ├── hc.h
+│   │       │   │   │   │   ├── hc_r.h
+│   │       │   │   │   │   ├── lib.h
+│   │       │   │   │   │   ├── main.cpp
+│   │       │   │   │   │   ├── sa.h
+│   │       │   │   │   │   ├── sa_refinit.h
+│   │       │   │   │   │   ├── se.h
+│   │       │   │   │   │   └── ts.h
+│   │       │   │   │   └── result
+│   │       │   │   ├── 2-deception
+│   │       │   │   │   ├── Makefile
+│   │       │   │   │   ├── main
+│   │       │   │   │   │   ├── ga.h
+│   │       │   │   │   │   ├── gadp.h
+│   │       │   │   │   │   ├── gar.h
+│   │       │   │   │   │   ├── gardp.h
+│   │       │   │   │   │   ├── hc.h
+│   │       │   │   │   │   ├── hcdp.h
+│   │       │   │   │   │   ├── hcdp_r.h
+│   │       │   │   │   │   ├── hcdp_rm.h
+│   │       │   │   │   │   ├── lib.h
+│   │       │   │   │   │   ├── main.cpp
+│   │       │   │   │   │   ├── sa.h
+│   │       │   │   │   │   ├── sadp.h
+│   │       │   │   │   │   ├── ts.h
+│   │       │   │   │   │   └── tsdp.h
+│   │       │   │   │   └── result
+│   │       │   │   ├── 3-tsp
+│   │       │   │   │   ├── Makefile
+│   │       │   │   │   ├── eil51.tsp
+│   │       │   │   │   ├── eil51.tsp.opt
+│   │       │   │   │   ├── main
+│   │       │   │   │   │   ├── aco.h
+│   │       │   │   │   │   ├── ga.h
+│   │       │   │   │   │   ├── gacx.h
+│   │       │   │   │   │   ├── gals.h
+│   │       │   │   │   │   ├── gaox.h
+│   │       │   │   │   │   ├── gapmx.h
+│   │       │   │   │   │   ├── hga.h
+│   │       │   │   │   │   ├── lib.h
+│   │       │   │   │   │   ├── main.cpp
+│   │       │   │   │   │   ├── pga.h
+│   │       │   │   │   │   └── sa.h
+│   │       │   │   │   ├── pr1002.tsp
+│   │       │   │   │   ├── pr1002.tsp.opt
+│   │       │   │   │   └── result
+│   │       │   │   ├── 4-function
+│   │       │   │   │   ├── Makefile
+│   │       │   │   │   ├── main
+│   │       │   │   │   │   ├── de.h
+│   │       │   │   │   │   ├── deb1.h
+│   │       │   │   │   │   ├── deb2.h
+│   │       │   │   │   │   ├── decb1.h
+│   │       │   │   │   │   ├── der2.h
+│   │       │   │   │   │   ├── functions.h
+│   │       │   │   │   │   ├── lib.h
+│   │       │   │   │   │   ├── main.cpp
+│   │       │   │   │   │   └── pso.h
+│   │       │   │   │   └── result
+│   │       │   │   ├── 5-eval
+│   │       │   │   │   ├── Makefile
+│   │       │   │   │   └── main
+│   │       │   │   │       ├── ga.h
+│   │       │   │   │       ├── gar.h
+│   │       │   │   │       ├── garx2.h
+│   │       │   │   │       ├── garxu.h
+│   │       │   │   │       ├── gax2.h
+│   │       │   │   │       ├── gaxu.h
+│   │       │   │   │       ├── lib.h
+│   │       │   │   │       └── main.cpp
+│   │       │   │   ├── 6-clustering
+│   │       │   │   │   ├── Makefile
+│   │       │   │   │   ├── abalone.data
+│   │       │   │   │   ├── iris.data
+│   │       │   │   │   ├── main
+│   │       │   │   │   │   ├── ga.h
+│   │       │   │   │   │   ├── lib.h
+│   │       │   │   │   │   ├── main.cpp
+│   │       │   │   │   │   └── prega.h
+│   │       │   │   │   └── result
+│   │       │   │   ├── Makefile
+│   │       │   │   ├── a-lib
+│   │       │   │   │   └── lib.h
+│   │       │   │   ├── ch03-search.sh
+│   │       │   │   ├── ch05-search.sh
+│   │       │   │   ├── ch06-search.sh
+│   │       │   │   ├── ch07-search.sh
+│   │       │   │   ├── ch08-search.sh
+│   │       │   │   ├── ch09-search.sh
+│   │       │   │   ├── ch10-search.sh
+│   │       │   │   ├── ch11-search.sh
+│   │       │   │   ├── ch12-search.sh
+│   │       │   │   ├── ch14-search.sh
+│   │       │   │   ├── ch15-search.sh
+│   │       │   │   ├── ch16-search.sh
+│   │       │   │   ├── ch17-search.sh
+│   │       │   │   ├── ch18-search.sh
+│   │       │   │   ├── chaa-search.sh
+│   │       │   │   ├── do_all.sh
+│   │       │   │   └── search.conf
+│   │       │   ├── gnuplot
+│   │       │   │   └── app01
+│   │       │   │       ├── hc10-100.txt
+│   │       │   │       ├── hcsa-10-100-1-o.gp
+│   │       │   │       ├── hcsa-10-100-o.gp
+│   │       │   │       ├── result-aco-tsp-eil51-1-o.gp
+│   │       │   │       ├── result-aco-tsp-eil51.txt
+│   │       │   │       └── sa10-100.txt
+│   │       │   └── python
+│   │       │       ├── 0-es
+│   │       │       │   ├── 1-onemax
+│   │       │       │   │   ├── es.py
+│   │       │       │   │   └── lib.py
+│   │       │       │   └── 2-deception
+│   │       │       │       ├── es.py
+│   │       │       │       └── lib.py
+│   │       │       ├── 1-onemax
+│   │       │       │   ├── ga.py
+│   │       │       │   ├── gar.py
+│   │       │       │   ├── gax2.py
+│   │       │       │   ├── gaxu.py
+│   │       │       │   ├── hc.py
+│   │       │       │   ├── hc_r.py
+│   │       │       │   ├── lib.py
+│   │       │       │   ├── sa.py
+│   │       │       │   ├── sa_refinit.py
+│   │       │       │   ├── se.py
+│   │       │       │   └── ts.py
+│   │       │       ├── 2-deception
+│   │       │       │   ├── ga.py
+│   │       │       │   ├── gadp.py
+│   │       │       │   ├── gar.py
+│   │       │       │   ├── gardp.py
+│   │       │       │   ├── hc.py
+│   │       │       │   ├── hcdp.py
+│   │       │       │   ├── hcdp_r.py
+│   │       │       │   ├── hcdp_rm.py
+│   │       │       │   ├── lib.py
+│   │       │       │   ├── sa.py
+│   │       │       │   ├── sadp.py
+│   │       │       │   ├── ts.py
+│   │       │       │   └── tsdp.py
+│   │       │       ├── 3-tsp
+│   │       │       │   ├── aco.py
+│   │       │       │   ├── eil51.tsp
+│   │       │       │   ├── eil51.tsp.opt
+│   │       │       │   ├── ga.py
+│   │       │       │   ├── gacx.py
+│   │       │       │   ├── gals.py
+│   │       │       │   ├── gaox.py
+│   │       │       │   ├── gapmx.py
+│   │       │       │   ├── hga.py
+│   │       │       │   ├── lib.py
+│   │       │       │   ├── pga.py
+│   │       │       │   ├── pr1002.tsp
+│   │       │       │   ├── pr1002.tsp.opt
+│   │       │       │   └── sa.py
+│   │       │       ├── 4-function
+│   │       │       │   ├── de.py
+│   │       │       │   ├── deb1.py
+│   │       │       │   ├── deb2.py
+│   │       │       │   ├── decb1.py
+│   │       │       │   ├── der2.py
+│   │       │       │   ├── functions.py
+│   │       │       │   ├── lib.py
+│   │       │       │   └── pso.py
+│   │       │       ├── 5-eval
+│   │       │       │   ├── ga.py
+│   │       │       │   ├── gar.py
+│   │       │       │   ├── garx2.py
+│   │       │       │   ├── garxu.py
+│   │       │       │   ├── gax2.py
+│   │       │       │   ├── gaxu.py
+│   │       │       │   └── lib.py
+│   │       │       ├── 6-clustering
+│   │       │       │   ├── abalone.data
+│   │       │       │   ├── ga.py
+│   │       │       │   ├── iris.data
+│   │       │       │   ├── lib.py
+│   │       │       │   └── prega.py
+│   │       │       └── a-lib
+│   │       │           └── lib.py
+│   │       └── src-tree.txt
+│   └── 框架設計
+│       ├── 2021_F3_10D.png
+│       ├── 2021_F4_20D.png
+│       ├── 2021_F7_20D.png
+│       └── README.md
+└── src-tree.txt
+
+58 directories, 280 files
