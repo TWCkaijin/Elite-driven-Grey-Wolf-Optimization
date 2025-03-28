@@ -1,6 +1,7 @@
 import opfunu as of
 import scipy.io as sio
 import numpy as np
+import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier as KNN
 from sklearn.model_selection import train_test_split
 
@@ -12,6 +13,9 @@ class DataSet:
         },
         "gene":{
             
+        },
+        "DM":{
+            
         }
     }
     NN_K = 12
@@ -21,13 +25,17 @@ class DataSet:
     def __init__(self):
 
         self.all_funcs= {"CEC":self.get_CEC_data_dict(),
-                        "GENE":self.get_GENE_data_dict()}
+                        "GENE":self.get_GENE_data_dict(),
+                        "DM":{}
+                        }
 
     def get_function(I,II,III,dim):
         if I == "CEC":
             return CECFUNC(II,III,dim).get_function_info()
         elif I == "GENE":
             return GENEFUNC(III,dim).get_function_info()
+        elif I == "DM":
+            return DMFUNC(III,dim).get_function_info()
         
 
 
@@ -97,8 +105,6 @@ class GENEFUNC:
     def get_function_info(self):
         return function_struct(self.func,self.dim,np.max(self.data,axis=0),np.min(self.data,axis=0),"d")
     
-    
-
     def func(self,x):
         """ 
         間單來說就是優化每個特徵的參數，
@@ -112,7 +118,6 @@ class GENEFUNC:
 
         X_train_weighted = self.X_train * weights
         X_test_weighted = self.X_test * weights
-
 
         if np.isnan(weights).any():
             print(weights)
@@ -130,6 +135,54 @@ class GENEFUNC:
         
         accuracy = knn.score(X_test_weighted, self.Y_test)
         return 1/accuracy  
+
+
+
+
+class DMFUNC:
+    def __init__(self,name,dim):
+        self.name = name[4:]
+        self.dim = dim
+        raw = np.loadtxt(f'_geneData/DM/test_data.csv', delimiter=',',dtype='str')[1:]
+        #print(raw)
+        self.data = raw[:,:-1].astype(np.float64)
+        self.labels = raw[:, -1:].astype(np.int8)
+        
+        train_test_split(self.data, self.labels, test_size=0.2, random_state=42)
+        self.X_train, self.X_test = self.data[:int(len(self.data)*0.8)], self.data[int(len(self.data)*0.8):]
+        self.Y_train, self.Y_test = self.labels[:int(len(self.labels)*0.8)], self.labels[int(len(self.labels)*0.8):]
+        self.Y_test = self.Y_test.ravel()
+        self.Y_train = self.Y_train.ravel()
+
+    def get_function_info(self):
+        return function_struct(self.func,self.dim,np.max(self.data,axis=0),np.min(self.data,axis=0),"d")
+    
+    def func(self,x):
+        weights = x[:-1]
+        k = int(round(x[-1]))
+
+        k = max(1, min(20, k))
+
+        X_train_weighted = self.X_train * weights
+        X_test_weighted = self.X_test * weights
+
+        if np.isnan(weights).any():
+            print(weights)
+            raise ValueError("Weights contain NaN values")
+        elif np.isnan(k).any():
+            print(k)
+            raise ValueError("k contains NaN values")
+        elif np.isnan(X_train_weighted).any():
+            print(X_train_weighted)
+            raise ValueError("X_train_weighted contains NaN values")
+
+        knn = KNN(n_neighbors=k)
+        knn.fit(X_train_weighted, self.Y_train)
+        
+        accuracy = knn.score(X_test_weighted, self.Y_test)
+        return 1/accuracy  
+
+
 
 
 class function_struct:

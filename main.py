@@ -24,7 +24,7 @@ class MAINCONTROL:
         bar = tqdm(range(EPOCH), position=idx, leave=True, dynamic_ncols=True)
         for i in bar:
             bar.set_description(f"{obj.__name__:<16}-Epoch {i}/{EPOCH}")
-            tmp = (1/(obj.Start()[-1])) if self.f_type == "GENE" else obj.Start()[-1]
+            tmp = (1/(obj.Start()[-1])) if self.f_type == "GENE" or self.f_type == "DM" else obj.Start()[-1]
             Result = (Result * i + tmp)/ (i+1) if Result is not None else tmp
         print()
 
@@ -59,7 +59,7 @@ class MAINCONTROL:
 
         print(f"{Color.GREEN}All Optimizers Completed, plotting the chart{Color.RESET}")
         plt.xlabel("Iterations")
-        if self.f_type == "GENE":
+        if self.f_type == "GENE" or self.f_type == "DM":
             plt.ylabel("Accuracy")
             plt.title(f"{self.name}-{self.DIM}D-{self.NUM_WOLVES}N-{EPOCH} EPOCH")
         else:
@@ -136,6 +136,10 @@ if __name__ == '__main__':
             name = list(funcs_by_year['GENE'].keys())[int(name)-1]
             dim = funcs_by_year[f_type][name]
             print(f"Selected: {name} - Dimension: {dim}")
+            
+        elif f_type =="DM":
+            name = "train_data"
+            dim = 8
             
         else:
             print("Invalid function type")
